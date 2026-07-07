@@ -1,16 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import Link from "next/link";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Testimonial from "../components/Testimonial";
+import FloatingCTA from "../components/FloatingCTA";
+import SiteHero from "../components/SiteHero";
 
-// 1. תמונות שיתחלפו לאט ובעדינות ברקע של כותרת השם
-const heroImages = [
-  "/4W3A5030-copy-1-scaled.jpg",
-  "/4W3A1878-copy.jpg",
-  "/4W3A0973-copy-scaled.jpg",
-];
-
-// 2. גלריית העבודות המלאה למטה
+// גלריית העבודות המלאה למטה
 const initialImages = [
   { id: 1, src: "/4W3A5030-copy-1-scaled.jpg", category: "סטודיו" },
   { id: 2, src: "/4W3A2230-copy.jpg", category: "סטודיו" },
@@ -23,9 +20,21 @@ const initialImages = [
 const categories = ["הכל", "סטודיו", "חוץ", "אירועים"];
 
 export default function Home() {
-  const [activeCategory, setActiveCategory] = useState("הכל");
-  const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState("הכל");
+  const [galleryOpen, setGalleryOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  // Open gallery if main URL contains #gallery
+  useEffect(() => {
+    const openGallery = () => {
+      if (window.location.hash === "#gallery") {
+        setGalleryOpen(true);
+      }
+    };
+    openGallery();
+    window.addEventListener("hashchange", openGallery);
+    return () => window.removeEventListener("hashchange", openGallery);
+  }, []);
 
   // מניעת גלילה כשהלייטבוקס פתוח
   useEffect(() => {
@@ -37,7 +46,11 @@ export default function Home() {
     return () => { document.body.style.overflow = "unset"; };
   }, [selectedIndex]);
 
-  // מנגנון ניווט חצים במקלדת
+  // גלריה מסוננתי לשימוש בניווט ולייטבוקס
+  const filteredImages = selectedCategory === "הכל"
+    ? initialImages
+    : initialImages.filter(img => img.category === selectedCategory);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (selectedIndex === null) return;
@@ -46,9 +59,9 @@ export default function Home() {
         setSelectedIndex((prev) => {
           if (prev === null) return null;
           if (isRight) {
-            return (prev - 1 + filteredImages.length) % filteredImages.length; 
+            return (prev + 1) % filteredImages.length;
           } else {
-            return (prev + 1) % filteredImages.length; 
+            return (prev - 1 + filteredImages.length) % filteredImages.length;
           }
         });
       }
@@ -56,37 +69,51 @@ export default function Home() {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  });
+  }, [selectedIndex, filteredImages.length]);
 
-  // החלפת תמונת רקע עליונה כל 4 שניות
+  // Gesture refs & state
+  const prevBtnRef = useRef<HTMLButtonElement | null>(null);
+  const nextBtnRef = useRef<HTMLButtonElement | null>(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const touchStartX = useRef<number | null>(null);
+
+  // reset imageLoaded when opening a new lightbox image
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentHeroIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
+    if (selectedIndex !== null) setImageLoaded(false);
+  }, [selectedIndex]);
 
-  const filteredImages = activeCategory === "הכל"
-    ? initialImages
-    : initialImages.filter(img => img.category === activeCategory);
+  // focus trap / focus management for lightbox
+  useEffect(() => {
+    if (selectedIndex === null) return;
+    // focus the first available control when lightbox opens
+    const firstEl = prevBtnRef.current || nextBtnRef.current;
+    firstEl?.focus();
+
+    const handleTab = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      e.preventDefault();
+      const nodes = [prevBtnRef.current, nextBtnRef.current].filter(Boolean) as HTMLElement[];
+      if (nodes.length === 0) return;
+      const idx = nodes.indexOf(document.activeElement as HTMLElement);
+      const nextIdx = e.shiftKey ? (idx - 1 + nodes.length) % nodes.length : (idx + 1) % nodes.length;
+      nodes[nextIdx].focus();
+    };
+    window.addEventListener('keydown', handleTab);
+    return () => window.removeEventListener('keydown', handleTab);
+  }, [selectedIndex]);
 
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (selectedIndex !== null) {
-      setSelectedIndex((selectedIndex - 1 + filteredImages.length) % filteredImages.length);
-    }
+    setSelectedIndex((prev) => prev === null ? null : (prev + 1) % filteredImages.length);
   };
 
   const handlePrev = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (selectedIndex !== null) {
-      setSelectedIndex((selectedIndex + 1) % filteredImages.length);
-    }
+    setSelectedIndex((prev) => prev === null ? null : (prev - 1 + filteredImages.length) % filteredImages.length);
   };
 
   return (
-    <main className="min-h-screen w-full bg-[#0a0a0a] text-[#f5f5f5] antialiased m-0 p-0 block relative">
-      
+    <main className="min-h-screen w-full bg-white text-pink-600 antialiased m-0 p-0 block relative">
       {/* מודל לייטבוקס */}
       <AnimatePresence>
         {selectedIndex !== null && (
@@ -95,6 +122,9 @@ export default function Home() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedIndex(null)}
+            role="dialog"
+            aria-modal={true}
+            aria-label="Image preview"
             className="flex justify-center items-center cursor-zoom-out"
             style={{ 
               position: "fixed", 
@@ -106,31 +136,64 @@ export default function Home() {
               zIndex: 99999 
             }}
           >
+            {/* Lightbox header: index + category */}
+            <div style={{ position: 'absolute', top: '1rem', left: '50%', transform: 'translateX(-50%)', zIndex: 999999 }} className="flex items-center gap-3 text-sm text-neutral-300">
+              <span>{selectedIndex !== null ? selectedIndex + 1 : ''} / {filteredImages.length}</span>
+                <span className="text-xs text-pink-300">• {selectedIndex !== null ? filteredImages[selectedIndex].category : ''}</span>
+            </div>
+
             {/* התמונה - מתרנדרת ראשונה כדי שהכפתורים יהיו מעליה */}
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={selectedIndex}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-                src={filteredImages[selectedIndex].src}
-                alt="View Enlarged"
-                className="object-contain rounded-xl shadow-[0_30px_60px_-15px_rgba(0,0,0,1)] border border-white/10 pointer-events-none"
-                style={{ 
-                  maxWidth: "70vw", 
-                  maxHeight: "80vh", 
-                  width: "auto",
-                  height: "auto",
-                  zIndex: 100000 
-                }}
-              />
-            </AnimatePresence>
+            <div onTouchStart={(e) => { touchStartX.current = e.touches?.[0]?.clientX ?? null; }} onTouchEnd={(e) => {
+                const start = touchStartX.current ?? 0;
+                const end = e.changedTouches?.[0]?.clientX ?? 0;
+                const dx = end - start;
+                if (dx > 40) { setSelectedIndex((prev) => prev === null ? null : (prev - 1 + filteredImages.length) % filteredImages.length); }
+                else if (dx < -40) { setSelectedIndex((prev) => prev === null ? null : (prev + 1) % filteredImages.length); }
+              }} style={{ position: 'relative' }}>
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={selectedIndex}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  src={filteredImages[selectedIndex].src}
+                  alt={filteredImages[selectedIndex].category}
+                  onLoad={() => setImageLoaded(true)}
+                  className="object-contain rounded-xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.06)] border border-pink-50 pointer-events-auto"
+                  style={{ 
+                    maxWidth: "70vw", 
+                    maxHeight: "80vh", 
+                    width: "auto",
+                    height: "auto",
+                    zIndex: 100000 
+                  }}
+                />
+                {!imageLoaded && (
+                  <div style={{ position: 'absolute', inset: 0, zIndex: 100001 }} className="flex items-center justify-center">
+                    <div className="w-12 h-12 border-2 border-pink-100 border-t-pink-300 rounded-full animate-spin" />
+                  </div>
+                )}
+              </AnimatePresence>
+
+              {/* Thumbnail strip */}
+              <div style={{ position: 'absolute', left: 0, right: 0, bottom: '2.5rem', zIndex: 100002 }} className="flex items-center justify-center">
+                <div className="bg-pink-50 backdrop-blur-sm rounded-full px-3 py-2 flex gap-2">
+                  {filteredImages.map((t, i) => (
+                    <button key={t.id} onClick={(e) => { e.stopPropagation(); setSelectedIndex(i); }} className={`w-12 h-12 rounded-md overflow-hidden border ${i === selectedIndex ? 'border-pink-200' : 'border-pink-50'}`}>
+                      <img src={t.src} alt={t.category} className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
 
             {/* חץ שמאלה - הודגש עם inline style ו-zIndex מטורף כדי שלא יעלם */}
             <button 
+              ref={prevBtnRef}
+              aria-label="Previous image"
               onClick={handlePrev}
-              className="text-white/80 hover:text-white bg-black/60 hover:bg-black/90 transition-all duration-300 p-4 rounded-full border border-white/20 cursor-pointer"
+              className="text-pink-600 hover:text-pink-700 bg-pink-50 hover:bg-pink-100 transition-all duration-300 p-4 rounded-full border border-pink-50 cursor-pointer"
               style={{ position: 'absolute', left: '2rem', top: '50%', transform: 'translateY(-50%)', zIndex: 999999 }}
             >
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -140,8 +203,10 @@ export default function Home() {
 
             {/* חץ ימינה - הודגש עם inline style */}
             <button 
+              ref={nextBtnRef}
+              aria-label="Next image"
               onClick={handleNext}
-              className="text-white/80 hover:text-white bg-black/60 hover:bg-black/90 transition-all duration-300 p-4 rounded-full border border-white/20 cursor-pointer"
+              className="text-pink-600 hover:text-pink-700 bg-pink-50 hover:bg-pink-100 transition-all duration-300 p-4 rounded-full border border-pink-50 cursor-pointer"
               style={{ position: 'absolute', right: '2rem', top: '50%', transform: 'translateY(-50%)', zIndex: 999999 }}
             >
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -149,138 +214,96 @@ export default function Home() {
               </svg>
             </button>
 
-            {/* כפתור סגירה - הודגש עם inline style */}
-            <button 
-              onClick={(e) => { e.stopPropagation(); setSelectedIndex(null); }}
-              className="text-[#00d2ff] hover:text-[#00ff87] text-sm tracking-widest cursor-pointer transition-colors font-light bg-black/60 px-5 py-2.5 rounded-full border border-white/20"
-              style={{ position: 'absolute', top: '2rem', right: '2rem', zIndex: 999999 }}
-            >
-              ✕ CLOSE
-            </button>
+            {/* download & close buttons removed per design request */}
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Hero Section */}
-      <header 
-        style={{ height: "78vh" }} 
-        className="relative flex flex-col justify-center items-center text-center w-full overflow-hidden px-6 m-0 z-10"
-      >
-        <div className="absolute inset-0 z-0 bg-[#0a0a0a] w-full h-full">
-          <AnimatePresence>
-            <motion.img
-              key={currentHeroIndex}
-              src={heroImages[currentHeroIndex]}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.25 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 2, ease: "easeInOut" }}
-              className="w-full h-full object-cover absolute inset-0"
-              style={{ width: "100%", height: "100%" }}
-              alt="Background Content"
-            />
-          </AnimatePresence>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent z-10" />
-        </div>
+      <SiteHero title="RACHELY CHALOFSKI" showCamera showBackground />
 
-        <div className="relative z-20 pointer-events-none">
-          <motion.h1 
-            initial={{ opacity: 0, letterSpacing: "0.1em" }}
-            animate={{ opacity: 1, letterSpacing: "0.2em" }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="text-4xl md:text-6xl font-light uppercase mb-4 tracking-widest text-white"
-          >
-            Rachely Chalofski
-          </motion.h1>
-          
-          <motion.div 
-            initial={{ opacity: 0, width: 0 }}
-            animate={{ opacity: 1, width: "100px" }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="h-[2px] bg-gradient-to-r from-[#00d2ff] via-[#00ff87] to-[#ff9f00] mb-6 mx-auto"
-          />
+      {galleryOpen && (
+        <div id="gallery" data-gallery aria-hidden={selectedIndex !== null} className="w-full px-6 md:px-24 py-16 relative z-30 bg-white flex flex-col items-center border-t border-pink-100">
+          <div className="w-full max-w-5xl mx-auto mb-10">
+            <p className="text-sm text-pink-300 mb-5">בחרו איזה סוג גלריה תרצו לראות:</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`rounded-2xl border px-4 py-3 text-center transition ${selectedCategory === category ? 'border-pink-200 text-pink-600 bg-pink-50' : 'border-pink-50 text-pink-300 hover:border-pink-200 hover:text-pink-600'}`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
 
-          <motion.p 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.8 }}
-            className="text-neutral-400 text-xs md:text-sm tracking-[0.4em] uppercase font-light"
-          >
-            Visual Storyteller & Artist
-          </motion.p>
-        </div>
-      </header>
-
-      {/* אזור הגלריה והסינון */}
-      <div className="w-full px-6 md:px-24 pt-16 pb-12 relative z-30 bg-[#0a0a0a] flex flex-col items-center">
-        
-        {/* תפריט קטגוריות */}
-        <nav className="flex justify-center items-center gap-8 mb-16 text-sm tracking-wider font-light w-full max-w-5xl mx-auto">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className="relative py-2 cursor-pointer transition-colors duration-300 text-neutral-400 hover:text-white"
+          {/* גריד גלריית התמונות */}
+          <section className="mb-32 w-full max-w-5xl mx-auto">
+            <motion.div 
+              layout 
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full"
+              initial="hidden"
+              animate="show"
+              variants={{
+                hidden: {},
+                show: { transition: { staggerChildren: 0.06 } }
+              }}
             >
-              <span className={activeCategory === category ? "text-white font-normal" : ""}>
-                {category}
-              </span>
-              {activeCategory === category && (
-                <motion.div 
-                  layoutId="underline" 
-                  className="absolute left-0 right-0 bottom-0 h-[2px] bg-gradient-to-r from-[#00d2ff] to-[#00ff87]"
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                />
-              )}
-            </button>
-          ))}
-        </nav>
-
-        {/* גריד גלריית התמונות */}
-        <section className="mb-32 w-full max-w-5xl mx-auto">
-          <motion.div 
-            layout 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full"
-          >
-            <AnimatePresence mode="popLayout">
+              <AnimatePresence mode="popLayout">
               {filteredImages.map((img, index) => (
                 <motion.div
                   layout
                   key={img.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
+                  variants={{
+                    hidden: { opacity: 0, y: 12, scale: 0.98 },
+                    show: { opacity: 1, y: 0, scale: 1 }
+                  }}
+                  initial="hidden"
+                  animate="show"
+                  exit="hidden"
                   transition={{ duration: 0.5, ease: "easeInOut" }}
-                  whileHover={{ y: -8 }}
+                  // softer, more elegant hover
+                  whileHover={{ y: -6, scale: 1.02 }}
                   onClick={() => setSelectedIndex(index)} 
-                  className="relative overflow-hidden rounded-md aspect-[3/4] bg-neutral-950 group cursor-pointer shadow-2xl"
+                  className="relative overflow-hidden rounded-md bg-neutral-950 group cursor-pointer shadow-2xl flex justify-center"
                 >
                   <img 
                     src={img.src} 
                     alt={`רחלי חלופסקי צלמת - ${img.category}`}
-                    className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+                    className="block w-auto max-w-full h-auto object-contain transition-transform duration-500 ease-out group-hover:scale-105"
                     loading="lazy"
                   />
                   
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex flex-col justify-end p-8 pointer-events-none">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8 pointer-events-none">
                     <span className="text-xs tracking-widest text-[#00d2ff] font-medium uppercase mb-1">{img.category}</span>
-                    <p className="text-white text-sm font-light tracking-wide">הגדלת תמונה מקרוב ←</p>
+                    <p className="text-pink-600 text-sm font-light tracking-wide">הגדלת תמונה מקרוב ←</p>
                   </div>
                 </motion.div>
               ))}
             </AnimatePresence>
           </motion.div>
         </section>
+      </div>
+      )}
+
+      {/* פוטר */}
+      {/* Testimonials */}
+      <section className="mb-12 w-full max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
+          <Testimonial quote="Rachely captured our day with such calm and precision — the photos feel timeless." author="M & A" />
+          <Testimonial quote="We felt completely at ease; the result exceeded our expectations." author="D. Cohen" />
+          <Testimonial quote="An incredible blend of editorial and emotion. Highly recommended." author="Brand Studio" />
+        </section>
 
         {/* פוטר */}
-        <footer className="border-t border-neutral-900 pt-12 pb-8 flex flex-col md:flex-row justify-between items-center text-xs tracking-widest text-neutral-500 gap-4 w-full max-w-5xl mx-auto">
+        <footer className="border-t border-pink-100 pt-12 pb-8 flex flex-col md:flex-row justify-between items-center text-xs tracking-widest text-pink-300 gap-4 w-full max-w-5xl mx-auto">
           <p>© 2026 כל הזכויות שמורות לרחלי חלופסקי</p>
           <div className="flex gap-8 font-light">
-            <a href="https://wa.me/972500000000" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-300">WHATSAPP</a>
-            <a href="mailto:info@example.com" className="hover:text-white transition-colors duration-300">EMAIL</a>
+            <a href="mailto:r0527149555@gmail.com" className="hover:text-pink-700 transition-colors duration-300">אימייל</a>
+        
           </div>
         </footer>
-      </div>
+        <FloatingCTA />
 
     </main>
   );

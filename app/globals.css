@@ -1,8 +1,31 @@
 @import "tailwindcss";
 
 body {
-  background-color: #0a0a0a;
-  color: #f5f5f5;
+  background-color: #ffffff;
+  color: #ff6fae; /* primary light pink */
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   overflow-x: hidden;
 }
+
+:root{
+  --accent-1: #ff9ecb; /* soft pink gradient */
+  --accent-2: #ffd7e8;
+  --accent-3: #ffc9dd;
+  --muted: #f5cfe0; /* muted pink */
+  --text: #ff6fae;
+}
+
+.container-max{ max-width: 1100px; margin-left: auto; margin-right: auto; }
+
+.page-hero{ padding: 6rem 1.5rem; }
+.page-hero h1{ font-weight:300; letter-spacing:0.18em; }
+.page-hero p{ color: var(--muted); letter-spacing:0.12em; }
+
+.card{ background: rgba(255, 223, 235, 0.06); border: 1px solid rgba(255, 200, 220, 0.12); padding: 1.25rem; border-radius: 0.75rem; }
+
+.muted{ color: var(--muted); }
+
+.underline-accent{ height:2px; background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3)); display:block }
+
+/* subtle focus outline for accessibility */
+:focus{ outline: 2px solid rgba(35,213,226,0.12); outline-offset: 3px; }
