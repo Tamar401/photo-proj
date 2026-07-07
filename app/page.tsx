@@ -5,19 +5,25 @@ import { motion, AnimatePresence } from "framer-motion";
 
 // 1. תמונות שיתחלפו לאט ובעדינות ברקע של כותרת השם
 const heroImages = [
-  "/4W3A5030-copy-1-scaled.jpg",
-  "/4W3A1878-copy.jpg",
-  "/4W3A0973-copy-scaled.jpg",
+  "/ארי 2 ביצהה.jpg",
+  "/חיים (1).jpg",
+  "/לתמר.jpg",
+  "/קולדצקי10 copy.jpg",
+  "/קולדצקי ראשון.jpg",
 ];
 
 // 2. גלריית העבודות המלאה למטה
 const initialImages = [
-  { id: 1, src: "/4W3A5030-copy-1-scaled.jpg", category: "סטודיו" },
-  { id: 2, src: "/4W3A2230-copy.jpg", category: "סטודיו" },
-  { id: 3, src: "/4W3A1878-copy.jpg", category: "חוץ" },
-  { id: 4, src: "/4W3A1247-copy-2-scaled.jpg", category: "חוץ" },
-  { id: 5, src: "/4W3A0973-copy-scaled.jpg", category: "אירועים" },
-  { id: 6, src: "/4W3A0486-copy-2-scaled.jpg", category: "אירועים" },
+  { id: 1, src: "/ארי 2 ביצהה.jpg", category: "סטודיו" },
+  { id: 2, src: "/חיים (1).jpg", category: "סטודיו" },
+  { id: 3, src: "/לאתר6 copy.jpg", category: "חוץ" },
+  { id: 4, src: "/לתמר.jpg", category: "חוץ" },
+  { id: 5, src: "/לתמר1.jpg", category: "אירועים" },
+  { id: 6, src: "/ניסןי copy.jpg", category: "סטודיו" },
+  { id: 7, src: "/קולדצקי ראשון.jpg", category: "אירועים" },
+  { id: 8, src: "/קולדצקי10 copy.jpg", category: "אירועים" },
+  { id: 9, src: "/קולדצקי12222.jpg", category: "אירועים" },
+  { id: 10, src: "/קולדצקי222 עם ביצה.jpg", category: "אירועים" },
 ];
 
 const categories = ["הכל", "סטודיו", "חוץ", "אירועים"];
@@ -70,6 +76,28 @@ export default function Home() {
     ? initialImages
     : initialImages.filter(img => img.category === activeCategory);
 
+  const testimonials = [
+    {
+      name: 'הילה וינשטיין',
+      title: 'אמא מרוצה',
+      quote: 'רחלי תפסה את הרגעים הכי טבעיים של הילדים שלנו בצורה כל כך עדינה ויפה. התוצאות עלו על כל הציפיות.',
+    },
+    {
+      name: 'אביב לוי',
+      title: 'זוג צעיר',
+      quote: 'הצילומים היו מקצועיים וחוויתיים. רחלי הובילה אותנו בשקט ובקסם, והצילום יצא כמו מתוך מגזין.',
+    },
+    {
+      name: 'איריס רוזן',
+      title: 'משפחה',
+      quote: 'התמונות נראות יוקרתיות אך מלאות חמימות. התחושה במהלך הצילומים הייתה רגועה ומלאת אמון.',
+    },
+  ];
+
+  const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const testimonialNext = () => setTestimonialIndex((i) => (i + 1) % testimonials.length);
+  const testimonialPrev = () => setTestimonialIndex((i) => (i - 1 + testimonials.length) % testimonials.length);
+
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (selectedIndex !== null) {
@@ -85,7 +113,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen w-full bg-[#0a0a0a] text-[#f5f5f5] antialiased m-0 p-0 block relative">
+    <main className="min-h-screen w-full bg-[#f8f8f8] text-[#331a34] antialiased m-0 p-0 block relative pt-16">
       
       {/* מודל לייטבוקס */}
       <AnimatePresence>
@@ -100,7 +128,7 @@ export default function Home() {
               position: "fixed", 
               top: 0, left: 0, right: 0, bottom: 0, 
               width: "100vw", height: "100vh",
-              backgroundColor: "rgba(15, 15, 15, 0.92)", 
+              backgroundColor: "rgba(255, 245, 251, 0.96)", 
               backdropFilter: "blur(12px)", 
               WebkitBackdropFilter: "blur(12px)", 
               zIndex: 99999 
@@ -116,7 +144,7 @@ export default function Home() {
                 transition={{ duration: 0.2 }}
                 src={filteredImages[selectedIndex].src}
                 alt="View Enlarged"
-                className="object-contain rounded-xl shadow-[0_30px_60px_-15px_rgba(0,0,0,1)] border border-white/10 pointer-events-none"
+                className="object-contain rounded-[2rem] shadow-[0_30px_60px_-15px_rgba(203,120,154,0.3)] border border-pink-200/50 pointer-events-none bg-white"
                 style={{ 
                   maxWidth: "70vw", 
                   maxHeight: "80vh", 
@@ -130,7 +158,7 @@ export default function Home() {
             {/* חץ שמאלה - הודגש עם inline style ו-zIndex מטורף כדי שלא יעלם */}
             <button 
               onClick={handlePrev}
-              className="text-white/80 hover:text-white bg-black/60 hover:bg-black/90 transition-all duration-300 p-4 rounded-full border border-white/20 cursor-pointer"
+              className="text-[#67405d] hover:text-[#331a34] bg-white/90 hover:bg-white transition-all duration-300 p-4 rounded-full border border-pink-200/60 cursor-pointer"
               style={{ position: 'absolute', left: '2rem', top: '50%', transform: 'translateY(-50%)', zIndex: 999999 }}
             >
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -141,7 +169,7 @@ export default function Home() {
             {/* חץ ימינה - הודגש עם inline style */}
             <button 
               onClick={handleNext}
-              className="text-white/80 hover:text-white bg-black/60 hover:bg-black/90 transition-all duration-300 p-4 rounded-full border border-white/20 cursor-pointer"
+              className="text-[#67405d] hover:text-[#331a34] bg-white/90 hover:bg-white transition-all duration-300 p-4 rounded-full border border-pink-200/60 cursor-pointer"
               style={{ position: 'absolute', right: '2rem', top: '50%', transform: 'translateY(-50%)', zIndex: 999999 }}
             >
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -152,7 +180,7 @@ export default function Home() {
             {/* כפתור סגירה - הודגש עם inline style */}
             <button 
               onClick={(e) => { e.stopPropagation(); setSelectedIndex(null); }}
-              className="text-[#00d2ff] hover:text-[#00ff87] text-sm tracking-widest cursor-pointer transition-colors font-light bg-black/60 px-5 py-2.5 rounded-full border border-white/20"
+              className="text-[#c94a8c] hover:text-[#a9296d] text-sm tracking-widest cursor-pointer transition-colors font-light bg-white/90 px-5 py-2.5 rounded-full border border-pink-200/70"
               style={{ position: 'absolute', top: '2rem', right: '2rem', zIndex: 999999 }}
             >
               ✕ CLOSE
@@ -163,24 +191,24 @@ export default function Home() {
 
       {/* Hero Section */}
       <header 
-        style={{ height: "78vh" }} 
+        style={{ height: "100vh", marginTop: "-4rem" }} 
         className="relative flex flex-col justify-center items-center text-center w-full overflow-hidden px-6 m-0 z-10"
       >
-        <div className="absolute inset-0 z-0 bg-[#0a0a0a] w-full h-full">
+        <div className="absolute inset-0 z-0 bg-[#f8f8f8] w-full h-full">
           <AnimatePresence>
             <motion.img
-              key={currentHeroIndex}
-              src={heroImages[currentHeroIndex]}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.25 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 2, ease: "easeInOut" }}
-              className="w-full h-full object-cover absolute inset-0"
-              style={{ width: "100%", height: "100%" }}
-              alt="Background Content"
-            />
+                key={currentHeroIndex}
+                src={heroImages[currentHeroIndex]}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 2, ease: "easeInOut" }}
+                className="w-full h-full object-cover object-center absolute inset-0"
+                style={{ width: "100%", height: "100%" }}
+                alt="Background Content"
+              />
           </AnimatePresence>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#f8f8f8] via-transparent to-transparent z-10" />
         </div>
 
         <div className="relative z-20 pointer-events-none">
@@ -188,7 +216,7 @@ export default function Home() {
             initial={{ opacity: 0, letterSpacing: "0.1em" }}
             animate={{ opacity: 1, letterSpacing: "0.2em" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
-            className="text-4xl md:text-6xl font-light uppercase mb-4 tracking-widest text-white"
+            className="text-4xl md:text-6xl font-light uppercase mb-4 tracking-widest text-[#331a34]"
           >
             Rachely Chalofski
           </motion.h1>
@@ -197,87 +225,71 @@ export default function Home() {
             initial={{ opacity: 0, width: 0 }}
             animate={{ opacity: 1, width: "100px" }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="h-[2px] bg-gradient-to-r from-[#00d2ff] via-[#00ff87] to-[#ff9f00] mb-6 mx-auto"
+            className="h-[2px] bg-gradient-to-r from-[#ffb6d9] via-[#ffd6ed] to-[#fff0f7] mb-6 mx-auto"
           />
 
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.8 }}
-            className="text-neutral-400 text-xs md:text-sm tracking-[0.4em] uppercase font-light"
+            className="text-[#7d5f7f] text-xs md:text-sm tracking-[0.4em] uppercase font-light"
           >
             Visual Storyteller & Artist
           </motion.p>
         </div>
       </header>
 
-      {/* אזור הגלריה והסינון */}
-      <div className="w-full px-6 md:px-24 pt-16 pb-12 relative z-30 bg-[#0a0a0a] flex flex-col items-center">
-        
-        {/* תפריט קטגוריות */}
-        <nav className="flex justify-center items-center gap-8 mb-16 text-sm tracking-wider font-light w-full max-w-5xl mx-auto">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className="relative py-2 cursor-pointer transition-colors duration-300 text-neutral-400 hover:text-white"
-            >
-              <span className={activeCategory === category ? "text-white font-normal" : ""}>
-                {category}
-              </span>
-              {activeCategory === category && (
-                <motion.div 
-                  layoutId="underline" 
-                  className="absolute left-0 right-0 bottom-0 h-[2px] bg-gradient-to-r from-[#00d2ff] to-[#00ff87]"
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                />
-              )}
-            </button>
-          ))}
-        </nav>
-
-        {/* גריד גלריית התמונות */}
-        <section className="mb-32 w-full max-w-5xl mx-auto">
-          <motion.div 
-            layout 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full"
-          >
-            <AnimatePresence mode="popLayout">
-              {filteredImages.map((img, index) => (
-                <motion.div
-                  layout
-                  key={img.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                  whileHover={{ y: -8 }}
-                  onClick={() => setSelectedIndex(index)} 
-                  className="relative overflow-hidden rounded-md aspect-[3/4] bg-neutral-950 group cursor-pointer shadow-2xl"
-                >
-                  <img 
-                    src={img.src} 
-                    alt={`רחלי חלופסקי צלמת - ${img.category}`}
-                    className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex flex-col justify-end p-8 pointer-events-none">
-                    <span className="text-xs tracking-widest text-[#00d2ff] font-medium uppercase mb-1">{img.category}</span>
-                    <p className="text-white text-sm font-light tracking-wide">הגדלת תמונה מקרוב ←</p>
+      <section className="w-full px-6 md:px-24 py-20 relative z-30 bg-[#f8f8f8] text-[#331a34]">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            {/* Left: testimonial text area */}
+            <div className="order-2 lg:order-1">
+              <div className="relative">
+                <div className="h-96 flex items-center">
+                  <div className="max-w-2xl">
+                    <p className="italic text-[#5d3a59] text-lg leading-8">{testimonials[testimonialIndex].quote}</p>
+                    <p className="mt-6 font-semibold text-[#331a34]">{testimonials[testimonialIndex].name}</p>
+                    <p className="text-sm text-[#d47aa5]">{testimonials[testimonialIndex].title}</p>
                   </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
-        </section>
+                </div>
 
-        {/* פוטר */}
-        <footer className="border-t border-neutral-900 pt-12 pb-8 flex flex-col md:flex-row justify-between items-center text-xs tracking-widest text-neutral-500 gap-4 w-full max-w-5xl mx-auto">
+                <div className="mt-8 flex gap-4">
+                  <button onClick={testimonialPrev} className="px-4 py-2 bg-white/90 border border-pink-100 text-[#331a34] rounded-md shadow-sm">← קודם</button>
+                  <button onClick={testimonialNext} className="px-4 py-2 bg-[#ffb4d8] text-white rounded-md shadow-sm">הבא →</button>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: big pink panel */}
+            <div className="order-1 lg:order-2 flex justify-end">
+              <div className="relative w-full max-w-md h-96 bg-[#f4c9cc] rounded-md flex items-center justify-center">
+                <div className="text-6xl font-extrabold text-white text-right leading-none pr-8">סיפורי<br/>לקוחות</div>
+
+                <div className="absolute right-6 top-1/2 -translate-y-1/2 flex flex-col gap-3">
+                  {testimonials.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setTestimonialIndex(idx)}
+                      className={`w-3 h-3 rounded-full ${idx === testimonialIndex ? 'bg-[#331a34]' : 'bg-[#12363f]/60'}`}
+                      aria-label={`הצג חוות דעת ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery removed from homepage — moved to /gallery */}
+      <div className="w-full px-6 md:px-24 pt-8 pb-12 relative z-30 bg-[#f8f8f8] flex flex-col items-center">
+        <p className="max-w-5xl mx-auto text-center text-[#7e5b7b] py-12">הגלריה הועברה לעמוד נפרד. יש ללחוץ על "גלריה" בכותרת כדי לעבור לעמוד המלא.</p>
+
+        <footer className="border-t border-pink-100 pt-12 pb-8 flex flex-col md:flex-row justify-between items-center text-xs tracking-widest text-[#7e5b7b] gap-4 w-full max-w-5xl mx-auto">
           <p>© 2026 כל הזכויות שמורות לרחלי חלופסקי</p>
           <div className="flex gap-8 font-light">
-            <a href="https://wa.me/972500000000" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-300">WHATSAPP</a>
-            <a href="mailto:info@example.com" className="hover:text-white transition-colors duration-300">EMAIL</a>
+            <a href="https://wa.me/972500000000" target="_blank" rel="noopener noreferrer" className="hover:text-[#c24f8d] transition-colors duration-300">WHATSAPP</a>
+            <a href="mailto:info@example.com" className="hover:text-[#c24f8d] transition-colors duration-300">EMAIL</a>
           </div>
         </footer>
       </div>
