@@ -1,0 +1,29 @@
+# Normalize text files and enforce LF for source files
+* text=auto
+
+# Force LF for source code files
+*.js     text eol=lf
+*.jsx    text eol=lf
+*.ts     text eol=lf
+*.tsx    text eol=lf
+*.css    text eol=lf
+*.html   text eol=lf
+*.json   text eol=lf
+*.md     text eol=lf
+
+# Treat common image formats as binary
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.webp   binary
+*.avif   binary
+
+# SVGs are text (so they can be diffed) but preserve original line endings
+*.svg    text
+
+# Fonts/binaries
+*.ico    binary
+*.ttf    binary
+*.woff   binary
+*.woff2  binary
