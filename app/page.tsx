@@ -212,30 +212,23 @@ export default function Home() {
         </div>
 
         <div className="relative z-20 pointer-events-none">
-          <motion.h1 
-            initial={{ opacity: 0, letterSpacing: "0.1em" }}
-            animate={{ opacity: 1, letterSpacing: "0.2em" }}
+          <motion.span
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
-            className="text-4xl md:text-6xl font-light uppercase mb-4 tracking-widest text-[#331a34]"
+            className="absolute text-[2rem] md:text-[8rem] font-light text-[#ffb4d8] left-0 right-0 top-1/2 -translate-y-1/2 tracking-widest uppercase pointer-events-none text-left whitespace-nowrap"
+            style={{ zIndex: 1, transform: 'translateX(-85%)' }}
           >
-            Rachely Chalofski
-          </motion.h1>
-          
-          <motion.div 
-            initial={{ opacity: 0, width: 0 }}
-            animate={{ opacity: 1, width: "100px" }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="h-[2px] bg-gradient-to-r from-[#ffb6d9] via-[#ffd6ed] to-[#fff0f7] mb-6 mx-auto"
-          />
-
-          <motion.p 
-            initial={{ opacity: 0, y: 10 }}
+            RACHELY CHALOFSKI
+          </motion.span>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.8 }}
-            className="text-[#7d5f7f] text-xs md:text-sm tracking-[0.4em] uppercase font-light"
+            transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
+            className="relative z-20 text-5xl md:text-7xl font-light text-white tracking-widest"
           >
-            Visual Storyteller & Artist
-          </motion.p>
+            רחלי חלופסקי
+          </motion.h1>
         </div>
       </header>
 
