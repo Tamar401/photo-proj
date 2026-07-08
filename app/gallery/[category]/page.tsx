@@ -5,16 +5,28 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
 const initialImages = [
-  { id: 1, src: "/ארי 2 ביצהה.jpg", category: "משפחה" },
-  { id: 2, src: "/חיים (1).jpg", category: "משפחה" },
-  { id: 3, src: "/לאתר6 copy.jpg", category: "משפחה" },
-  { id: 4, src: "/לתמר.jpg", category: "ניו בורן" },
-  { id: 5, src: "/לתמר1.jpg", category: "ניו בורן" },
-  { id: 6, src: "/ניסןי copy.jpg", category: "ניו בורן" },
-  { id: 7, src: "/קולדצקי ראשון.jpg", category: "סמאשקייק" },
-  { id: 8, src: "/קולדצקי10 copy.jpg", category: "סמאשקייק" },
-  { id: 9, src: "/קולדצקי12222.jpg", category: "סמאשקייק" },
-  { id: 10, src: "/קולדצקי222 עם ביצה.jpg", category: "סמאשקייק" },
+  { id: 1, src: "/משפחה/1.jpg", category: "משפחה" },
+  { id: 2, src: "/משפחה/ארי 2 ביצהה.jpg", category: "משפחה" },
+  { id: 3, src: "/משפחה/גולדשטוף 2.jpg", category: "משפחה" },
+  { id: 4, src: "/משפחה/חיים (1).jpg", category: "משפחה" },
+  { id: 5, src: "/משפחה/לאתר 2.jpg", category: "משפחה" },
+  { id: 6, src: "/משפחה/לאתר3 copy.jpg", category: "משפחה" },
+  { id: 7, src: "/משפחה/לאתר4 copy.jpg", category: "משפחה" },
+  { id: 8, src: "/משפחה/לאתר5 copy.jpg", category: "משפחה" },
+  { id: 9, src: "/משפחה/לאתר7 copy.jpg", category: "משפחה" },
+  { id: 10, src: "/משפחה/לתמר.jpg", category: "משפחה" },
+  { id: 11, src: "/משפחה/לתמר1.jpg", category: "משפחה" },
+  { id: 12, src: "/משפחה/ניסןי copy.jpg", category: "משפחה" },
+  { id: 13, src: "/משפחה/קולדצקי ראשון.jpg", category: "משפחה" },
+  { id: 14, src: "/משפחה/קולדצקי10 copy.jpg", category: "משפחה" },
+  { id: 15, src: "/משפחה/קולדצקי12222.jpg", category: "משפחה" },
+  { id: 16, src: "/משפחה/קולדצקי222 עם ביצה.jpg", category: "משפחה" },
+  { id: 17, src: "/משפחה/שלמה   עע חתוך טוב copy.jpg", category: "משפחה" },
+  { id: 18, src: "/משפחה/שני ותמר שני.jpg", category: "משפחה" },
+  { id: 19, src: "/סמאש קייק/לאתר6 copy.jpg", category: "סמאש קייק" },
+  { id: 20, src: "/סמאש קייק/לאתר8 copy.jpg", category: "סמאש קייק" },
+  { id: 21, src: "/סמאש קייק/לאתר9 copy.jpg", category: "סמאש קייק" },
+  { id: 22, src: "/סמאש קייק/לאתר 10.jpg", category: "סמאש קייק" },
 ];
 
 export default function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
@@ -56,7 +68,7 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
   const categoryNames: Record<string, string> = {
     "משפחה": "משפחה",
     "ניו בורן": "ניו בורן",
-    "סמאשקייק": "סמאשקייק",
+    "סמאש קייק": "סמאש קייק",
   };
 
   return (
@@ -138,8 +150,8 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
 
         <h1 className="text-5xl md:text-6xl font-light mb-16 tracking-widest">{categoryNames[decodedCategory] || decodedCategory}</h1>
 
-        <section className="mb-32 w-full max-w-5xl mx-auto">
-          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+        <section className="mb-32 w-full max-w-7xl mx-auto px-4">
+          <motion.div layout className="columns-1 md:columns-2 lg:columns-3 gap-8 w-full space-y-8">
             <AnimatePresence mode="popLayout">
               {filteredImages.map((img, index) => (
                 <motion.div
@@ -151,9 +163,9 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
                   transition={{ duration: 0.5, ease: "easeInOut" }}
                   whileHover={{ y: -8 }}
                   onClick={() => setSelectedIndex(index)}
-                  className="relative overflow-hidden rounded-md bg-[#f5f5f5] group cursor-pointer shadow-[0_35px_70px_-30px_rgba(215,127,175,0.2)] aspect-[3/4]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,180,216,0.15) 1px, transparent 0)', backgroundSize: '20px 20px' }}
+                  className="relative overflow-hidden rounded-md bg-[#f5f5f5] group cursor-pointer shadow-[0_35px_70px_-30px_rgba(215,127,175,0.2)] break-inside-avoid" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,180,216,0.15) 1px, transparent 0)', backgroundSize: '20px 20px' }}
                 >
-                  <img src={img.src} alt={img.category} className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105" loading="lazy" />
+                  <img src={img.src} alt={img.category} className="w-full h-auto object-contain transition-transform duration-1000 ease-out group-hover:scale-105" loading="lazy" />
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -161,7 +173,7 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
         </section>
 
         <footer className="border-t border-pink-100 pt-12 pb-8 w-full max-w-5xl mx-auto text-xs text-[#7e5b7b]">
-          © 2026 כל הזכויות שמורות לרחלי חלופסקי
+          © 2026  לרחלי חלופסקי
         </footer>
       </div>
     </main>

@@ -5,25 +5,36 @@ import { motion, AnimatePresence } from "framer-motion";
 
 // 1. תמונות שיתחלפו לאט ובעדינות ברקע של כותרת השם
 const heroImages = [
-  "/ארי 2 ביצהה.jpg",
-  "/חיים (1).jpg",
-  "/לתמר.jpg",
-  "/קולדצקי10 copy.jpg",
-  "/קולדצקי ראשון.jpg",
+  "/משפחה/ארי 2 ביצהה.jpg",
+  "/משפחה/חיים (1).jpg",
+  "/משפחה/לתמר.jpg",
+  "/סמאש קייק/לאתר6 copy.jpg",
+  "/משפחה/קולדצקי ראשון.jpg",
 ];
 
 // 2. גלריית העבודות המלאה למטה
 const initialImages = [
-  { id: 1, src: "/ארי 2 ביצהה.jpg", category: "סטודיו" },
-  { id: 2, src: "/חיים (1).jpg", category: "סטודיו" },
-  { id: 3, src: "/לאתר6 copy.jpg", category: "חוץ" },
-  { id: 4, src: "/לתמר.jpg", category: "חוץ" },
-  { id: 5, src: "/לתמר1.jpg", category: "אירועים" },
-  { id: 6, src: "/ניסןי copy.jpg", category: "סטודיו" },
-  { id: 7, src: "/קולדצקי ראשון.jpg", category: "אירועים" },
-  { id: 8, src: "/קולדצקי10 copy.jpg", category: "אירועים" },
-  { id: 9, src: "/קולדצקי12222.jpg", category: "אירועים" },
-  { id: 10, src: "/קולדצקי222 עם ביצה.jpg", category: "אירועים" },
+  { id: 1, src: "/משפחה/1.jpg", category: "משפחה" },
+  { id: 2, src: "/משפחה/ארי 2 ביצהה.jpg", category: "משפחה" },
+  { id: 3, src: "/משפחה/גולדשטוף 2.jpg", category: "משפחה" },
+  { id: 4, src: "/משפחה/חיים (1).jpg", category: "משפחה" },
+  { id: 5, src: "/משפחה/לאתר 2.jpg", category: "משפחה" },
+  { id: 6, src: "/משפחה/לאתר3 copy.jpg", category: "משפחה" },
+  { id: 7, src: "/משפחה/לאתר4 copy.jpg", category: "משפחה" },
+  { id: 8, src: "/משפחה/לאתר5 copy.jpg", category: "משפחה" },
+  { id: 9, src: "/משפחה/לאתר7 copy.jpg", category: "משפחה" },
+  { id: 10, src: "/משפחה/לתמר.jpg", category: "משפחה" },
+  { id: 11, src: "/משפחה/לתמר1.jpg", category: "משפחה" },
+  { id: 12, src: "/משפחה/ניסןי copy.jpg", category: "משפחה" },
+  { id: 13, src: "/משפחה/קולדצקי ראשון.jpg", category: "משפחה" },
+  { id: 14, src: "/משפחה/קולדצקי10 copy.jpg", category: "משפחה" },
+  { id: 15, src: "/משפחה/קולדצקי12222.jpg", category: "משפחה" },
+  { id: 16, src: "/משפחה/קולדצקי222 עם ביצה.jpg", category: "משפחה" },
+  { id: 17, src: "/משפחה/שלמה   עע חתוך טוב copy.jpg", category: "משפחה" },
+  { id: 18, src: "/משפחה/שני ותמר שני.jpg", category: "משפחה" },
+  { id: 19, src: "/סמאש קייק/לאתר6 copy.jpg", category: "סמאש קייק" },
+  { id: 20, src: "/סמאש קייק/לאתר8 copy.jpg", category: "סמאש קייק" },
+  { id: 21, src: "/סמאש קייק/לאתר9 copy.jpg", category: "סמאש קייק" },
 ];
 
 const categories = ["הכל", "סטודיו", "חוץ", "אירועים"];
@@ -81,22 +92,30 @@ export default function Home() {
       name: 'הילה וינשטיין',
       title: 'אמא מרוצה',
       quote: 'רחלי תפסה את הרגעים הכי טבעיים של הילדים שלנו בצורה כל כך עדינה ויפה. התוצאות עלו על כל הציפיות.',
+      image: '/משפחה/ארי 2 ביצהה.jpg',
     },
     {
       name: 'אביב לוי',
       title: 'זוג צעיר',
       quote: 'הצילומים היו מקצועיים וחוויתיים. רחלי הובילה אותנו בשקט ובקסם, והצילום יצא כמו מתוך מגזין.',
+      image: '/משפחה/לתמר.jpg',
     },
     {
       name: 'איריס רוזן',
       title: 'משפחה',
       quote: 'התמונות נראות יוקרתיות אך מלאות חמימות. התחושה במהלך הצילומים הייתה רגועה ומלאת אמון.',
+      image: '/משפחה/קולדצקי10 copy.jpg',
     },
   ];
 
   const [testimonialIndex, setTestimonialIndex] = useState(0);
-  const testimonialNext = () => setTestimonialIndex((i) => (i + 1) % testimonials.length);
-  const testimonialPrev = () => setTestimonialIndex((i) => (i - 1 + testimonials.length) % testimonials.length);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTestimonialIndex((i) => (i + 1) % testimonials.length);
+    }, 7000);
+    return () => clearInterval(interval);
+  }, [testimonials.length]);
 
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -214,61 +233,100 @@ export default function Home() {
         <div className="relative z-20 pointer-events-none">
           <motion.span
             initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            animate={{ opacity: 0.5, scale: 1 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
-            className="absolute text-[2rem] md:text-[8rem] font-light text-[#ffb4d8] left-0 right-0 top-1/2 -translate-y-1/2 tracking-widest uppercase pointer-events-none text-left whitespace-nowrap"
-            style={{ zIndex: 1, transform: 'translateX(-85%)' }}
+            className="absolute text-[10rem] md:text-[14rem] font-light text-[#ffb4d8] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 tracking-widest uppercase pointer-events-none"
+            style={{ zIndex: 1 }}
           >
-            RACHELY CHALOFSKI
+            RACHELY
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
-            className="relative z-20 text-5xl md:text-7xl font-light text-white tracking-widest"
+            className="relative z-20 text-5xl md:text-7xl font-light text-white tracking-widest uppercase"
           >
             רחלי חלופסקי
           </motion.h1>
         </div>
       </header>
 
-      <section className="w-full px-6 md:px-24 py-20 relative z-30 bg-[#f8f8f8] text-[#331a34]">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            {/* Left: testimonial text area */}
-            <div className="order-2 lg:order-1">
-              <div className="relative">
-                <div className="h-96 flex items-center">
-                  <div className="max-w-2xl">
-                    <p className="italic text-[#5d3a59] text-lg leading-8">{testimonials[testimonialIndex].quote}</p>
-                    <p className="mt-6 font-semibold text-[#331a34]">{testimonials[testimonialIndex].name}</p>
-                    <p className="text-sm text-[#d47aa5]">{testimonials[testimonialIndex].title}</p>
-                  </div>
-                </div>
+      <section className="w-full px-6 md:px-24 py-20 bg-[#f8f8f8] text-[#331a34]">
+        <div className="max-w-5xl mx-auto text-center">
+          <div className="w-full overflow-visible mt-4 mb-6">
+            <motion.svg className="w-full h-[90px] md:h-[100px]" viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+              <motion.path
+                d="M0 50 C280 12, 520 70, 840 30 S1100 28, 1200 50"
+                stroke="#ffb4d8"
+                strokeWidth={18}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="none"
+                initial={{ pathLength: 0 }}
+                whileInView={{ pathLength: 1 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 1.2, ease: 'easeOut' }}
+              />
+            </motion.svg>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-[#ffb4d8]">לקוחות מספרים</h2>
 
-                <div className="mt-8 flex gap-4">
-                  <button onClick={testimonialPrev} className="px-4 py-2 bg-white/90 border border-pink-100 text-[#331a34] rounded-md shadow-sm">← קודם</button>
-                  <button onClick={testimonialNext} className="px-4 py-2 bg-[#ffb4d8] text-white rounded-md shadow-sm">הבא →</button>
-                </div>
-              </div>
+          <div className="mt-12 relative">
+            <div className="max-w-3xl mx-auto px-6">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={testimonialIndex}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.6, ease: 'easeOut' }}
+                  className="flex items-start gap-6"
+                >
+                  <motion.img
+                    src={testimonials[testimonialIndex].image}
+                    alt={testimonials[testimonialIndex].name}
+                    className="w-20 h-20 rounded-full object-cover shadow-md"
+                    initial={{ opacity: 0, x: 12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 12 }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
+                  />
+
+                  <div className="flex-1 text-right">
+                    <motion.p
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.6, ease: 'easeOut' }}
+                      className="text-lg md:text-xl leading-8 text-[#5d3a59]"
+                    >
+                      {testimonials[testimonialIndex].quote}
+                    </motion.p>
+
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.12, duration: 0.5 }}
+                      className="mt-6 flex items-center justify-end gap-4"
+                    >
+                      <div className="text-sm font-semibold text-[#ffb4d8]">{testimonials[testimonialIndex].name}</div>
+                      <div className="text-xs text-[#7e5b7b]">{testimonials[testimonialIndex].title}</div>
+                    </motion.div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
 
-            {/* Right: big pink panel */}
-            <div className="order-1 lg:order-2 flex justify-end">
-              <div className="relative w-full max-w-md h-96 bg-[#f4c9cc] rounded-md flex items-center justify-center">
-                <div className="text-6xl font-extrabold text-white text-right leading-none pr-8">סיפורי<br/>לקוחות</div>
-
-                <div className="absolute right-6 top-1/2 -translate-y-1/2 flex flex-col gap-3">
-                  {testimonials.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setTestimonialIndex(idx)}
-                      className={`w-3 h-3 rounded-full ${idx === testimonialIndex ? 'bg-[#331a34]' : 'bg-[#12363f]/60'}`}
-                      aria-label={`הצג חוות דעת ${idx + 1}`}
-                    />
-                  ))}
-                </div>
-              </div>
+            <div className="mt-8 flex justify-center items-center gap-3">
+              {testimonials.map((_, idx) => (
+                <motion.button
+                  key={idx}
+                  onClick={() => setTestimonialIndex(idx)}
+                  whileHover={{ scale: 1.15 }}
+                  className={`h-3 w-3 rounded-full transition ${idx === testimonialIndex ? 'bg-[#ffb4d8]' : 'bg-[#f0e6ef]'}`}
+                  aria-label={`הצג חוות דעת ${idx + 1}`}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -276,10 +334,8 @@ export default function Home() {
 
       {/* Gallery removed from homepage — moved to /gallery */}
       <div className="w-full px-6 md:px-24 pt-8 pb-12 relative z-30 bg-[#f8f8f8] flex flex-col items-center">
-        <p className="max-w-5xl mx-auto text-center text-[#7e5b7b] py-12">הגלריה הועברה לעמוד נפרד. יש ללחוץ על "גלריה" בכותרת כדי לעבור לעמוד המלא.</p>
-
         <footer className="border-t border-pink-100 pt-12 pb-8 flex flex-col md:flex-row justify-between items-center text-xs tracking-widest text-[#7e5b7b] gap-4 w-full max-w-5xl mx-auto">
-          <p>© 2026 כל הזכויות שמורות לרחלי חלופסקי</p>
+          <p>© תמר יגלניק </p>
           <div className="flex gap-8 font-light">
             <a href="https://wa.me/972500000000" target="_blank" rel="noopener noreferrer" className="hover:text-[#c24f8d] transition-colors duration-300">WHATSAPP</a>
             <a href="mailto:info@example.com" className="hover:text-[#c24f8d] transition-colors duration-300">EMAIL</a>

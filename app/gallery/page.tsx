@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 
 const categories = [
-  { id: "משפחה", name: "משפחה", image: "/ארי 2 ביצהה.jpg" },
-  { id: "ניו בורן", name: "ניו בורן", image: "/לתמר.jpg" },
-  { id: "סמאשקייק", name: "סמאשקייק", image: "/קולדצקי10 copy.jpg" },
+  { id: "משפחה", name: "משפחה", image: "/משפחה/ארי 2 ביצהה.jpg" },
+  { id: "ניו בורן", name: "ניו בורן", image: "/משפחה/לתמר.jpg" },
+  { id: "סמאש קייק", name: "סמאש קייק", image: "/סמאש קייק/לאתר6 copy.jpg" },
 ];
 
 export default function GalleryPage() {
@@ -15,7 +15,7 @@ export default function GalleryPage() {
       {/* Hero Header */}
       <div className="relative w-full h-[50vh] flex items-center justify-center overflow-hidden">
         <img
-          src="/לתמר.jpg"
+          src="/משפחה/לתמר.jpg"
           alt="Gallery Header"
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -58,15 +58,13 @@ export default function GalleryPage() {
                     className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <motion.div
-                    className="absolute bottom-0 left-0 right-0 p-6 text-center"
-                    whileHover={{ scale: 1.15 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                  >
-                    <span className="text-2xl font-light tracking-wider text-white/90">
+
+                  {/* centered large label that grows and turns pink on hover */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <span className="text-4xl md:text-5xl font-light tracking-widest text-white/90 transition-transform duration-400 transform group-hover:scale-110 group-hover:text-[#ffb4d8]">
                       {category.name}
                     </span>
-                  </motion.div>
+                  </div>
                 </div>
               </motion.div>
             </Link>
@@ -74,7 +72,7 @@ export default function GalleryPage() {
         </div>
 
         <footer className="border-t border-pink-100 pt-12 pb-8 w-full max-w-5xl mx-auto text-xs text-[#7e5b7b]">
-          © 2026 כל הזכויות שמורות לרחלי חלופסקי
+         <p>© תמר יגלניק </p>
         </footer>
       </div>
     </main>
