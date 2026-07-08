@@ -253,21 +253,16 @@ export default function Home() {
 
       <section className="w-full px-6 md:px-24 py-20 bg-[#f8f8f8] text-[#331a34]">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="w-full overflow-visible mt-4 mb-6">
-            <motion.svg className="w-full h-[90px] md:h-[100px]" viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-              <motion.path
-                d="M0 50 C280 12, 520 70, 840 30 S1100 28, 1200 50"
-                stroke="#ffb4d8"
-                strokeWidth={18}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                fill="none"
-                initial={{ pathLength: 0 }}
-                whileInView={{ pathLength: 1 }}
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 1.2, ease: 'easeOut' }}
-              />
-            </motion.svg>
+          <div className="w-full flex justify-center mt-4 mb-6">
+            <motion.img
+              src="/לב.png"
+              alt="Heart decoration"
+              className="h-[70px] md:h-[100px] object-contain opacity-80"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 1, ease: 'easeOut' }}
+            />
           </div>
           <h2 className="text-4xl md:text-5xl font-extrabold text-[#ffb4d8]">לקוחות מספרים</h2>
 
@@ -342,7 +337,6 @@ export default function Home() {
           </div>
         </footer>
       </div>
-
     </main>
   );
 }

@@ -23,10 +23,12 @@ const initialImages = [
   { id: 16, src: "/משפחה/קולדצקי222 עם ביצה.jpg", category: "משפחה" },
   { id: 17, src: "/משפחה/שלמה   עע חתוך טוב copy.jpg", category: "משפחה" },
   { id: 18, src: "/משפחה/שני ותמר שני.jpg", category: "משפחה" },
-  { id: 19, src: "/סמאש קייק/לאתר6 copy.jpg", category: "סמאש קייק" },
-  { id: 20, src: "/סמאש קייק/לאתר8 copy.jpg", category: "סמאש קייק" },
-  { id: 21, src: "/סמאש קייק/לאתר9 copy.jpg", category: "סמאש קייק" },
-  { id: 22, src: "/סמאש קייק/לאתר 10.jpg", category: "סמאש קייק" },
+  { id: 19, src: "/ניו בורן/12311-Edit.jpg", category: "ניו בורן" },
+  { id: 20, src: "/ניו בורן/12315-Edit (1).jpg", category: "ניו בורן" },
+  { id: 21, src: "/סמאש קייק/לאתר6 copy.jpg", category: "סמאש קייק" },
+  { id: 22, src: "/סמאש קייק/לאתר8 copy.jpg", category: "סמאש קייק" },
+  { id: 23, src: "/סמאש קייק/לאתר9 copy.jpg", category: "סמאש קייק" },
+  { id: 24, src: "/סמאש קייק/לאתר 10.jpg", category: "סמאש קייק" },
 ];
 
 export default function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
@@ -150,8 +152,8 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
 
         <h1 className="text-5xl md:text-6xl font-light mb-16 tracking-widest">{categoryNames[decodedCategory] || decodedCategory}</h1>
 
-        <section className="mb-32 w-full max-w-7xl mx-auto px-4">
-          <motion.div layout className="columns-1 md:columns-2 lg:columns-3 gap-8 w-full space-y-8">
+        <section className="mb-16 w-full max-w-7xl mx-auto px-2">
+          <motion.div layout className="columns-1 md:columns-2 lg:columns-3 gap-3 w-full space-y-3">
             <AnimatePresence mode="popLayout">
               {filteredImages.map((img, index) => (
                 <motion.div

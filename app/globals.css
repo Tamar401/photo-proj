@@ -50,3 +50,21 @@ body {
 
 /* subtle focus outline for accessibility */
 :focus{ outline: 2px solid rgba(35,213,226,0.12); outline-offset: 3px; }
+
+/* Background size utility for gradient animation */
+.bg-size-200 {
+  background-size: 200% 100%;
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  animation: gradient-shift 3s ease infinite;
+}

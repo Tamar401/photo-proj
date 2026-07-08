@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const categories = [
   { id: "משפחה", name: "משפחה", image: "/משפחה/ארי 2 ביצהה.jpg" },
-  { id: "ניו בורן", name: "ניו בורן", image: "/משפחה/לתמר.jpg" },
+  { id: "ניו בורן", name: "ניו בורן", image: "/ניו בורן/12311-Edit.jpg" },
   { id: "סמאש קייק", name: "סמאש קייק", image: "/סמאש קייק/לאתר6 copy.jpg" },
 ];
 
