@@ -251,6 +251,108 @@ export default function Home() {
         </div>
       </header>
 
+      {/* Floating Images & Words Section */}
+      <section className="w-full py-32 bg-[#f8f8f8] relative overflow-hidden">
+        
+        {/* Decorative curve at top */}
+        <svg className="absolute top-0 left-0 right-0 w-full h-12 text-[#fff4fb]" preserveAspectRatio="none" viewBox="0 0 1440 100" fill="currentColor">
+          <path d="M0,50 Q360,0 720,50 T1440,50 L1440,100 L0,100 Z"/>
+        </svg>
+
+        <div className="max-w-full px-6 relative z-10 pt-12">
+          
+          {/* Row 1 - moving right */}
+          <div className="mb-20 flex gap-4 overflow-hidden">
+            <motion.div
+              animate={{ x: [0, -1000] }}
+              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+              className="flex gap-4 flex-shrink-0"
+            >
+              {[...Array(2)].map((_, setIdx) => (
+                <div key={setIdx} className="flex gap-4">
+                  <img src="/משפחה/1.jpg" alt="gallery" className="w-40 h-40 rounded-2xl object-cover opacity-40 flex-shrink-0" />
+                  <img src="/משפחה/ארי 2 ביצהה.jpg" alt="gallery" className="w-40 h-40 rounded-2xl object-cover opacity-40 flex-shrink-0" />
+                  <img src="/משפחה/גולדשטוף 2.jpg" alt="gallery" className="w-40 h-40 rounded-2xl object-cover opacity-40 flex-shrink-0" />
+                  <img src="/משפחה/חיים (1).jpg" alt="gallery" className="w-40 h-40 rounded-2xl object-cover opacity-40 flex-shrink-0" />
+                  <img src="/משפחה/לאתר 2.jpg" alt="gallery" className="w-40 h-40 rounded-2xl object-cover opacity-40 flex-shrink-0" />
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Row 2 - moving left */}
+          <div className="mb-20 flex gap-4 overflow-hidden">
+            <motion.div
+              animate={{ x: [0, 1000] }}
+              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+              className="flex gap-4 flex-shrink-0"
+            >
+              {[...Array(2)].map((_, setIdx) => (
+                <div key={setIdx} className="flex gap-4">
+                  <img src="/סמאש קייק/לאתר6 copy.jpg" alt="gallery" className="w-40 h-40 rounded-2xl object-cover opacity-40 flex-shrink-0" />
+                  <img src="/סמאש קייק/לאתר8 copy.jpg" alt="gallery" className="w-40 h-40 rounded-2xl object-cover opacity-40 flex-shrink-0" />
+                  <img src="/סמאש קייק/לאתר9 copy.jpg" alt="gallery" className="w-40 h-40 rounded-2xl object-cover opacity-40 flex-shrink-0" />
+                  <img src="/משפחה/לתמר.jpg" alt="gallery" className="w-40 h-40 rounded-2xl object-cover opacity-40 flex-shrink-0" />
+                  <img src="/משפחה/קולדצקי ראשון.jpg" alt="gallery" className="w-40 h-40 rounded-2xl object-cover opacity-40 flex-shrink-0" />
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Row 3 - moving right */}
+          <div className="flex gap-4 overflow-hidden">
+            <motion.div
+              animate={{ x: [0, -1000] }}
+              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+              className="flex gap-4 flex-shrink-0"
+            >
+              {[...Array(2)].map((_, setIdx) => (
+                <div key={setIdx} className="flex gap-4">
+                  <img src="/משפחה/לתמר1.jpg" alt="gallery" className="w-40 h-40 rounded-2xl object-cover opacity-40 flex-shrink-0" />
+                  <img src="/משפחה/ניסןי copy.jpg" alt="gallery" className="w-40 h-40 rounded-2xl object-cover opacity-40 flex-shrink-0" />
+                  <img src="/משפחה/קולדצקי10 copy.jpg" alt="gallery" className="w-40 h-40 rounded-2xl object-cover opacity-40 flex-shrink-0" />
+                  <img src="/משפחה/קולדצקי12222.jpg" alt="gallery" className="w-40 h-40 rounded-2xl object-cover opacity-40 flex-shrink-0" />
+                  <img src="/משפחה/שני ותמר שני.jpg" alt="gallery" className="w-40 h-40 rounded-2xl object-cover opacity-40 flex-shrink-0" />
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+        </div>
+
+        {/* Decorative curve at bottom */}
+        <svg className="absolute bottom-0 left-0 right-0 w-full h-12 text-[#fff4fb]" preserveAspectRatio="none" viewBox="0 0 1440 100" fill="currentColor">
+          <path d="M0,50 Q360,100 720,50 T1440,50 L1440,0 L0,0 Z"/>
+        </svg>
+
+      </section>
+
+      {/* Words Section */}
+      <section className="w-full py-20 bg-[#fff4fb] relative overflow-hidden">
+        <div className="max-w-5xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="flex gap-8 justify-center items-center flex-wrap"
+          >
+            {['התרגשות', 'טוהר', 'חוויה', 'שמחה', 'אמת', 'רגש', 'יופי', 'קסם'].map((word, idx) => (
+              <motion.span
+                key={word}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: idx * 0.1 }}
+                className="text-2xl md:text-3xl font-light text-[#ffb4d8]"
+              >
+                {word}
+              </motion.span>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
       <section className="w-full px-6 md:px-24 py-20 bg-[#f8f8f8] text-[#331a34]">
         <div className="max-w-5xl mx-auto text-center">
           <div className="w-full flex justify-center mt-4 mb-6">
@@ -327,16 +429,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Gallery removed from homepage — moved to /gallery */}
-      <div className="w-full px-6 md:px-24 pt-8 pb-12 relative z-30 bg-[#f8f8f8] flex flex-col items-center">
-        <footer className="border-t border-pink-100 pt-12 pb-8 flex flex-col md:flex-row justify-between items-center text-xs tracking-widest text-[#7e5b7b] gap-4 w-full max-w-5xl mx-auto">
-          <p>© תמר יגלניק </p>
-          <div className="flex gap-8 font-light">
-            <a href="https://wa.me/972500000000" target="_blank" rel="noopener noreferrer" className="hover:text-[#c24f8d] transition-colors duration-300">WHATSAPP</a>
-            <a href="mailto:info@example.com" className="hover:text-[#c24f8d] transition-colors duration-300">EMAIL</a>
-          </div>
-        </footer>
-      </div>
+
     </main>
   );
 }

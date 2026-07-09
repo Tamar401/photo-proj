@@ -71,9 +71,6 @@ export default function GalleryPage() {
           ))}
         </div>
 
-        <footer className="border-t border-pink-100 pt-12 pb-8 w-full max-w-5xl mx-auto text-xs text-[#7e5b7b]">
-         <p>© תמר יגלניק </p>
-        </footer>
       </div>
     </main>
   );

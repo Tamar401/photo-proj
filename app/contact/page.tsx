@@ -130,30 +130,18 @@ export default function ContactPage() {
             </motion.a>
           </motion.div>
 
-          {/* מחיצה */}
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex items-center gap-4 mb-12 max-w-2xl mx-auto"
-          >
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-pink-300 to-transparent" />
-            <span className="text-sm text-[#7e5b7b] font-light">או שלחו הודעה</span>
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-pink-300 to-transparent" />
-          </motion.div>
-
           {/* טופס */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-            className="bg-white/50 backdrop-blur-sm rounded-3xl shadow-xl border border-pink-200/50 p-8 md:p-12 max-w-2xl mx-auto"
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="max-w-2xl mx-auto w-full"
           >
             <form onSubmit={handleSubmit} className="space-y-6">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.8 }}
+                transition={{ duration: 0.5, delay: 0.7 }}
               >
                 <label className="block text-sm font-medium text-[#5d3a59] mb-2 text-right">שם מלא *</label>
                 <motion.input
@@ -161,9 +149,26 @@ export default function ContactPage() {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  whileFocus={{ scale: 1.01 }}
-                  className="w-full p-4 rounded-xl border-2 border-pink-200/70 focus:border-pink-400 focus:ring-2 focus:ring-pink-200/50 transition-all duration-300 bg-white/80 text-right text-[#331a34] placeholder-pink-300/70"
+                  whileFocus={{ borderColor: "#ffb4d8" }}
+                  className="w-full p-3 rounded-lg border border-pink-200 focus:border-pink-400 focus:outline-none transition-all duration-300 bg-white text-right text-[#331a34] placeholder-pink-300"
                   placeholder="הכניסו את שמכם המלא"
+                />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.8 }}
+              >
+                <label className="block text-sm font-medium text-[#5d3a59] mb-2 text-right">אימייל *</label>
+                <motion.input
+                  required
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  whileFocus={{ borderColor: "#ffb4d8" }}
+                  className="w-full p-3 rounded-lg border border-pink-200 focus:border-pink-400 focus:outline-none transition-all duration-300 bg-white text-right text-[#331a34] placeholder-pink-300"
+                  placeholder="example@email.com"
                 />
               </motion.div>
 
@@ -172,15 +177,14 @@ export default function ContactPage() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.9 }}
               >
-                <label className="block text-sm font-medium text-[#5d3a59] mb-2 text-right">אימייל *</label>
+                <label className="block text-sm font-medium text-[#5d3a59] mb-2 text-right">טלפון (אופציונלי)</label>
                 <motion.input
-                  required
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  whileFocus={{ scale: 1.01 }}
-                  className="w-full p-4 rounded-xl border-2 border-pink-200/70 focus:border-pink-400 focus:ring-2 focus:ring-pink-200/50 transition-all duration-300 bg-white/80 text-right text-[#331a34] placeholder-pink-300/70"
-                  placeholder="example@email.com"
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  whileFocus={{ borderColor: "#ffb4d8" }}
+                  className="w-full p-3 rounded-lg border border-pink-200 focus:border-pink-400 focus:outline-none transition-all duration-300 bg-white text-right text-[#331a34] placeholder-pink-300"
+                  placeholder="050-1234567"
                 />
               </motion.div>
 
@@ -189,30 +193,14 @@ export default function ContactPage() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 1.0 }}
               >
-                <label className="block text-sm font-medium text-[#5d3a59] mb-2 text-right">טלפון (אופציונלי)</label>
-                <motion.input
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  whileFocus={{ scale: 1.01 }}
-                  className="w-full p-4 rounded-xl border-2 border-pink-200/70 focus:border-pink-400 focus:ring-2 focus:ring-pink-200/50 transition-all duration-300 bg-white/80 text-right text-[#331a34] placeholder-pink-300/70"
-                  placeholder="050-1234567"
-                />
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 1.1 }}
-              >
                 <label className="block text-sm font-medium text-[#5d3a59] mb-2 text-right">ההודעה שלכם *</label>
                 <motion.textarea
                   required
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  whileFocus={{ scale: 1.01 }}
-                  rows={6}
-                  className="w-full p-4 rounded-xl border-2 border-pink-200/70 focus:border-pink-400 focus:ring-2 focus:ring-pink-200/50 transition-all duration-300 bg-white/80 resize-none text-right text-[#331a34] placeholder-pink-300/70"
+                  whileFocus={{ borderColor: "#ffb4d8" }}
+                  rows={5}
+                  className="w-full p-3 rounded-lg border border-pink-200 focus:border-pink-400 focus:outline-none transition-all duration-300 bg-white resize-none text-right text-[#331a34] placeholder-pink-300"
                   placeholder="ספרו לי על הצילום שתרצו..."
                 />
               </motion.div>
@@ -221,29 +209,29 @@ export default function ContactPage() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 1.2 }}
+                transition={{ duration: 0.5, delay: 1.1 }}
                 className="pt-2"
               >
                 <motion.button
                   type="submit"
                   disabled={status === "sending"}
-                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full bg-[#ffb4d8] hover:bg-[#ff9ecb] text-white font-semibold py-5 px-8 rounded-2xl shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+                  className="w-full bg-[#ffb4d8] hover:bg-[#ff9ecb] text-white font-semibold py-4 px-8 rounded-lg shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
                 >
-                  <span className="flex items-center justify-center gap-3 text-lg">
+                  <span className="flex items-center justify-center gap-3 text-base">
                     {status === "sending" ? (
                       <>
                         <motion.div
                           animate={{ rotate: 360 }}
                           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                          className="w-5 h-5 border-3 border-white border-t-transparent rounded-full"
+                          className="w-4 h-4 border-2 border-white border-t-transparent rounded-full"
                         />
                         שולח הודעה...
                       </>
                     ) : (
                       <>
-                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                         </svg>
                         שלחו הודעה
@@ -260,20 +248,14 @@ export default function ContactPage() {
                     initial={{ opacity: 0, y: -10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    className="bg-green-50 border-2 border-green-300 text-green-800 px-6 py-4 rounded-2xl flex items-center gap-3 shadow-md"
+                    className="bg-green-50 border border-green-300 text-green-800 px-4 py-3 rounded-lg flex items-center gap-3 shadow-sm"
                   >
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: "spring", stiffness: 500, delay: 0.1 }}
-                    >
-                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </motion.div>
+                    <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                     <div className="text-right flex-1">
-                      <div className="font-semibold">ההודעה נשלחה בהצלחה!</div>
-                      <div className="text-sm opacity-80">אחזור אליכם בהקדם 💝</div>
+                      <div className="font-semibold text-sm">ההודעה נשלחה בהצלחה!</div>
+                      <div className="text-xs opacity-80">אחזור אליכם בהקדם</div>
                     </div>
                   </motion.div>
                 )}
@@ -283,14 +265,14 @@ export default function ContactPage() {
                     initial={{ opacity: 0, y: -10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    className="bg-red-50 border-2 border-red-300 text-red-800 px-6 py-4 rounded-2xl flex items-center gap-3 shadow-md"
+                    className="bg-red-50 border border-red-300 text-red-800 px-4 py-3 rounded-lg flex items-center gap-3 shadow-sm"
                   >
-                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <div className="text-right flex-1">
-                      <div className="font-semibold">אופס! משהו השתבש</div>
-                      <div className="text-sm opacity-80">{errorText}</div>
+                      <div className="font-semibold text-sm">אופס! משהו השתבש</div>
+                      <div className="text-xs opacity-80">{errorText}</div>
                     </div>
                   </motion.div>
                 )}
@@ -299,15 +281,6 @@ export default function ContactPage() {
           </motion.div>
 
         </div>
-
-        {/* Footer */}
-        <footer className="border-t border-pink-100 pt-12 pb-8 mt-16 w-full max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center text-xs tracking-widest text-[#7e5b7b] gap-4">
-          <p>© תמר יגלניק </p>
-          <div className="flex gap-8 font-light">
-            <a href="https://wa.me/972500000000" target="_blank" rel="noopener noreferrer" className="hover:text-[#c24f8d] transition-colors duration-300">WHATSAPP</a>
-            <a href="mailto:r0527149555@gmail.com" className="hover:text-[#c24f8d] transition-colors duration-300">EMAIL</a>
-          </div>
-        </footer>
       </div>
     </main>
   );

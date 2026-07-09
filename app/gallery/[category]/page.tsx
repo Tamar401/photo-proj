@@ -23,12 +23,21 @@ const initialImages = [
   { id: 16, src: "/משפחה/קולדצקי222 עם ביצה.jpg", category: "משפחה" },
   { id: 17, src: "/משפחה/שלמה   עע חתוך טוב copy.jpg", category: "משפחה" },
   { id: 18, src: "/משפחה/שני ותמר שני.jpg", category: "משפחה" },
-  { id: 19, src: "/ניו בורן/12311-Edit.jpg", category: "ניו בורן" },
-  { id: 20, src: "/ניו בורן/12315-Edit (1).jpg", category: "ניו בורן" },
-  { id: 21, src: "/סמאש קייק/לאתר6 copy.jpg", category: "סמאש קייק" },
-  { id: 22, src: "/סמאש קייק/לאתר8 copy.jpg", category: "סמאש קייק" },
-  { id: 23, src: "/סמאש קייק/לאתר9 copy.jpg", category: "סמאש קייק" },
-  { id: 24, src: "/סמאש קייק/לאתר 10.jpg", category: "סמאש קייק" },
+  { id: 19, src: "/ניו בורן/0P7A5441-Edit.jpg", category: "ניו בורן" },
+  { id: 20, src: "/ניו בורן/12311-Edit.jpg", category: "ניו בורן" },
+  { id: 21, src: "/ניו בורן/12315-Edit (1).jpg", category: "ניו בורן" },
+  { id: 22, src: "/סמאש קייק/לאתר6 copy.jpg", category: "סמאש קייק" },
+  { id: 23, src: "/סמאש קייק/לאתר8 copy.jpg", category: "סמאש קייק" },
+  { id: 24, src: "/סמאש קייק/לאתר9 copy.jpg", category: "סמאש קייק" },
+  { id: 25, src: "/סמאש קייק/לאתר 10.jpg", category: "סמאש קייק" },
+  { id: 26, src: "/סמאש קייק/לאתר 10.jpg", category: "סמאש קייק" },
+  { id: 27, src: "/סמאש קייק/לאתר 10.jpg", category: "סמאש קייק" },
+  { id: 28, src: "/סמאש קייק/לאתר 10.jpg", category: "סמאש קייק" },
+  { id: 29, src: "/סמאש קייק/לאתר 10.jpg", category: "סמאש קייק" },
+  { id: 30, src: "/סמאש קייק/לאתר 10.jpg", category: "סמאש קייק" },
+  { id: 31, src: "/סמאש קייק/לאתר 10.jpg", category: "סמאש קייק" },
+  { id: 32, src: "/סמאש קייק/לאתר 10.jpg", category: "סמאש קייק" },
+
 ];
 
 export default function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
@@ -174,9 +183,6 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
           </motion.div>
         </section>
 
-        <footer className="border-t border-pink-100 pt-12 pb-8 w-full max-w-5xl mx-auto text-xs text-[#7e5b7b]">
-          © 2026  לרחלי חלופסקי
-        </footer>
       </div>
     </main>
   );

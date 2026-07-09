@@ -164,15 +164,6 @@ export default function AboutPage() {
           </motion.div>
 
         </div>
-
-        {/* Footer */}
-        <footer className="border-t border-pink-100 pt-12 pb-8 mt-20 w-full max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center text-xs tracking-widest text-[#7e5b7b] gap-4">
-          <p>© תמר יגלניק </p>
-          <div className="flex gap-8 font-light">
-            <a href="https://wa.me/972500000000" target="_blank" rel="noopener noreferrer" className="hover:text-[#c24f8d] transition-colors duration-300">WHATSAPP</a>
-            <a href="mailto:r0527149555@gmail.com" className="hover:text-[#c24f8d] transition-colors duration-300">EMAIL</a>
-          </div>
-        </footer>
       </div>
     </main>
   );
