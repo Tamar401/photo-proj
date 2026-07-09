@@ -264,7 +264,7 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-3xl md:text-4xl font-light text-[#ffb4d8] mb-8 tracking-wide"
           >
-            נעים להכיר!
+            !נעים להכיר
           </motion.h2>
 
           {/* "רחלי חלופסקי" - outline style */}
@@ -295,9 +295,25 @@ export default function Home() {
             מלמד אותי להסתכל בעיניים הפתוחות ולתפוס את ההיפ האמתית של החיים.
             <br />
             <br />
-            אני מאמינה שבכל רגע יש קסם - בחיוך של ילד, בנשיקה של זוג, בטבע שמסביב לנו. 
+            אני מאמינה שבכל רגע יש קסם - בחיוך של ילד,  בטבע שמסביב לנו. 
             העבודה שלי היא להשמר ולהישמור על הרגעים האלה לנצח.
           </motion.p>
+
+          {/* Gallery Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="mt-12"
+          >
+            <a
+              href="/gallery"
+              className="inline-block px-10 py-4 bg-[#ffb4d8] text-white font-light text-lg tracking-wide rounded-full hover:bg-[#ff9ac6] transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105"
+            >
+              לצפות בגלריה
+            </a>
+          </motion.div>
 
         </div>
       </section>
