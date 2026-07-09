@@ -298,6 +298,7 @@ export default function Home() {
             העבודה שלי היא להשמר ולהישמור על הרגעים האלה לנצח.
           </motion.p>
 
+
           {/* Gallery Button */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
