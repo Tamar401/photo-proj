@@ -168,9 +168,9 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
                 <motion.div
                   layout
                   key={img.id}
-                  initial={{ opacity: 0, scale: 0.8, blur: 10 }}
-                  animate={{ opacity: 1, scale: 1, blur: 0 }}
-                  exit={{ opacity: 0, scale: 0.8, blur: 10 }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ 
                     duration: 0.6, 
                     ease: "easeInOut",
