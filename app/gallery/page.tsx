@@ -44,18 +44,23 @@ export default function GalleryPage() {
       <div className="w-full px-6 md:px-24 pt-12 pb-12 relative z-30 bg-[#fff4fb] flex flex-col items-center" style={{ marginTop: '-40px', borderRadius: '40px 40px 0 0' }}>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 w-full max-w-5xl mx-auto">
-          {categories.map((category) => (
+          {categories.map((category, index) => (
             <Link key={category.id} href={`/gallery/${category.id}`}>
               <motion.div
                 className="relative overflow-hidden rounded-2xl cursor-pointer group"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.1 }}
                 whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
               >
                 <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
-                  <img
+                  <motion.img
                     src={category.image}
                     alt={category.name}
                     className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 

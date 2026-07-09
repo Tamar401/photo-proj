@@ -168,15 +168,28 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
                 <motion.div
                   layout
                   key={img.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  initial={{ opacity: 0, scale: 0.8, blur: 10 }}
+                  animate={{ opacity: 1, scale: 1, blur: 0 }}
+                  exit={{ opacity: 0, scale: 0.8, blur: 10 }}
+                  transition={{ 
+                    duration: 0.6, 
+                    ease: "easeInOut",
+                    delay: (index % 12) * 0.05
+                  }}
                   whileHover={{ y: -8 }}
                   onClick={() => setSelectedIndex(index)}
-                  className="relative overflow-hidden rounded-md bg-[#f5f5f5] group cursor-pointer shadow-[0_35px_70px_-30px_rgba(215,127,175,0.2)] break-inside-avoid" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,180,216,0.15) 1px, transparent 0)', backgroundSize: '20px 20px' }}
+                  className="relative overflow-hidden rounded-md bg-gradient-to-br from-[#f5f5f5] to-[#efefef] group cursor-pointer shadow-[0_35px_70px_-30px_rgba(215,127,175,0.2)] break-inside-avoid" 
+                  style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,180,216,0.15) 1px, transparent 0)', backgroundSize: '20px 20px' }}
                 >
-                  <img src={img.src} alt={img.category} className="w-full h-auto object-contain transition-transform duration-1000 ease-out group-hover:scale-105" loading="lazy" />
+                  <motion.img 
+                    src={img.src} 
+                    alt={img.category} 
+                    className="w-full h-auto object-contain transition-transform duration-1000 ease-out group-hover:scale-105" 
+                    loading="lazy"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                  />
                 </motion.div>
               ))}
             </AnimatePresence>
