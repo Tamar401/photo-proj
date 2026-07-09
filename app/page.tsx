@@ -276,9 +276,8 @@ export default function Home() {
             className="text-5xl md:text-6xl font-light mb-8 tracking-widest"
             style={{
               color: 'transparent',
-              WebkitTextStroke: '2px #ffb4d8',
-              textStroke: '2px #ffb4d8'
-            }}
+              WebkitTextStroke: '2px #ffb4d8'
+            } as any}
           >
             רחלי חלופסקי
           </motion.h3>
@@ -311,7 +310,7 @@ export default function Home() {
               href="/gallery"
               className="inline-block px-10 py-4 bg-[#ffb4d8] text-white font-light text-lg tracking-wide rounded-full hover:bg-[#ff9ac6] transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105"
             >
-              לצפות בגלריה
+              לגלריה
             </a>
           </motion.div>
 
