@@ -48,25 +48,9 @@ body {
 
 .underline-accent{ height:2px; background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3)); display:block }
 
-/* subtle focus outline for accessibility */
-:focus { 
-  outline: 2px solid #ffb4d8; 
-  outline-offset: 3px; 
-}
-
-/* Remove default focus ring on all elements */
-*:focus-visible {
-  outline: 2px solid #ffb4d8;
-  outline-offset: 3px;
-}
-
-/* Remove turquoise colors from selection and active states */
-*::selection {
-  background-color: #ffb4d8;
-  color: white;
-}
-
-/* Remove default button focus and active states */
+/* Remove all focus outlines */
+:focus,
+*:focus-visible,
 button:focus,
 button:active,
 input:focus,
@@ -76,20 +60,14 @@ textarea:active,
 select:focus,
 select:active,
 a:focus,
-a:active {
-  outline: 2px solid #ffb4d8;
-  outline-offset: 2px;
-}
-
-/* Remove webkit focus styles */
+a:active,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible,
 a:focus-visible {
-  outline: 2px solid #ffb4d8;
-  outline-offset: 2px;
-  box-shadow: none;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 /* Background size utility for gradient animation */
