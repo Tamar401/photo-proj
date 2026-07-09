@@ -251,73 +251,55 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Floating Images & Words Section */}
-      <section className="w-full py-32 bg-[#f8f8f8] relative overflow-hidden">
-        
-        <div className="max-w-full relative z-10">
+
+
+      <section className="w-full px-6 md:px-24 py-20 bg-[#f8f8f8] text-[#331a34]">
+        <div className="max-w-5xl mx-auto text-center">
           
-          {/* Words Floating Above */}
-          <div className="absolute top-12 left-1/2 transform -translate-x-1/2 w-full pointer-events-none">
-            <div className="flex gap-12 justify-center items-center flex-wrap px-12">
-              {['התרגשות', 'טוהר', 'חוויה', 'שמחה', 'אמת', 'רגש', 'יופי', 'קסם'].map((word, idx) => (
-                <motion.span
-                  key={word}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: idx * 0.1 }}
-                  className="text-2xl md:text-3xl font-light text-[#ffb4d8] drop-shadow-lg whitespace-nowrap"
-                >
-                  {word}
-                </motion.span>
-              ))}
-            </div>
-          </div>
+          {/* "נעים להכיר!" */}
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-3xl md:text-4xl font-light text-[#ffb4d8] mb-8 tracking-wide"
+          >
+            נעים להכיר!
+          </motion.h2>
 
-          {/* Row 1 - diagonal right, top position */}
-          <div className="py-12 overflow-hidden" style={{ marginLeft: '0', marginRight: '0' }}>
-            <div className="flex gap-0 flex-shrink-0" style={{ transform: 'skewY(-3deg)' }}>
-              {[...Array(4)].map((_, setIdx) => (
-                <div key={setIdx} className="flex gap-0">
-                  <img src="/משפחה/1.jpg" alt="gallery" className="w-48 h-40 object-cover opacity-50 flex-shrink-0" />
-                  <img src="/משפחה/ארי 2 ביצהה.jpg" alt="gallery" className="w-48 h-40 object-cover opacity-50 flex-shrink-0" />
-                  <img src="/משפחה/גולדשטוף 2.jpg" alt="gallery" className="w-48 h-40 object-cover opacity-50 flex-shrink-0" />
-                  <img src="/משפחה/חיים (1).jpg" alt="gallery" className="w-48 h-40 object-cover opacity-50 flex-shrink-0" />
-                </div>
-              ))}
-            </div>
-          </div>
+          {/* "רחלי חלופסקי" - outline style */}
+          <motion.h3
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-5xl md:text-6xl font-light mb-8 tracking-widest"
+            style={{
+              color: 'transparent',
+              WebkitTextStroke: '2px #ffb4d8',
+              textStroke: '2px #ffb4d8'
+            }}
+          >
+            רחלי חלופסקי
+          </motion.h3>
 
-          {/* Row 2 - diagonal left */}
-          <div className="py-12 overflow-hidden -ml-24">
-            <div className="flex gap-0 flex-shrink-0" style={{ transform: 'skewY(3deg)' }}>
-              {[...Array(4)].map((_, setIdx) => (
-                <div key={setIdx} className="flex gap-0">
-                  <img src="/סמאש קייק/לאתר6 copy.jpg" alt="gallery" className="w-48 h-40 object-cover opacity-50 flex-shrink-0" />
-                  <img src="/סמאש קייק/לאתר8 copy.jpg" alt="gallery" className="w-48 h-40 object-cover opacity-50 flex-shrink-0" />
-                  <img src="/סמאש קייק/לאתר9 copy.jpg" alt="gallery" className="w-48 h-40 object-cover opacity-50 flex-shrink-0" />
-                  <img src="/משפחה/לתמר.jpg" alt="gallery" className="w-48 h-40 object-cover opacity-50 flex-shrink-0" />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Row 3 - diagonal right */}
-          <div className="py-12 overflow-hidden ml-12">
-            <div className="flex gap-0 flex-shrink-0" style={{ transform: 'skewY(-3deg)' }}>
-              {[...Array(4)].map((_, setIdx) => (
-                <div key={setIdx} className="flex gap-0">
-                  <img src="/משפחה/לתמר1.jpg" alt="gallery" className="w-48 h-40 object-cover opacity-50 flex-shrink-0" />
-                  <img src="/משפחה/ניסןי copy.jpg" alt="gallery" className="w-48 h-40 object-cover opacity-50 flex-shrink-0" />
-                  <img src="/משפחה/קולדצקי10 copy.jpg" alt="gallery" className="w-48 h-40 object-cover opacity-50 flex-shrink-0" />
-                  <img src="/משפחה/קולדצקי12222.jpg" alt="gallery" className="w-48 h-40 object-cover opacity-50 flex-shrink-0" />
-                </div>
-              ))}
-            </div>
-          </div>
+          {/* About text */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-lg md:text-xl leading-8 text-[#5d3a59] max-w-3xl mx-auto"
+          >
+            אני צלמת המתמחה בתיעוד רגעים אמתיים ועמוקים. כל תצלום הוא סיפור של רגש וחום, 
+            מלמד אותי להסתכל בעיניים הפתוחות ולתפוס את ההיפ האמתית של החיים.
+            <br />
+            <br />
+            אני מאמינה שבכל רגע יש קסם - בחיוך של ילד, בנשיקה של זוג, בטבע שמסביב לנו. 
+            העבודה שלי היא להשמר ולהישמור על הרגעים האלה לנצח.
+          </motion.p>
 
         </div>
-
       </section>
 
       <section className="w-full px-6 md:px-24 py-20 bg-[#f8f8f8] text-[#331a34]">
