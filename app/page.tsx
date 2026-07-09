@@ -317,6 +317,83 @@ export default function Home() {
         </div>
       </section>
 
+      {/* What I Photograph Section */}
+      <section className="w-full px-6 md:px-24 py-20 bg-white text-[#331a34]">
+        <div className="max-w-6xl mx-auto">
+          
+          {/* Section Title */}
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-4xl md:text-5xl font-light text-center mb-16 text-[#ffb4d8]"
+          >
+            מה אני מצלמת
+          </motion.h2>
+
+          {/* Categories Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            {/* Category 1 - Family */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="group cursor-pointer"
+            >
+              <div className="relative overflow-hidden rounded-lg mb-4 h-48 md:h-56">
+                <img 
+                  src="/משפחה/1.jpg" 
+                  alt="צילומי משפחה" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <h3 className="text-xl font-light text-center text-[#5d3a59]">צילומי משפחה</h3>
+            </motion.div>
+
+            {/* Category 2 - Newborn */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="group cursor-pointer"
+            >
+              <div className="relative overflow-hidden rounded-lg mb-4 h-48 md:h-56">
+                <img 
+                  src="/ניו בורן/0P7A5441-Edit.jpg" 
+                  alt="צילומי ניו בורן" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <h3 className="text-xl font-light text-center text-[#5d3a59]">צילומי ניו בורן</h3>
+            </motion.div>
+
+            {/* Category 3 - Smash Cake */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="group cursor-pointer"
+            >
+              <div className="relative overflow-hidden rounded-lg mb-4 h-48 md:h-56">
+                <img 
+                  src="/סמאש קייק/לאתר6 copy.jpg" 
+                  alt="צילומי סמאש קייק" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <h3 className="text-xl font-light text-center text-[#5d3a59]">צילומי סמאש קייק</h3>
+            </motion.div>
+
+          </div>
+
+        </div>
+      </section>
+
       <section className="w-full px-6 md:px-24 py-20 bg-[#f8f8f8] text-[#331a34]">
         <div className="max-w-5xl mx-auto text-center">
           <div className="w-full flex justify-center mt-4 mb-6">
