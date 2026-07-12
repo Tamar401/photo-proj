@@ -40,6 +40,75 @@ const initialImages = [
   { id: 32, src: "/סמאש קייק/לאתר 10.jpg", category: "סמאש קייק" },
 ];
 
+const lightboxVariants = {
+  enter: (direction: number) => ({ opacity: 0, x: direction > 0 ? 20 : -20 }),
+  center: { opacity: 1, x: 0 },
+  exit: (direction: number) => ({ opacity: 0, x: direction > 0 ? -20 : 20 }),
+};
+
+const categoryNames: Record<string, string> = {
+  "משפחה": "משפחה",
+  "ניו בורן": "ניו בורן",
+  "סמאש קייק": "סמאש קייק",
+};
+
+// רכיב התמונה הוצא אל מחוץ לפונקציה הראשית כדי למנוע טעינה כפולה
+const LazyImageCard = ({ img, index, onClick }: any) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+        observer.disconnect(); 
+      }
+    }, { rootMargin: "200px" });
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const cardVariants = {
+    hidden: { opacity: 0, scale: 0.9, y: 15 },
+    visible: { opacity: 1, scale: 1, y: 0 },
+  };
+
+  const cardTransition = { 
+    duration: 1.0, 
+    ease: [0.16, 1, 0.3, 1],
+    delay: (index % 6) * 0.08 
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={isLoaded ? "visible" : "hidden"}
+      variants={cardVariants}
+      transition={cardTransition}
+      exit="hidden"
+      whileHover={isLoaded ? { y: -4 } : {}}
+      onClick={onClick}
+      className="relative overflow-hidden rounded-lg bg-[#f5f5f5] group cursor-pointer shadow-md hover:shadow-lg transition-shadow duration-300 break-inside-avoid w-full mb-3"
+    >
+      {isVisible && (
+        <Image
+          src={img.src}
+          alt={img.category}
+          width={0}
+          height={0}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          style={{ width: '100%', height: 'auto' }}
+          onLoad={() => setIsLoaded(true)}
+          className={`transition-transform duration-1000 ease-out group-hover:scale-105 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+        />
+      )}
+    </motion.div>
+  );
+};
+
 export default function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
   const { category } = use(params);
   const decodedCategory = decodeURIComponent(category);
@@ -85,74 +154,6 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
       setLightboxDirection(-1);
       setSelectedIndex((selectedIndex - 1 + filteredImages.length) % filteredImages.length);
     }
-  };
-
-  const lightboxVariants = {
-    enter: (direction: number) => ({ opacity: 0, x: direction > 0 ? 20 : -20 }),
-    center: { opacity: 1, x: 0 },
-    exit: (direction: number) => ({ opacity: 0, x: direction > 0 ? -20 : 20 }),
-  };
-
-  const categoryNames: Record<string, string> = {
-    "משפחה": "משפחה",
-    "ניו בורן": "ניו בורן",
-    "סמאש קייק": "סמאש קייק",
-  };
-
-  const LazyImageCard = ({ img, index, onClick }: any) => {
-    const ref = useRef<HTMLDivElement>(null);
-    const [isVisible, setIsVisible] = useState(false);
-    const [isLoaded, setIsLoaded] = useState(false);
-
-    useEffect(() => {
-      const observer = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect(); 
-        }
-      }, { rootMargin: "200px" });
-
-      if (ref.current) observer.observe(ref.current);
-      return () => observer.disconnect();
-    }, []);
-
-    const cardVariants = {
-      hidden: { opacity: 0, scale: 0.85, y: 20 },
-      visible: { opacity: 1, scale: 1, y: 0 },
-    };
-
-    const cardTransition = { 
-      duration: 1.2, 
-      ease: [0.16, 1, 0.3, 1],
-      delay: (index % 6) * 0.1 
-    };
-
-    return (
-      <motion.div
-        ref={ref}
-        initial="hidden"
-        animate={isLoaded ? "visible" : "hidden"}
-        variants={cardVariants}
-        transition={cardTransition}
-        exit="hidden"
-        whileHover={isLoaded ? { y: -6 } : {}}
-        onClick={onClick}
-        // aspect-square שומר על גודל קבוע ומונע קפיצות של התמונות בעמודה
-        className="relative overflow-hidden rounded-lg bg-[#f5f5f5] group cursor-pointer shadow-md hover:shadow-lg transition-shadow duration-300 break-inside-avoid w-full aspect-square"
-      >
-        {isVisible && (
-          <Image
-            src={img.src}
-            alt={img.category}
-            fill // ממלא את הקונטיינר הריבועי לחלוטין
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            onLoad={() => setIsLoaded(true)}
-            // object-cover מוודא שהתמונה לא מתעוותת אלא נחתכת יפה
-            className={`object-cover transition-transform duration-1000 ease-out group-hover:scale-105 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-          />
-        )}
-      </motion.div>
-    );
   };
 
   return (
@@ -235,7 +236,7 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
         <h1 className="text-5xl md:text-6xl font-light mb-16 tracking-widest">{categoryNames[decodedCategory] || decodedCategory}</h1>
 
         <section className="mb-16 w-full max-w-7xl mx-auto px-2 relative">
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-3 w-full space-y-3">
+          <div className="columns-1 md:columns-2 lg:columns-3 gap-3 w-full">
             {filteredImages.slice(0, displayCount).map((img, index) => (
               <LazyImageCard 
                 key={img.id}
