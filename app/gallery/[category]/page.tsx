@@ -77,7 +77,7 @@ const LazyImageCard = ({ img, index, onClick }: any) => {
 
   const cardTransition = { 
     duration: 1.0, 
-    ease: [0.16, 1, 0.3, 1],
+    ease: "easeInOut",
     delay: (index % 6) * 0.08 
   };
 
@@ -87,7 +87,7 @@ const LazyImageCard = ({ img, index, onClick }: any) => {
       initial="hidden"
       animate={isLoaded ? "visible" : "hidden"}
       variants={cardVariants}
-      transition={cardTransition}
+      transition={cardTransition as any}
       exit="hidden"
       whileHover={isLoaded ? { y: -4 } : {}}
       onClick={onClick}
