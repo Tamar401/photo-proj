@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect, use, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 const initialImages = [
   { id: 1, src: "/משפחה/1.jpg", category: "משפחה" },
@@ -37,7 +38,6 @@ const initialImages = [
   { id: 30, src: "/סמאש קייק/לאתר 10.jpg", category: "סמאש קייק" },
   { id: 31, src: "/סמאש קייק/לאתר 10.jpg", category: "סמאש קייק" },
   { id: 32, src: "/סמאש קייק/לאתר 10.jpg", category: "סמאש קייק" },
-
 ];
 
 export default function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
@@ -45,14 +45,31 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
   const decodedCategory = decodeURIComponent(category);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [lightboxDirection, setLightboxDirection] = useState(0);
+  
+  const [displayCount, setDisplayCount] = useState(9);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+
+  const filteredImages = initialImages.filter(img => img.category === decodedCategory);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setDisplayCount((prev) => Math.min(prev + 6, filteredImages.length));
+        }
+      },
+      { rootMargin: "400px" } 
+    );
+
+    if (loadMoreRef.current) observer.observe(loadMoreRef.current);
+    return () => observer.disconnect();
+  }, [filteredImages.length]);
 
   useEffect(() => {
     if (selectedIndex !== null) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "unset";
     return () => { document.body.style.overflow = "unset"; };
   }, [selectedIndex]);
-
-  const filteredImages = initialImages.filter(img => img.category === decodedCategory);
 
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -80,6 +97,62 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
     "משפחה": "משפחה",
     "ניו בורן": "ניו בורן",
     "סמאש קייק": "סמאש קייק",
+  };
+
+  const LazyImageCard = ({ img, index, onClick }: any) => {
+    const ref = useRef<HTMLDivElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect(); 
+        }
+      }, { rootMargin: "200px" });
+
+      if (ref.current) observer.observe(ref.current);
+      return () => observer.disconnect();
+    }, []);
+
+    const cardVariants = {
+      hidden: { opacity: 0, scale: 0.85, y: 20 },
+      visible: { opacity: 1, scale: 1, y: 0 },
+    };
+
+    const cardTransition = { 
+      duration: 1.2, 
+      ease: [0.16, 1, 0.3, 1],
+      delay: (index % 6) * 0.1 
+    };
+
+    return (
+      <motion.div
+        ref={ref}
+        initial="hidden"
+        animate={isLoaded ? "visible" : "hidden"}
+        variants={cardVariants}
+        transition={cardTransition}
+        exit="hidden"
+        whileHover={isLoaded ? { y: -6 } : {}}
+        onClick={onClick}
+        // aspect-square שומר על גודל קבוע ומונע קפיצות של התמונות בעמודה
+        className="relative overflow-hidden rounded-lg bg-[#f5f5f5] group cursor-pointer shadow-md hover:shadow-lg transition-shadow duration-300 break-inside-avoid w-full aspect-square"
+      >
+        {isVisible && (
+          <Image
+            src={img.src}
+            alt={img.category}
+            fill // ממלא את הקונטיינר הריבועי לחלוטין
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            onLoad={() => setIsLoaded(true)}
+            // object-cover מוודא שהתמונה לא מתעוותת אלא נחתכת יפה
+            className={`object-cover transition-transform duration-1000 ease-out group-hover:scale-105 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+          />
+        )}
+      </motion.div>
+    );
   };
 
   return (
@@ -161,39 +234,21 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
 
         <h1 className="text-5xl md:text-6xl font-light mb-16 tracking-widest">{categoryNames[decodedCategory] || decodedCategory}</h1>
 
-        <section className="mb-16 w-full max-w-7xl mx-auto px-2">
-          <motion.div layout className="columns-1 md:columns-2 lg:columns-3 gap-3 w-full space-y-3">
-            <AnimatePresence mode="popLayout">
-              {filteredImages.map((img, index) => (
-                <motion.div
-                  layout
-                  key={img.id}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ 
-                    duration: 0.6, 
-                    ease: "easeInOut",
-                    delay: (index % 12) * 0.05
-                  }}
-                  whileHover={{ y: -8 }}
-                  onClick={() => setSelectedIndex(index)}
-                  className="relative overflow-hidden rounded-md bg-gradient-to-br from-[#f5f5f5] to-[#efefef] group cursor-pointer shadow-[0_35px_70px_-30px_rgba(215,127,175,0.2)] break-inside-avoid" 
-                  style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,180,216,0.15) 1px, transparent 0)', backgroundSize: '20px 20px' }}
-                >
-                  <motion.img 
-                    src={img.src} 
-                    alt={img.category} 
-                    className="w-full h-auto object-contain transition-transform duration-1000 ease-out group-hover:scale-105" 
-                    loading="lazy"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
-                  />
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
+        <section className="mb-16 w-full max-w-7xl mx-auto px-2 relative">
+          <div className="columns-1 md:columns-2 lg:columns-3 gap-3 w-full space-y-3">
+            {filteredImages.slice(0, displayCount).map((img, index) => (
+              <LazyImageCard 
+                key={img.id}
+                img={img}
+                index={index}
+                onClick={() => setSelectedIndex(index)}
+              />
+            ))}
+          </div>
+          
+          {displayCount < filteredImages.length && (
+            <div ref={loadMoreRef} className="w-full h-20 absolute bottom-0 translate-y-full" />
+          )}
         </section>
 
       </div>
