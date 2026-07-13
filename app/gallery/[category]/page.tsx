@@ -44,9 +44,9 @@ const initialImages = [
 ];
 
 const lightboxVariants = {
-  enter: (direction: number) => ({ opacity: 0, x: direction > 0 ? 20 : -20 }),
-  center: { opacity: 1, x: 0 },
-  exit: (direction: number) => ({ opacity: 0, x: direction > 0 ? -20 : 20 }),
+  enter: { opacity: 0, scale: 1 },
+  center: { opacity: 1, scale: 1 },
+  exit: { opacity: 0, scale: 1 },
 };
 
 const categoryNames: Record<string, string> = {
@@ -184,6 +184,14 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
               >
                 <div className="relative rounded-[32px] bg-transparent shadow-none overflow-hidden">
 
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setSelectedIndex(null); }}
+                    className="absolute top-2 left-1/2 -translate-x-1/2 z-40 text-[#c94a8c] hover:text-[#a9296d] text-2xl cursor-pointer transition-colors font-light"
+                    aria-label="Close lightbox"
+                  >
+                    ✕
+                  </button>
+
                   <div className="absolute inset-x-0 top-0 z-30 flex items-center justify-center px-4 py-4">
                     <span className="text-[11px] uppercase tracking-[0.32em] text-[#331a34]/70">
                       {selectedIndex + 1} / {filteredImages.length}
@@ -191,20 +199,28 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
                   </div>
 
                   <div className="relative mx-auto w-full max-w-full" style={{ maxHeight: "calc(80vh - 100px)" }}>
-                    <AnimatePresence mode="wait">
+                    {/* תמונה קודמת - fade out */}
+                    {selectedIndex > 0 && (
                       <motion.img
-                        key={selectedIndex}
-                        custom={lightboxDirection}
-                        variants={lightboxVariants}
-                        initial="enter"
-                        animate="center"
-                        exit="exit"
-                        transition={{ duration: 0.4, ease: "easeInOut" }}
-                        src={filteredImages[selectedIndex].src}
-                        alt={filteredImages[selectedIndex].category}
-                        className="mx-auto max-w-full max-h-[calc(80vh-100px)] object-contain"
+                        src={filteredImages[selectedIndex - 1]?.src || filteredImages[selectedIndex].src}
+                        alt="previous"
+                        className="absolute mx-auto max-w-full max-h-[calc(80vh-100px)] object-contain inset-0"
+                        initial={{ opacity: 1 }}
+                        animate={{ opacity: 0 }}
+                        transition={{ duration: 0.7, ease: "easeInOut" }}
                       />
-                    </AnimatePresence>
+                    )}
+                    
+                    {/* תמונה חדשה - fade in */}
+                    <motion.img
+                      key={selectedIndex}
+                      src={filteredImages[selectedIndex].src}
+                      alt={filteredImages[selectedIndex].category}
+                      className="mx-auto max-w-full max-h-[calc(80vh-100px)] object-contain"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.7, ease: "easeInOut" }}
+                    />
 
                     <button
                       onClick={handlePrev}
