@@ -4,8 +4,9 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 
 const categories = [
-  { id: "משפחה", name: "משפחה", image: "/משפחה/ארי 2 ביצהה.jpg" },
+  { id: "משפחה", name: "משפחה", image: "/משפחה/לאתר 2.jpg" },
   { id: "ניו בורן", name: "ניו בורן", image: "/ניו בורן/12311-Edit.jpg" },
+  { id: "חלאקה", name: "חלאקה", image: "/חלאקה/קולדצקי ראשון.jpg" },
   { id: "סמאש קייק", name: "סמאש קייק", image: "/סמאש קייק/לאתר6 copy.jpg" },
 ];
 
@@ -43,7 +44,7 @@ export default function GalleryPage() {
 
       <div className="w-full px-6 md:px-24 pt-12 pb-12 relative z-30 bg-[#fff4fb] flex flex-col items-center" style={{ marginTop: '-40px', borderRadius: '40px 40px 0 0' }}>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 w-full max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16 w-full max-w-7xl mx-auto">
           {categories.map((category, index) => (
             <Link key={category.id} href={`/gallery/${category.id}`}>
               <motion.div

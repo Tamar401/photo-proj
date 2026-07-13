@@ -7,7 +7,7 @@ import Image from "next/image";
 
 const initialImages = [
   { id: 1, src: "/משפחה/1.jpg", category: "משפחה" },
-  { id: 2, src: "/משפחה/ארי 2 ביצהה.jpg", category: "משפחה" },
+  { id: 2, src: "/משפחה/לאתר 2.jpg", category: "משפחה" },
   { id: 3, src: "/משפחה/גולדשטוף 2.jpg", category: "משפחה" },
   { id: 4, src: "/משפחה/חיים (1).jpg", category: "משפחה" },
   { id: 5, src: "/משפחה/לאתר 2.jpg", category: "משפחה" },
@@ -27,7 +27,10 @@ const initialImages = [
   { id: 19, src: "/ניו בורן/0P7A5441-Edit.jpg", category: "ניו בורן" },
   { id: 20, src: "/ניו בורן/12311-Edit.jpg", category: "ניו בורן" },
   { id: 21, src: "/ניו בורן/12315-Edit (1).jpg", category: "ניו בורן" },
-  { id: 22, src: "/סמאש קייק/לאתר6 copy.jpg", category: "סמאש קייק" },
+  { id: 22, src: "/חלאקה/קולדצקי ראשון.jpg", category: "חלאקה" },
+  { id: 23, src: "/חלאקה/קולדצקי10 copy.jpg", category: "חלאקה" },
+  { id: 24, src: "/חלאקה/קולדצקי222 עם ביצה.jpg", category: "חלאקה" },
+  { id: 25, src: "/סמאש קייק/לאתר6 copy.jpg", category: "סמאש קייק" },
   { id: 23, src: "/סמאש קייק/לאתר8 copy.jpg", category: "סמאש קייק" },
   { id: 24, src: "/סמאש קייק/לאתר9 copy.jpg", category: "סמאש קייק" },
   { id: 25, src: "/סמאש קייק/לאתר 10.jpg", category: "סמאש קייק" },
@@ -49,6 +52,7 @@ const lightboxVariants = {
 const categoryNames: Record<string, string> = {
   "משפחה": "משפחה",
   "ניו בורן": "ניו בורן",
+  "חלאקה": "חלאקה",
   "סמאש קייק": "סמאש קייק",
 };
 
