@@ -2,7 +2,6 @@
 
 import type React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -46,11 +45,9 @@ export default function Header() {
         {/* Logo on the left */}
         <div className="absolute left-0 flex items-center">
           <Link href="/">
-            <Image
+            <img
               src="/logo.png"
               alt="Logo"
-              width={50}
-              height={50}
               className="h-12 w-auto object-contain cursor-pointer hover:opacity-80 transition-opacity"
             />
           </Link>
