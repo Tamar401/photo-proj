@@ -2,11 +2,13 @@
 
 import type React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 const navItems = [
+  { href: "/contact", label: "צור קשר", color: "#ffb4d8" },
   { href: "/about", label: "אודות", color: "#d36d9f" },
   { href: "/gallery", label: "גלריה", color: "#ff94c4" },
   { href: "/", label: "בית", color: "#c24f8d" },
@@ -40,14 +42,32 @@ export default function Header() {
       className="fixed top-0 left-0 right-0 z-50 px-6 py-4 bg-white/80 border-b border-white/70 shadow-none backdrop-blur-xl"
     >
       <div className="max-w-5xl mx-auto relative flex items-center justify-center">
+        
+        {/* Logo on the left */}
+        <div className="absolute left-0 flex items-center">
+          <Link href="/">
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              width={50}
+              height={50}
+              className="h-12 w-auto object-contain cursor-pointer hover:opacity-80 transition-opacity"
+            />
+          </Link>
+        </div>
+
         <nav className="flex items-center gap-8 text-[#331a34] text-sm font-medium tracking-[0.2em]">
           {navItems.map((item) => {
             const isActive =
               item.href === "/gallery"
                 ? pathname === "/gallery"
+                : item.href === "/contact"
+                ? pathname === "/contact"
+                : item.href === "/about"
+                ? pathname === "/about"
                 : item.href === "/"
                 ? pathname === "/" && currentHash === ""
-                : pathname === item.href;
+                : false;
 
             return (
               <Link
@@ -68,12 +88,7 @@ export default function Header() {
         </nav>
 
         <div className="absolute right-0 flex items-center">
-          <Link
-            href="/contact"
-            className="bg-white text-[#c13f7f] px-5 py-2.5 rounded-full font-semibold shadow-[0_20px_60px_-30px_rgba(209,80,142,0.8)] hover:bg-pink-100 transition"
-          >
-            צור קשר
-          </Link>
+          {/* Placeholder for potential future elements */}
         </div>
       </div>
     </motion.header>
