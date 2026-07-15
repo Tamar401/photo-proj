@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import AnimatedUnderline from "@/components/AnimatedUnderline";
+import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 
 const heroImages = [
   "/משפחה/לאתר 2.jpg",
@@ -154,10 +156,15 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-3xl md:text-4xl font-light text-[#ffb4d8] mb-8 tracking-wide"
+            className="text-3xl md:text-4xl font-light text-[#ffb4d8] mb-4 tracking-wide"
           >
             !נעים להכיר
           </motion.h2>
+
+          {/* Animated Underline */}
+          <div className="w-20 h-1 mx-auto mb-8">
+            <AnimatedUnderline />
+          </div>
 
           {/* "רחלי חלופסקי" - outline style */}
           <motion.h3
@@ -210,6 +217,32 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Before After Slider Section */}
+      <section className="w-full px-6 md:px-24 py-20 bg-[#f8f8f8] text-[#331a34]">
+        <div className="max-w-5xl mx-auto">
+          
+          {/* Section Title */}
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-4xl md:text-5xl font-light text-center mb-4 text-[#ffb4d8]"
+          >
+            העיבוד שלי
+          </motion.h2>
+          
+          {/* Animated Underline */}
+          <div className="w-20 h-1 mx-auto mb-16">
+            <AnimatedUnderline />
+          </div>
+
+          {/* Before After Slider */}
+          <BeforeAfterSlider />
+
+        </div>
+      </section>
+
       {/* What I Photograph Section */}
       <section className="w-full px-6 md:px-24 py-20 bg-white text-[#331a34]">
         <div className="max-w-6xl mx-auto">
@@ -220,10 +253,15 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-4xl md:text-5xl font-light text-center mb-16 text-[#ffb4d8]"
+            className="text-4xl md:text-5xl font-light text-center mb-4 text-[#ffb4d8]"
           >
             מה אני מצלמת
           </motion.h2>
+          
+          {/* Animated Underline */}
+          <div className="w-24 h-1 mx-auto mb-16">
+            <AnimatedUnderline />
+          </div>
 
           {/* Categories Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
