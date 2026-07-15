@@ -66,6 +66,10 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [testimonials.length]);
 
+  const filteredImages = activeCategory === "הכל"
+    ? initialImages
+    : initialImages.filter((image) => image.category === activeCategory);
+
   return (
     <main className="min-h-screen w-full bg-[#f8f8f8] text-[#331a34] antialiased m-0 p-0 block relative pt-16">
       
