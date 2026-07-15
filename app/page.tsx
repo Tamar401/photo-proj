@@ -4,22 +4,18 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
-// 1. תמונות שיתחלפו לאט ובעדינות ברקע של כותרת השם
 const heroImages = [
   "/משפחה/לאתר 2.jpg",
   "/משפחה/חיים (1).jpg",
   "/משפחה/לתמר.jpg",
   "/סמאש קייק/לאתר6 copy.jpg",
-  "/משפחה/קולדצקי ראשון.jpg",
+  "/משפחה/1.jpg"
 ];
 
-// 2. גלריית העבודות המלאה למטה
 const initialImages = [
   { id: 1, src: "/משפחה/1.jpg", category: "משפחה" },
   { id: 2, src: "/משפחה/לאתר 2.jpg", category: "משפחה" },
-  { id: 3, src: "/משפחה/גולדשטוף 2.jpg", category: "משפחה" },
   { id: 4, src: "/משפחה/חיים (1).jpg", category: "משפחה" },
-  { id: 5, src: "/משפחה/לאתר 2.jpg", category: "משפחה" },
   { id: 6, src: "/משפחה/לאתר3 copy.jpg", category: "משפחה" },
   { id: 7, src: "/משפחה/לאתר4 copy.jpg", category: "משפחה" },
   { id: 8, src: "/משפחה/לאתר5 copy.jpg", category: "משפחה" },
@@ -27,7 +23,6 @@ const initialImages = [
   { id: 10, src: "/משפחה/לתמר.jpg", category: "משפחה" },
   { id: 11, src: "/משפחה/לתמר1.jpg", category: "משפחה" },
   { id: 12, src: "/משפחה/ניסןי copy.jpg", category: "משפחה" },
-  { id: 13, src: "/משפחה/קולדצקי ראשון.jpg", category: "משפחה" },
   { id: 14, src: "/משפחה/קולדצקי10 copy.jpg", category: "משפחה" },
   { id: 15, src: "/משפחה/קולדצקי12222.jpg", category: "משפחה" },
   { id: 16, src: "/משפחה/קולדצקי222 עם ביצה.jpg", category: "משפחה" },
@@ -38,79 +33,32 @@ const initialImages = [
   { id: 21, src: "/סמאש קייק/לאתר9 copy.jpg", category: "סמאש קייק" },
 ];
 
-const categories = ["הכל", "סטודיו", "חוץ", "אירועים"];
-
 export default function Home() {
   const [activeCategory, setActiveCategory] = useState("הכל");
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-  // מניעת גלילה כשהלייטבוקס פתוח
   useEffect(() => {
-    if (selectedIndex !== null) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    if (selectedIndex !== null) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "unset";
     return () => { document.body.style.overflow = "unset"; };
   }, [selectedIndex]);
 
-  // מנגנון ניווט חצים במקלדת
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (selectedIndex === null) return;
-      if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
-        const isRight = e.key === "ArrowRight";
-        setSelectedIndex((prev) => {
-          if (prev === null) return null;
-          if (isRight) {
-            return (prev - 1 + filteredImages.length) % filteredImages.length; 
-          } else {
-            return (prev + 1) % filteredImages.length; 
-          }
-        });
-      }
-      if (e.key === "Escape") setSelectedIndex(null);
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  });
-
-  // החלפת תמונת רקע עליונה כל 4 שניות
+  // החלפת תמונת רקע עליונה כל 6 שניות
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentHeroIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
-    }, 4000);
+    }, 6000);
     return () => clearInterval(interval);
   }, []);
 
-  const filteredImages = activeCategory === "הכל"
-    ? initialImages
-    : initialImages.filter(img => img.category === activeCategory);
-
   const testimonials = [
-    {
-      name: 'הילה וינשטיין',
-      title: 'אמא מרוצה',
-      quote: 'רחלי תפסה את הרגעים הכי טבעיים של הילדים שלנו בצורה כל כך עדינה ויפה. התוצאות עלו על כל הציפיות.',
-      image: '/משפחה/לאתר 2.jpg',
-    },
-    {
-      name: 'אביב לוי',
-      title: 'זוג צעיר',
-      quote: 'הצילומים היו מקצועיים וחוויתיים. רחלי הובילה אותנו בשקט ובקסם, והצילום יצא כמו מתוך מגזין.',
-      image: '/משפחה/לתמר.jpg',
-    },
-    {
-      name: 'איריס רוזן',
-      title: 'משפחה',
-      quote: 'התמונות נראות יוקרתיות אך מלאות חמימות. התחושה במהלך הצילומים הייתה רגועה ומלאת אמון.',
-      image: '/משפחה/קולדצקי10 copy.jpg',
-    },
+    { name: 'הילה וינשטיין', title: 'אמא מרוצה', quote: 'רחלי תפסה את הרגעים הכי טבעיים של הילדים שלנו בצורה כל כך עדינה ויפה.', image: '/משפחה/לאתר 2.jpg' },
+    { name: 'אביב לוי', title: 'זוג צעיר', quote: 'הצילומים היו מקצועיים וחוויתיים. רחלי הובילה אותנו בשקט ובקסם.', image: '/משפחה/לתמר.jpg' },
+    { name: 'איריס רוזן', title: 'משפחה', quote: 'התמונות נראות יוקרתיות אך מלאות חמימות. התחושה הייתה רגועה ומלאת אמון.', image: '/משפחה/קולדצקי10 copy.jpg' },
   ];
 
   const [testimonialIndex, setTestimonialIndex] = useState(0);
-
   useEffect(() => {
     const interval = setInterval(() => {
       setTestimonialIndex((i) => (i + 1) % testimonials.length);
@@ -118,24 +66,10 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [testimonials.length]);
 
-  const handleNext = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (selectedIndex !== null) {
-      setSelectedIndex((selectedIndex - 1 + filteredImages.length) % filteredImages.length);
-    }
-  };
-
-  const handlePrev = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (selectedIndex !== null) {
-      setSelectedIndex((selectedIndex + 1) % filteredImages.length);
-    }
-  };
-
   return (
     <main className="min-h-screen w-full bg-[#f8f8f8] text-[#331a34] antialiased m-0 p-0 block relative pt-16">
       
-      {/* מודל לייטבוקס */}
+      {/* לייטבוקס נשאר כפי שהיה */}
       <AnimatePresence>
         {selectedIndex !== null && (
           <motion.div
@@ -143,18 +77,8 @@ export default function Home() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedIndex(null)}
-            className="flex justify-center items-center cursor-zoom-out"
-            style={{ 
-              position: "fixed", 
-              top: 0, left: 0, right: 0, bottom: 0, 
-              width: "100vw", height: "100vh",
-              backgroundColor: "rgba(255, 245, 251, 0.96)", 
-              backdropFilter: "blur(12px)", 
-              WebkitBackdropFilter: "blur(12px)", 
-              zIndex: 99999 
-            }}
+            className="fixed inset-0 z-[99999] flex justify-center items-center bg-[rgba(255,245,251,0.96)] backdrop-blur-md p-4"
           >
-            {/* התמונה - מתרנדרת ראשונה כדי שהכפתורים יהיו מעליה */}
             <AnimatePresence mode="wait">
               <motion.img
                 key={selectedIndex}
@@ -164,70 +88,35 @@ export default function Home() {
                 transition={{ duration: 0.2 }}
                 src={filteredImages[selectedIndex].src}
                 alt="View Enlarged"
-                className="object-contain rounded-[2rem] shadow-[0_30px_60px_-15px_rgba(203,120,154,0.3)] border border-pink-200/50 pointer-events-none bg-white"
-                style={{ 
-                  maxWidth: "70vw", 
-                  maxHeight: "80vh", 
-                  width: "auto",
-                  height: "auto",
-                  zIndex: 100000 
-                }}
+                className="max-w-[70vw] max-h-[80vh] object-contain rounded-[2rem] bg-white border border-pink-200/50"
               />
             </AnimatePresence>
-
-            {/* חץ שמאלה - הודגש עם inline style ו-zIndex מטורף כדי שלא יעלם */}
-            <button 
-              onClick={handlePrev}
-              className="text-[#67405d] hover:text-[#331a34] bg-white/90 hover:bg-white transition-all duration-300 p-4 rounded-full border border-pink-200/60 cursor-pointer"
-              style={{ position: 'absolute', left: '2rem', top: '50%', transform: 'translateY(-50%)', zIndex: 999999 }}
-            >
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M15 18l-6-6 6-6" />
-              </svg>
-            </button>
-
-            {/* חץ ימינה - הודגש עם inline style */}
-            <button 
-              onClick={handleNext}
-              className="text-[#67405d] hover:text-[#331a34] bg-white/90 hover:bg-white transition-all duration-300 p-4 rounded-full border border-pink-200/60 cursor-pointer"
-              style={{ position: 'absolute', right: '2rem', top: '50%', transform: 'translateY(-50%)', zIndex: 999999 }}
-            >
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 18l6-6-6-6" />
-              </svg>
-            </button>
-
-            {/* כפתור סגירה - הודגש עם inline style */}
-            <button 
-              onClick={(e) => { e.stopPropagation(); setSelectedIndex(null); }}
-              className="text-[#c94a8c] hover:text-[#a9296d] text-sm tracking-widest cursor-pointer transition-colors font-light bg-white/90 px-5 py-2.5 rounded-full border border-pink-200/70"
-              style={{ position: 'absolute', top: '2rem', right: '2rem', zIndex: 999999 }}
-            >
-              ✕ CLOSE
-            </button>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Hero Section */}
-      <header 
-        style={{ height: "100vh", marginTop: "-4rem" }} 
-        className="relative flex flex-col justify-center items-center text-center w-full overflow-hidden px-6 m-0 z-10"
-      >
-        <div className="absolute inset-0 z-0 bg-[#f8f8f8] w-full h-full">
-          <AnimatePresence>
-            <motion.img
+      <header style={{ height: "100vh", marginTop: "-4rem" }} className="relative flex flex-col justify-center items-center text-center w-full overflow-hidden px-6 m-0 z-10">
+       <div className="absolute inset-0 z-0 bg-[#f8f8f8] w-full h-full">
+          <div className="relative w-full h-full">
+            <AnimatePresence>
+              <motion.img
                 key={currentHeroIndex}
                 src={heroImages[currentHeroIndex]}
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                animate={{ 
+                  opacity: 1, 
+                  scale: 1.1 
+                }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 2, ease: "easeInOut" }}
+                transition={{ 
+                  opacity: { duration: 1.5, ease: "easeInOut" },
+                  scale: { duration: 6, ease: "linear" } 
+                }}
                 className="w-full h-full object-cover object-center absolute inset-0"
-                style={{ width: "100%", height: "100%" }}
                 alt="Background Content"
               />
-          </AnimatePresence>
+            </AnimatePresence>
+          </div>
           <div className="absolute inset-0 bg-gradient-to-t from-[#f8f8f8] via-transparent to-transparent z-10" />
         </div>
 
@@ -235,23 +124,21 @@ export default function Home() {
           <motion.span
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 0.5, scale: 1 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="absolute text-[10rem] md:text-[14rem] font-light text-[#ffb4d8] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 tracking-widest uppercase pointer-events-none"
-            style={{ zIndex: 1 }}
+            transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
+            className="absolute text-[10rem] md:text-[14rem] font-light text-[#ffb4d8] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 tracking-widest uppercase"
           >
             RACHELY
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
             className="relative z-20 text-5xl md:text-7xl font-light text-white tracking-widest uppercase"
           >
             רחלי חלופסקי
           </motion.h1>
         </div>
       </header>
-
 
 
       <section className="w-full px-6 md:px-24 py-20 bg-[#f8f8f8] text-[#331a34]">

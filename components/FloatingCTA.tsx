@@ -1,12 +1,25 @@
 "use client";
 
+import { motion } from "framer-motion";
+import Link from "next/link";
+
 export default function FloatingCTA() {
   return (
-    <a href="/contact" aria-label="Contact page" className="fixed bottom-8 right-8 z-50">
-      <div className="bg-gradient-to-br from-[#00d2ff] to-[#00ff87] text-black font-medium px-5 py-3 rounded-full shadow-2xl transform transition-all hover:scale-105 flex items-center gap-3">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 2L11 13" stroke="black" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/><path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="black" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
-        <span>קבעו סשן</span>
-      </div>
-    </a>
+    <motion.div
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ type: "spring", stiffness: 260, damping: 20, delay: 1 }}
+      className="fixed bottom-8 right-8 z-50"
+    >
+      <Link href="/contact">
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="bg-white text-zinc-900 px-6 py-3 rounded-full font-bold shadow-[0_0_20px_rgba(255,255,255,0.3)] backdrop-blur-md transition-colors hover:bg-zinc-200"
+        >
+          דברו איתי
+        </motion.button>
+      </Link>
+    </motion.div>
   );
 }
