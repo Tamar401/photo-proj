@@ -66,10 +66,6 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [testimonials.length]);
 
-  const filteredImages = activeCategory === "הכל"
-    ? initialImages
-    : initialImages.filter((image) => image.category === activeCategory);
-
   return (
     <main className="min-h-screen w-full bg-[#f8f8f8] text-[#331a34] antialiased m-0 p-0 block relative pt-16">
       
@@ -313,81 +309,55 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="w-full px-6 md:px-24 py-20 bg-[#f8f8f8] text-[#331a34]">
-        <div className="max-w-5xl mx-auto text-center">
-          <div className="w-full flex justify-center mt-4 mb-6">
-            <motion.img
-              src="/לב.png"
-              alt="Heart decoration"
-              className="h-[70px] md:h-[100px] object-contain opacity-80"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 1, ease: 'easeOut' }}
-            />
-          </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#ffb4d8]">לקוחות מספרים</h2>
+  <section className="w-full px-6 md:px-24 py-20 bg-[#f0ede5] text-[#331a34]">
+  <div className="max-w-4xl mx-auto">
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={testimonialIndex}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.6 }}
+        className="flex flex-col md:flex-row items-center gap-8 md:gap-12"
+      >
+        {/* סימן ציטוט פותח */}
+        <div className="text-6xl text-black font-serif hidden md:block">“</div>
 
-          <div className="mt-12 relative">
-            <div className="max-w-3xl mx-auto px-6">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={testimonialIndex}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.6, ease: 'easeOut' }}
-                  className="flex items-start gap-6"
-                >
-                  <motion.img
-                    src={testimonials[testimonialIndex].image}
-                    alt={testimonials[testimonialIndex].name}
-                    className="w-20 h-20 rounded-full object-cover shadow-md"
-                    initial={{ opacity: 0, x: 12 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 12 }}
-                    transition={{ duration: 0.6, ease: 'easeOut' }}
-                  />
-
-                  <div className="flex-1 text-right">
-                    <motion.p
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.6, ease: 'easeOut' }}
-                      className="text-lg md:text-xl leading-8 text-[#5d3a59]"
-                    >
-                      {testimonials[testimonialIndex].quote}
-                    </motion.p>
-
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.12, duration: 0.5 }}
-                      className="mt-6 flex items-center justify-end gap-4"
-                    >
-                      <div className="text-sm font-semibold text-[#ffb4d8]">{testimonials[testimonialIndex].name}</div>
-                      <div className="text-xs text-[#7e5b7b]">{testimonials[testimonialIndex].title}</div>
-                    </motion.div>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            <div className="mt-8 flex justify-center items-center gap-3">
-              {testimonials.map((_, idx) => (
-                <motion.button
-                  key={idx}
-                  onClick={() => setTestimonialIndex(idx)}
-                  whileHover={{ scale: 1.15 }}
-                  className={`h-3 w-3 rounded-full transition ${idx === testimonialIndex ? 'bg-[#ffb4d8]' : 'bg-[#f0e6ef]'}`}
-                  aria-label={`הצג חוות דעת ${idx + 1}`}
-                />
-              ))}
-            </div>
-          </div>
+        <div className="flex-1 text-center md:text-right">
+          <p className="text-lg md:text-xl leading-relaxed text-[#331a34] mb-6">
+            {testimonials[testimonialIndex].quote}
+          </p>
+          
+          {/* קו אדום מפריד */}
+          <div className="w-16 h-1 #ffb4d8 mx-auto md:mr-0 mb-4" />
+          
+          <div className="font-bold text-lg">{testimonials[testimonialIndex].name}</div>
+          <div className="text-sm opacity-70">{testimonials[testimonialIndex].title}</div>
         </div>
-      </section>
+
+        {/* תמונה עגולה */}
+        <div className="relative w-48 h-48 md:w-64 md:h-64 flex-shrink-0">
+           <img
+            src={testimonials[testimonialIndex].image}
+            alt={testimonials[testimonialIndex].name}
+            className="w-full h-full rounded-full object-cover shadow-xl border-4 border-white"
+          />
+        </div>
+      </motion.div>
+    </AnimatePresence>
+
+    {/* נקודות ניווט */}
+    <div className="mt-12 flex justify-center items-center gap-3">
+      {testimonials.map((_, idx) => (
+        <button
+          key={idx}
+          onClick={() => setTestimonialIndex(idx)}
+          className={`h-3 w-3 rounded-full transition ${idx === testimonialIndex ? 'bg-[#ffb4d8]' : 'bg-gray-300'}`}
+        />
+      ))}
+    </div>
+  </div>
+</section>
 
 
     </main>
