@@ -77,7 +77,7 @@ export default function ContactPage() {
         </div>
       </div>
 
-      <div className="w-full px-6 md:px-24 pt-16 pb-16 relative z-30 bg-[#fff4fb]" style={{ marginTop: '-40px', borderRadius: '40px 40px 0 0' }}>
+      <div className="w-full px-6 md:px-24 pt-16 pb-16 relative z-30 bg-[#fff4fb]" style={{ marginTop: '-40px'}}>
         <div className="max-w-4xl mx-auto">
           
           {/* לוגו לב */}

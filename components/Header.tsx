@@ -48,19 +48,25 @@ export default function Header() {
     }
   };
 
-  // שקוף בהתחלה, ורוד מלא אחרי 500px
+  // שקוף בהתחלה, הדרגתי לורוד עם blur
+  const bgOpacity = isHome 
+    ? Math.max(0, Math.min(1, scrollY / 300))
+    : 1;
+
   const bgColor = isHome 
-    ? scrollY > 500 
-      ? "#ffb4d8" 
-      : "transparent"
-    : "rgba(255, 180, 216, 1)";
+    ? `rgba(255, 180, 216, ${0.7 * bgOpacity})`
+    : "rgba(255, 180, 216, 0.8)";
+
+  const backdropBlur = (isHome && scrollY > 50)
+    ? "backdrop-blur-md"
+    : "backdrop-blur-none";
 
   return (
     <motion.header
       initial={{ y: -16, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="fixed top-0 left-0 right-0 z-50 px-6 py-4 border-none shadow-none backdrop-blur-none transition-colors duration-300"
+      className={`fixed top-0 left-0 right-0 z-50 px-6 py-4 border-none shadow-none transition-colors duration-300 ${backdropBlur}`}
       style={{
         backgroundColor: bgColor
       }}

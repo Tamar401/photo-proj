@@ -17,8 +17,9 @@ const heroImages = [
 ];
 
 const initialImages = [
-  { id: 1, src: "/משפחה/1.jpg", category: "משפחה" },
+
   { id: 2, src: "/משפחה/לאתר 2.jpg", category: "משפחה" },
+    { id: 1, src: "/משפחה/1.jpg", category: "משפחה" },
   { id: 4, src: "/משפחה/חיים (1).jpg", category: "משפחה" },
   { id: 6, src: "/משפחה/לאתר3 copy.jpg", category: "משפחה" },
   { id: 7, src: "/משפחה/לאתר4 copy.jpg", category: "משפחה" },
@@ -125,7 +126,7 @@ export default function Home() {
               />
             </AnimatePresence>
           </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#f8f8f8] via-transparent to-transparent z-10" />
+         
         </div>
 
         {/* אזור הכיתוב - ממוקם בדיוק במרכז המסך */}
@@ -241,6 +242,8 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-lg md:text-xl leading-8 text-[#5d3a59] max-w-3xl mx-auto"
           >
+            הופכת רגעים מתוקים לחוויה בלתי נשכחת!
+            <br/>
             אני צלמת המתמחה בתיעוד רגעים אמתיים ועמוקים. כל תצלום הוא סיפור של רגש וחום, 
             מלמד אותי להסתכל בעיניים הפתוחות ולתפוס את ההיפ האמתית של החיים.
             <br />
@@ -290,7 +293,7 @@ export default function Home() {
       </section>
 
       {/* What I Photograph Section */}
-      <section className="w-full px-6 md:px-24 py-20 bg-white text-[#331a34]">
+      <section className="w-full px-6 md:px-24 py-20 bg-[#f3eae3] text-[#331a34]">
         <div className="max-w-6xl mx-auto">
           
           {/* Section Title */}
@@ -395,8 +398,10 @@ export default function Home() {
 
         </div>
       </section>
-   <BackgroundCurve/>
-  <section className="w-full px-6 md:px-24 py-20 bg-[#f0ede5] text-[#331a34]">
+
+
+   
+  <section className="w-full px-6 md:px-24 py-20 bg-[#f3eae3] text-[#331a34]">
   <div className="max-w-4xl mx-auto">
     <AnimatePresence mode="wait">
       <motion.div
@@ -445,8 +450,8 @@ export default function Home() {
     </div>
   </div>
 </section>
-
-
+<BackgroundCurve/>
     </main>
+    
   );
 }

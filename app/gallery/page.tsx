@@ -42,7 +42,7 @@ export default function GalleryPage() {
         </div>
       </div>
 
-      <div className="w-full px-6 md:px-24 pt-12 pb-12 relative z-30 bg-[#fff4fb] flex flex-col items-center" style={{ marginTop: '-40px', borderRadius: '40px 40px 0 0' }}>
+      <div className="w-full px-6 md:px-24 pt-12 pb-12 relative z-30 bg-[#fff4fb] flex flex-col items-center" style={{ marginTop: '-40px' }}>
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16 w-full max-w-7xl mx-auto">
           {categories.map((category, index) => (

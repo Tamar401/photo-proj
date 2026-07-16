@@ -183,8 +183,8 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
   };
 
   return (
-    <main className="min-h-screen w-full bg-[#f8f8f8] text-[#331a34] antialiased m-0 p-0 block relative pt-24">
-      <div className="w-full px-4 md:px-12 pt-8 pb-12 relative z-30 bg-[#fff4fb] flex flex-col items-center">
+    <main className="min-h-screen w-full bg-[#f3eae3] text-[#331a34] antialiased m-0 p-0 block relative pt-24">
+      <div className="w-full px-4 md:px-12 pt-8 pb-12 relative z-30 bg-[#f5ede6] flex flex-col items-center">
 
         <AnimatePresence initial={false} custom={lightboxDirection}>
           {selectedIndex !== null && (
@@ -271,11 +271,21 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
           )}
         </AnimatePresence>
 
-        <Link href="/gallery" className="absolute top-8 left-6 text-[#7e5b7b] hover:text-[#331a34] transition-colors">
-          ← חזרה לגלריה
-        </Link>
+        <h1 className="text-5xl md:text-6xl font-light mb-6 tracking-widest">{categoryNames[decodedCategory] || decodedCategory}</h1>
 
-        <h1 className="text-5xl md:text-6xl font-light mb-16 tracking-widest">{categoryNames[decodedCategory] || decodedCategory}</h1>
+        {/* Breadcrumb Navigation - בצד ימין */}
+        <div className="w-full flex items-center justify-end px-4 md:px-12 mb-12">
+          <div className="flex items-center gap-3 text-lg md:text-xl font-light text-[#ffb4d8]">
+            <span className="text-[black]">{categoryNames[decodedCategory] || decodedCategory}</span>
+            <span>/</span>
+            <Link 
+              href="/gallery" 
+              className="hover:text-[#ff9ecb] transition-colors"
+            >
+              גלריה
+            </Link>
+          </div>
+        </div>
 
         <section className="mb-16 w-full max-w-[1600px] mx-auto relative">
           <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-1 w-full">
