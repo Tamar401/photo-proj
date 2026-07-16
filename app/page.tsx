@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import AnimatedUnderline from "@/components/AnimatedUnderline";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
+import BackgroundCurve from "@/components/BackgroundCurve";
 
 const heroImages = [
   "/משפחה/לאתר 2.jpg",
@@ -161,10 +162,9 @@ export default function Home() {
             !נעים להכיר
           </motion.h2>
 
-          {/* Animated Underline */}
-          <div className="w-20 h-1 mx-auto mb-8">
-            <AnimatedUnderline />
-          </div>
+         <div className="w-full max-w-[347px] h-[31px] mx-auto mb-8">
+  <AnimatedUnderline />
+</div>
 
           {/* "רחלי חלופסקי" - outline style */}
           <motion.h3
@@ -232,10 +232,9 @@ export default function Home() {
             העיבוד שלי
           </motion.h2>
           
-          {/* Animated Underline */}
-          <div className="w-20 h-1 mx-auto mb-16">
-            <AnimatedUnderline />
-          </div>
+         <div className="w-full max-w-[347px] h-[31px] mx-auto mb-8">
+  <AnimatedUnderline />
+</div>
 
           {/* Before After Slider */}
           <BeforeAfterSlider />
@@ -258,10 +257,9 @@ export default function Home() {
             מה אני מצלמת
           </motion.h2>
           
-          {/* Animated Underline */}
-          <div className="w-24 h-1 mx-auto mb-16">
-            <AnimatedUnderline />
-          </div>
+        <div className="w-full max-w-[347px] h-[31px] mx-auto mb-8">
+  <AnimatedUnderline />
+</div>
 
           {/* Categories Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -350,7 +348,7 @@ export default function Home() {
 
         </div>
       </section>
-
+   <BackgroundCurve/>
   <section className="w-full px-6 md:px-24 py-20 bg-[#f0ede5] text-[#331a34]">
   <div className="max-w-4xl mx-auto">
     <AnimatePresence mode="wait">

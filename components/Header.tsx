@@ -40,7 +40,7 @@ export default function Header() {
       transition={{ duration: 0.6 }}
       className="fixed top-0 left-0 right-0 z-50 px-6 py-4 bg-white/80 border-b border-white/70 shadow-none backdrop-blur-xl"
     >
-      <div className="max-w-5xl mx-auto relative flex items-center justify-center">
+      <div className="max-w-7xl mx-auto relative flex items-center justify-center px-12">
         
         {/* Logo on the left */}
         <div className="absolute left-0 flex items-center">
@@ -53,7 +53,7 @@ export default function Header() {
           </Link>
         </div>
 
-        <nav className="flex items-center gap-8 text-[#331a34] text-sm font-medium tracking-[0.2em]">
+        <nav className="flex items-center gap-12 text-[#331a34] text-sm font-medium tracking-[0.2em]">
           {navItems.map((item) => {
             const isActive =
               item.href === "/gallery"

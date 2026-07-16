@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import DrawnLine from "@/components/DrawnLine";
 
 export default function ContactPage() {
   const [name, setName] = useState("");
@@ -84,7 +85,7 @@ export default function ContactPage() {
               className="h-[70px] md:h-[100px] object-contain opacity-80"
             />
           </motion.div>
-
+<DrawnLine/>
           {/* כותרת */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -92,6 +93,7 @@ export default function ContactPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-center mb-12"
           >
+
             <h2 className="text-4xl md:text-5xl font-extrabold text-[#ffb4d8] mb-4">בואו נדבר</h2>
             <p className="text-lg md:text-xl text-[#7e5b7b] font-light">
               אשמח לשמוע על הרעיון הבא שלכם
