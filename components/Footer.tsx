@@ -18,11 +18,7 @@ export default function Footer() {
           whileHover={{ scale: 1.05 }}
           className="text-center md:text-left text-sm tracking-wider text-[#7e5b7b] hover:text-[#ffb4d8] transition-colors duration-300 cursor-pointer"
         >
-          <span className="flex items-center gap-1 justify-center md:justify-start">
-            {/* <span>Create with</span> */}
-            <span className="text-[#ffb4d8] text-lg"></span>
-            <span>Tamar Yagelnik</span>
-          </span>
+          
         </motion.a>
 
         {/* פרטי קשר */}

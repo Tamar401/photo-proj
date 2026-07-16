@@ -51,7 +51,7 @@ export default function Header() {
   // שקוף בהתחלה, ורוד מלא אחרי 500px
   const bgColor = isHome 
     ? scrollY > 500 
-      ? "rgba(255, 180, 216, 1)" 
+      ? "#ffb4d8" 
       : "transparent"
     : "rgba(255, 180, 216, 1)";
 
@@ -78,7 +78,8 @@ export default function Header() {
           </Link>
         </div>
 
-        <nav className="flex items-center gap-16 text-sm font-medium tracking-[0.2em]" style={{ color: "#331a34" }}>
+        {/* השינוי כאן: הגדלת ה-gap מ-gap-16 ל-gap-28 */}
+        <nav className="flex items-center gap-28 text-sm font-medium tracking-[0.2em]" style={{ color: "#331a34" }}>
           {navItems.map((item) => {
             const isActive =
               item.href === "/gallery"
@@ -97,7 +98,7 @@ export default function Header() {
                 href={item.href}
                 className="transition duration-200"
                 style={{
-                  color: isActive ? item.color : "#331a34",
+                  color: isActive ? item.color : "white",
                   textDecoration: isActive ? "underline" : "none",
                   textUnderlineOffset: "10px",
                 }}

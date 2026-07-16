@@ -6,6 +6,7 @@ import Link from "next/link";
 import AnimatedUnderline from "@/components/AnimatedUnderline";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import BackgroundCurve from "@/components/BackgroundCurve";
+import GalleryButton from "@/components/GalleryButton";
 
 const heroImages = [
   "/משפחה/לאתר 2.jpg",
@@ -76,7 +77,7 @@ export default function Home() {
   return (
     <main className="min-h-screen w-full bg-[#f8f8f8] text-[#331a34] antialiased m-0 p-0 block relative pt-16">
       
-      {/* לייטבוקס נשאר כפי שהיה */}
+      {/* לייטבוקס */}
       <AnimatePresence>
         {selectedIndex !== null && (
           <motion.div
@@ -102,7 +103,7 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      <header style={{ height: "120vh", marginTop: "-4rem" }} className="relative flex flex-col justify-center items-center text-center w-full overflow-hidden px-6 m-0 z-10">
+      <header style={{ height: "100vh", marginTop: "-4rem" }} className="relative flex flex-col w-full overflow-hidden m-0 z-10">
        <div className="absolute inset-0 z-0 bg-[#f8f8f8] w-full h-full">
           <div className="relative w-full h-full">
             <AnimatePresence>
@@ -127,13 +128,14 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#f8f8f8] via-transparent to-transparent z-10" />
         </div>
 
-        <div className="relative z-20 pointer-events-none flex items-center justify-center h-full w-full">
-          {/* כיתוב הרקע הוורוד הענק (RACHELY) */}
+        {/* אזור הכיתוב - ממוקם בדיוק במרכז המסך */}
+        <div className="absolute inset-0 z-20 flex items-center justify-center w-full pointer-events-none">
+          {/* כיתוב הרקע הוורוד (RACHELY) */}
           <motion.span
             initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 0.5, scale: 1 }}
+            animate={{ opacity: 0.6, scale: 1 }}
             transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
-            className="absolute text-[8rem] md:text-[25rem] lg:text-[18rem] font-light text-[#ffb4d8] tracking-widest uppercase z-0"
+            className="absolute text-[5rem] sm:text-[8rem] md:text-[11rem] lg:text-[14rem] font-light text-[#ffb4d8] tracking-widest uppercase z-0 whitespace-nowrap"
           >
             RACHELY
           </motion.span>
@@ -143,10 +145,57 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
-            className="relative z-10 text-5xl md:text-7xl lg:text-8xl font-light text-white tracking-widest uppercase drop-shadow-md"
+            className="relative z-10 text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-white tracking-widest uppercase drop-shadow-md whitespace-nowrap"
           >
             רחלי חלופסקי
           </motion.h1>
+        </div>
+
+        {/* אזור הכפתורים - ממוקם ממש בתחתית, מעל לנקודות הניווט */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="absolute bottom-20 left-0 right-0 z-30 flex flex-row items-center justify-center gap-6 md:gap-10"
+        >
+          {/* כפתור קצת עלי */}
+          <Link 
+            href="/about" 
+            className="flex items-center gap-2 text-white text-xl md:text-3xl font-medium hover:text-[#ffb4d8] transition-colors duration-300 drop-shadow-md"
+          >
+            <span className="text-2xl md:text-4xl">&laquo; קצת עלי </span>
+          </Link>
+          
+          {/* כפתור לגלריה */}
+          {/* <Link 
+            href="/gallery" 
+            className="bg-[#f6f2ec] text-[#b68297] hover:bg-white hover:scale-105 transition-all duration-300 px-8 py-3 md:px-12 md:py-4 rounded-full text-xl md:text-3xl font-medium shadow-lg"
+          > */}
+            <GalleryButton />
+          {/* </Link> */}
+        </motion.div>
+
+        {/* Navigation Dots - ניווט דוטס למטה */}
+        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-30 flex items-center gap-3">
+          {heroImages.map((_, index) => (
+            <motion.button
+              key={index}
+              onClick={() => setCurrentHeroIndex(index)}
+              initial={{ opacity: 0.6, scale: 0.8 }}
+              animate={{ 
+                opacity: index === currentHeroIndex ? 1 : 0.6,
+                scale: index === currentHeroIndex ? 1 : 0.8
+              }}
+              whileHover={{ scale: 1 }}
+              transition={{ duration: 0.3 }}
+              className={`h-3 w-3 rounded-full transition-all duration-300 ${
+                index === currentHeroIndex 
+                  ? 'bg-[#ffb4d8] shadow-lg shadow-[#ffb4d8]/50' 
+                  : 'bg-white/60 hover:bg-white/80'
+              }`}
+              aria-label={`Go to image ${index + 1}`}
+            />
+          ))}
         </div>
       </header>
 
@@ -209,12 +258,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="mt-12"
           >
-            <a
-              href="/gallery"
-              className="inline-block px-10 py-4 bg-[#ffb4d8] text-white font-light text-lg tracking-wide rounded-full hover:bg-[#ff9ac6] transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105"
-            >
-              לגלריה
-            </a>
+            <GalleryButton />
           </motion.div>
 
         </div>
@@ -351,7 +395,7 @@ export default function Home() {
 
         </div>
       </section>
-   
+   <BackgroundCurve/>
   <section className="w-full px-6 md:px-24 py-20 bg-[#f0ede5] text-[#331a34]">
   <div className="max-w-4xl mx-auto">
     <AnimatePresence mode="wait">
@@ -401,7 +445,7 @@ export default function Home() {
     </div>
   </div>
 </section>
-<BackgroundCurve/>
+
 
     </main>
   );
