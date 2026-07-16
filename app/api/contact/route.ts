@@ -10,17 +10,26 @@ type Body = {
 
 export async function POST(request: Request) {
   try {
+    console.log("📨 קיבלנו בקשה ל-POST ב-/api/contact");
+    
     const body: Body = await request.json();
     const { name = "", email = "", phone = "", message = "" } = body;
 
+    console.log("📋 נתונים קיבלו:", { name, email, phone, messageLength: message.length });
+
     if (!name || !email || !message) {
+      console.log("⚠️ שדות חובה חסרים");
       return NextResponse.json({ error: "חסרים שדות חובה" }, { status: 400 });
     }
 
     const RESEND_API_KEY = process.env.RESEND_API_KEY;
     const EMAIL_TO = process.env.EMAIL_TO || "r0527149555@gmail.com";
 
+    console.log("🔑 בדיקה של API Key:", RESEND_API_KEY ? "✅ קיים" : "❌ חסר");
+    console.log("📧 שולח אל:", EMAIL_TO);
+
     if (!RESEND_API_KEY) {
+      console.error("❌ API Key חסר!");
       return NextResponse.json({ 
         error: "שירות המייל לא מוגדר. אנא פנה למנהל האתר." 
       }, { status: 500 });
@@ -28,8 +37,9 @@ export async function POST(request: Request) {
 
     const resend = new Resend(RESEND_API_KEY);
 
-    await resend.emails.send({
-      from: "onboarding@resend.dev", // Resend's default sender
+    console.log("🚀 שולח דוא״ל דרך Resend...");
+    const result = await resend.emails.send({
+      from: "onboarding@resend.dev",
       to: EMAIL_TO,
       subject: `הודעה חדשה מאתר הצילומים - ${name}`,
       html: `
@@ -54,9 +64,15 @@ export async function POST(request: Request) {
       `,
     });
 
+    console.log("✅ דוא״ל נשלח בהצלחה!", result);
     return NextResponse.json({ ok: true });
   } catch (err: any) {
-    console.error("Contact API error:", err);
+    console.error("❌ Contact API error:", {
+      message: err?.message,
+      code: err?.code,
+      status: err?.status,
+      fullError: err
+    });
     return NextResponse.json({ 
       error: err?.message || "שגיאה בשליחת ההודעה. נסה שוב מאוחר יותר." 
     }, { status: 500 });

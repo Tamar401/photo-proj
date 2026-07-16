@@ -17,6 +17,8 @@ export default function ContactPage() {
     setStatus("sending");
     setErrorText("");
 
+    console.log("📤 שליחת הודעה:", { name, email, phone, message });
+
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
@@ -25,14 +27,20 @@ export default function ContactPage() {
       });
 
       const data = await res.json();
+      console.log("📩 תגובה מהשרת:", { status: res.status, data });
+
       if (res.ok) {
+        console.log("✅ ההודעה נשלחה בהצלחה!");
         setStatus("success");
         setName(""); setEmail(""); setPhone(""); setMessage("");
+        setTimeout(() => setStatus(null), 5000); // סגור הודעה אחרי 5 שניות
       } else {
+        console.error("❌ שגיאה:", data?.error);
         setStatus("error");
         setErrorText(data?.error || "שגיאה בשליחת הטופס");
       }
     } catch (err) {
+      console.error("⚠️ שגיאה ברשת:", err);
       setStatus("error");
       setErrorText("שגיאה ברשת — נסי שוב מאוחר יותר");
     }

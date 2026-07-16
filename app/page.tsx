@@ -351,7 +351,7 @@ export default function Home() {
 
         </div>
       </section>
-   <BackgroundCurve/>
+   
   <section className="w-full px-6 md:px-24 py-20 bg-[#f0ede5] text-[#331a34]">
   <div className="max-w-4xl mx-auto">
     <AnimatePresence mode="wait">
@@ -401,7 +401,7 @@ export default function Home() {
     </div>
   </div>
 </section>
-
+<BackgroundCurve/>
 
     </main>
   );
