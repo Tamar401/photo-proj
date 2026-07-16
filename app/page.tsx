@@ -102,7 +102,7 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      <header style={{ height: "100vh", marginTop: "-4rem" }} className="relative flex flex-col justify-center items-center text-center w-full overflow-hidden px-6 m-0 z-10">
+      <header style={{ height: "130vh", marginTop: "-4rem" }} className="relative flex flex-col justify-center items-center text-center w-full overflow-hidden px-6 m-0 z-10">
        <div className="absolute inset-0 z-0 bg-[#f8f8f8] w-full h-full">
           <div className="relative w-full h-full">
             <AnimatePresence>
@@ -148,7 +148,7 @@ export default function Home() {
       </header>
 
 
-      <section className="w-full px-6 md:px-24 py-20 bg-[#f8f8f8] text-[#331a34]">
+      <section className="w-full px-6 md:px-24 py-32 bg-[#f8f8f8] text-[#331a34]">
         <div className="max-w-5xl mx-auto text-center">
           
           {/* "נעים להכיר!" */}
@@ -218,7 +218,7 @@ export default function Home() {
       </section>
 
       {/* Before After Slider Section */}
-      <section className="w-full px-6 md:px-24 py-20 bg-[#f8f8f8] text-[#331a34]">
+      <section className="w-full px-6 md:px-24 py-32 bg-[#f8f8f8] text-[#331a34]">
         <div className="max-w-5xl mx-auto">
           
           {/* Section Title */}
