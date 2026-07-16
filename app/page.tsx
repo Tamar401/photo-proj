@@ -102,7 +102,7 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      <header style={{ height: "130vh", marginTop: "-4rem" }} className="relative flex flex-col justify-center items-center text-center w-full overflow-hidden px-6 m-0 z-10">
+      <header style={{ height: "120vh", marginTop: "-4rem" }} className="relative flex flex-col justify-center items-center text-center w-full overflow-hidden px-6 m-0 z-10">
        <div className="absolute inset-0 z-0 bg-[#f8f8f8] w-full h-full">
           <div className="relative w-full h-full">
             <AnimatePresence>
@@ -127,20 +127,23 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#f8f8f8] via-transparent to-transparent z-10" />
         </div>
 
-        <div className="relative z-20 pointer-events-none">
+        <div className="relative z-20 pointer-events-none flex items-center justify-center h-full w-full">
+          {/* כיתוב הרקע הוורוד הענק (RACHELY) */}
           <motion.span
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 0.5, scale: 1 }}
             transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
-            className="absolute text-[10rem] md:text-[14rem] font-light text-[#ffb4d8] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 tracking-widest uppercase"
+            className="absolute text-[8rem] md:text-[25rem] lg:text-[18rem] font-light text-[#ffb4d8] tracking-widest uppercase z-0"
           >
             RACHELY
           </motion.span>
+          
+          {/* הכיתוב הלבן מעל (רחלי חלופסקי) */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
-            className="relative z-20 text-5xl md:text-7xl font-light text-white tracking-widest uppercase"
+            className="relative z-10 text-5xl md:text-7xl lg:text-8xl font-light text-white tracking-widest uppercase drop-shadow-md"
           >
             רחלי חלופסקי
           </motion.h1>

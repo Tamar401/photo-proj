@@ -16,6 +16,8 @@ const navItems = [
 export default function Header() {
   const pathname = usePathname() || "/";
   const [currentHash, setCurrentHash] = useState("");
+  const [scrollY, setScrollY] = useState(0);
+  const [isHome, setIsHome] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -26,6 +28,19 @@ export default function Header() {
     }
   }, []);
 
+  useEffect(() => {
+    setIsHome(pathname === "/");
+  }, [pathname]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const handleHomeClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (pathname === "/" && currentHash === "") {
       e.preventDefault();
@@ -33,12 +48,22 @@ export default function Header() {
     }
   };
 
+  // שקוף בהתחלה, ורוד מלא אחרי 500px
+  const bgColor = isHome 
+    ? scrollY > 500 
+      ? "rgba(255, 180, 216, 1)" 
+      : "transparent"
+    : "rgba(255, 180, 216, 1)";
+
   return (
     <motion.header
       initial={{ y: -16, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="fixed top-0 left-0 right-0 z-50 px-6 py-4 bg-white/80 border-b border-white/70 shadow-none backdrop-blur-xl"
+      className="fixed top-0 left-0 right-0 z-50 px-6 py-4 border-none shadow-none backdrop-blur-none transition-colors duration-300"
+      style={{
+        backgroundColor: bgColor
+      }}
     >
       <div className="max-w-7xl mx-auto relative flex items-center justify-center px-12">
         
@@ -53,7 +78,7 @@ export default function Header() {
           </Link>
         </div>
 
-        <nav className="flex items-center gap-12 text-[#331a34] text-sm font-medium tracking-[0.2em]">
+        <nav className="flex items-center gap-16 text-sm font-medium tracking-[0.2em]" style={{ color: "#331a34" }}>
           {navItems.map((item) => {
             const isActive =
               item.href === "/gallery"
