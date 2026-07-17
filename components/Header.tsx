@@ -48,14 +48,14 @@ export default function Header() {
     }
   };
 
-  // שקוף בהתחלה, הדרגתי לורוד עם blur
+  // שקוף בהתחלה, הדרגתי לבז' חום עם blur
   const bgOpacity = isHome 
     ? Math.max(0, Math.min(1, scrollY / 300))
     : 1;
 
   const bgColor = isHome 
-    ? `rgba(255, 180, 216, ${0.7 * bgOpacity})`
-    : "rgba(255, 180, 216, 0.8)";
+    ? `rgba(232, 221, 212, ${0.7 * bgOpacity})`
+    : "rgba(232, 221, 212, 0.8)";
 
   const backdropBlur = (isHome && scrollY > 50)
     ? "backdrop-blur-md"
