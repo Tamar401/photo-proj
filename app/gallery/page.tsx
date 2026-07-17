@@ -1,7 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import AnimatedUnderline from "@/components/AnimatedUnderline";
 
 const categories = [
   { id: "משפחה", name: "משפחה", image: "/משפחה/לאתר 2.jpg" },
@@ -11,6 +13,9 @@ const categories = [
 ];
 
 export default function GalleryPage() {
+  // ניהול מצב ה-Hover לכל קטגוריה לפי האינדקס שלה
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   return (
     <main className="min-h-screen w-full bg-[#f8f8f8] text-[#331a34] antialiased m-0 p-0 block relative">
       {/* Hero Header */}
@@ -42,8 +47,7 @@ export default function GalleryPage() {
         </div>
       </div>
 
-      <div className="w-full px-6 md:px-24 pt-12 pb-12 relative z-30 bg-[#fff4fb] flex flex-col items-center" style={{ marginTop: '-40px' }}>
-        
+      <div className="w-full px-6 md:px-24 pt-12 pb-12 relative z-30 bg-[#fff4fb]" style={{ marginTop: '-40px' }}>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16 w-full max-w-7xl mx-auto">
           {categories.map((category, index) => (
             <Link key={category.id} href={`/gallery/${category.id}`}>
@@ -52,7 +56,9 @@ export default function GalleryPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.1 }}
-                whileHover={{ scale: 1.02 }}
+                // כאן אנחנו מעדכנים את המצב כשהעכבר נכנס או יוצא
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
               >
                 <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
                   <motion.img
@@ -65,18 +71,37 @@ export default function GalleryPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-                  {/* centered large label that grows and turns pink on hover */}
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <span className="text-4xl md:text-5xl font-light tracking-widest text-white/90 transition-transform duration-400 transform group-hover:scale-110 group-hover:text-[#ffb4d8]">
+                  {/* טקסט עם מעבר צבע מותנה */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                    <span 
+                      className={`text-4xl md:text-5xl font-light tracking-widest transition-colors duration-500 ${
+                        hoveredIndex === index ? "text-[#ffb4d8]" : "text-white/90"
+                      }`}
+                    >
                       {category.name}
                     </span>
+                    
+                    {/* הקו מופיע ונעלם עם אנימציה */}
+                    <div className="h-[20px] w-[80%] mt-2">
+                      <AnimatePresence>
+                        {hoveredIndex === index && (
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <AnimatedUnderline />
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   </div>
                 </div>
               </motion.div>
             </Link>
           ))}
         </div>
-
       </div>
     </main>
   );
