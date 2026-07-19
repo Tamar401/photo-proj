@@ -113,3 +113,10 @@ a:focus-visible {
 .animate-scroll-left {
   animation: scroll-left 20s linear infinite;
 }
+
+@font-face {
+  font-family: 'Bongkar';
+  src: url('/fonts/Bongkar.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

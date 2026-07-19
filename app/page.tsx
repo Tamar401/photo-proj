@@ -7,7 +7,14 @@ import AnimatedUnderline from "@/components/AnimatedUnderline";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import BackgroundCurve from "@/components/BackgroundCurve";
 import GalleryButton from "@/components/GalleryButton";
+import { Rubik } from "next/font/google";
 
+import { Fredoka } from "next/font/google";
+
+const fredoka = Fredoka({
+  subsets: ["hebrew"],
+  weight: ["600", "700"], // משקלים עבים ועגלגלים
+});
 const heroImages = [
   "/משפחה/1.jpg",
   "/סמאש קייק/לאתר6 copy.jpg",
@@ -76,7 +83,13 @@ export default function Home() {
   const filteredImages = activeCategory === "הכל"
     ? initialImages
     : initialImages.filter((image) => image.category === activeCategory);
-
+// מערך של 4 אנימציות שונות שיתחלפו ביניהן
+const currentAnim = [
+  { initial: 1, animate: 1.1 },     // 1. זום פנימה
+  { initial: 1.1, animate: 1 },     // 2. זום החוצה
+  { initial: 1.05, animate: 1.15 }, // 3. זום פנימה עדין
+  { initial: 1.15, animate: 1.05 }  // 4. זום החוצה עדין
+][currentHeroIndex % 4]; // הפעולה % 4 דואגת שהאנימציות יחזרו על עצמן במעגליות
   return (
     <main className="min-h-screen w-full bg-[#f8f8f8] text-[#331a34] antialiased m-0 p-0 block relative pt-16">
       
@@ -109,49 +122,49 @@ export default function Home() {
       <header style={{ height: "100vh", marginTop: "-4rem" }} className="relative flex flex-col w-full overflow-hidden m-0 z-10">
        <div className="absolute inset-0 z-0 bg-[#f8f8f8] w-full h-full">
           <div className="relative w-full h-full">
-            <AnimatePresence>
-              <motion.img
-                key={currentHeroIndex}
-                src={heroImages[currentHeroIndex]}
-                initial={{ opacity: 0 }}
-                animate={{ 
-                  opacity: 1, 
-                  scale: 1.1 
-                }}
-                exit={{ opacity: 0 }}
-                transition={{ 
-                  opacity: { duration: 1.5, ease: "easeInOut" },
-                  scale: { duration: 6, ease: "linear" } 
-                }}
-                className="w-full h-full object-cover object-center absolute inset-0"
-                alt="Background Content"
-              />
-            </AnimatePresence>
+          <AnimatePresence>
+  <motion.img
+    key={currentHeroIndex}
+    src={heroImages[currentHeroIndex]}
+    initial={{ opacity: 0, scale: currentAnim.initial }}
+    animate={{ 
+      opacity: 1, 
+      scale: currentAnim.animate 
+    }}
+    exit={{ opacity: 0 }}
+    transition={{ 
+      opacity: { duration: 1.5, ease: "easeInOut" },
+      scale: { duration: 6, ease: "linear" } 
+    }}
+    className="w-full h-full object-cover object-center absolute inset-0"
+    alt="Background Content"
+  />
+</AnimatePresence>
           </div>
          
         </div>
 
         {/* אזור הכיתוב - ממוקם בדיוק במרכז המסך */}
         <div className="absolute inset-0 z-20 flex items-center justify-center w-full pointer-events-none">
-          {/* כיתוב הרקע הוורוד (RACHELY) */}
-          <motion.span
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 0.6, scale: 1 }}
-            transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
-            className="absolute text-[5rem] sm:text-[8rem] md:text-[11rem] lg:text-[14rem] font-light text-[#ffb4d8] tracking-widest uppercase z-0 whitespace-nowrap"
-          >
-            RACHELY
-          </motion.span>
+         {/* כיתוב הרקע הוורוד (RACHELY) */}
+<motion.span
+  initial={{ opacity: 0, scale: 0.9 }}
+  animate={{ opacity: 0.6, scale: 1 }}
+  transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
+  className="absolute text-[5rem] sm:text-[8rem] md:text-[11rem] lg:text-[14rem] font-['Bongkar'] text-[#ffb4d8] tracking-widest uppercase z-0 whitespace-nowrap"
+>
+  RACHELY
+</motion.span>
           
-          {/* הכיתוב הלבן מעל (רחלי חלופסקי) */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
-            className="relative z-10 text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-white tracking-widest uppercase drop-shadow-md whitespace-nowrap"
-          >
-            רחלי חלופסקי
-          </motion.h1>
+{/* הכיתוב הלבן מעל (רחלי חלופסקי) */}
+<motion.h1
+  initial={{ opacity: 0, y: 30 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
+  className={`relative z-10 text-5xl sm:text-7xl md:text-8xl lg:text-[8rem] xl:text-[9.5rem] text-white tracking-widest drop-shadow-md whitespace-nowrap ${fredoka.className}`}
+>
+  רחלי חלופסקי
+</motion.h1>
         </div>
 
         {/* אזור הכפתורים - ממוקם ממש בתחתית, מעל לנקודות הניווט */}
@@ -263,9 +276,8 @@ export default function Home() {
 
         </div>
       </section>
-
-      {/* Before After Slider Section */}
-      <section className="w-full px-6 md:px-24 py-32 bg-[#f8f8f8] text-[#331a34]">
+ {/* Before After Slider Section - שונה לצבע קרם */}
+      <section className="w-full px-6 md:px-24 py-32 bg-[#f3eae3] text-[#331a34]">
         <div className="max-w-5xl mx-auto">
           
           {/* Section Title */}
@@ -289,8 +301,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* What I Photograph Section */}
-      <section className="w-full px-6 md:px-24 py-20 bg-[#f3eae3] text-[#331a34]">
+      {/* What I Photograph Section - שונה חזרה לבהיר כדי לשמור על התחלופה */}
+      <section className="w-full px-6 md:px-24 py-20 bg-[#f8f8f8] text-[#331a34]">
         <div className="max-w-6xl mx-auto">
           
           {/* Section Title */}
@@ -307,6 +319,7 @@ export default function Home() {
         <div className="w-full max-w-[347px] h-[31px] mx-auto mb-8">
   <AnimatedUnderline />
 </div>
+
 
           {/* Categories Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -471,7 +484,7 @@ export default function Home() {
     </div>
   </div>
 </section>
-<BackgroundCurve/>
+
     </main>
     
   );

@@ -1,4 +1,5 @@
 "use client";
+
 import { motion } from "framer-motion";
 
 export default function BackgroundCurve() {
@@ -19,7 +20,11 @@ export default function BackgroundCurve() {
           strokeLinejoin="round"
           initial={{ pathLength: 0, opacity: 0 }}
           whileInView={{ pathLength: 1, opacity: 1 }}
-          transition={{ duration: 4, ease: "easeInOut" }}
+          viewport={{ once: true, amount: 0.1 }} // האנימציה תתחיל כש-10% מהאלמנט נראים
+          transition={{ 
+            duration: 5, 
+            ease: [0.43, 0.13, 0.23, 0.96] // "Easing" רך יותר שמדמה תנועה אורגנית
+          }}
         />
       </motion.svg>
     </div>
