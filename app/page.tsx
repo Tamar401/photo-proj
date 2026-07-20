@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence,useScroll, useTransform  } from "framer-motion";
 import Link from "next/link";
 import AnimatedUnderline from "@/components/AnimatedUnderline";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
@@ -9,12 +9,51 @@ import BackgroundCurve from "@/components/BackgroundCurve";
 import GalleryButton from "@/components/GalleryButton";
 import { Rubik } from "next/font/google";
 
+
+import { Heebo } from "next/font/google"; // ייבוא הפונט המרובע והעבה
+
+// הגדרת הפונט במשקל הכי עבה שלו למראה עוצמתי
+const heebo = Heebo({
+  subsets: ["hebrew"],
+  weight: ["900"],
+});
 import { Fredoka } from "next/font/google";
 
 const fredoka = Fredoka({
   subsets: ["hebrew"],
   weight: ["600", "700"], // משקלים עבים ועגלגלים
 });
+// קומפוננטה שחושפת את הטקסט מילה-מילה לפי הגלילה
+const RevealText = ({ text, className }: { text: string, className?: string }) => {
+  const containerRef = useRef<HTMLParagraphElement>(null);
+  
+  // מעקב אחרי הגלילה של האלמנט הספציפי הזה
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start 85%", "end 50%"] // מתחיל להיצבע כשהוא קצת נכנס למסך, ומסיים כשהוא באמצע
+  });
+
+  const words = text.split(" ");
+
+  return (
+    <p ref={containerRef} className={`flex flex-wrap justify-center gap-x-2 gap-y-1 ${className} ${heebo.className}`}>
+      {words.map((word, i) => {
+        // חישוב מתי כל מילה צריכה להתחיל ולהיגמר להיצבע
+        const start = i / words.length;
+        const end = start + (1 / words.length);
+        
+        // מעבר משקיפות 0.2 (נראה כמו אפור בהיר) ל-1 (צבע מלא)
+        const opacity = useTransform(scrollYProgress, [start, end], [0.2, 1]);
+        
+        return (
+          <motion.span key={i} style={{ opacity }} className="transition-opacity duration-100">
+            {word}
+          </motion.span>
+        );
+      })}
+    </p>
+  );
+};
 const heroImages = [
   "/משפחה/1.jpg",
   "/סמאש קייק/לאתר6 copy.jpg",
@@ -245,22 +284,13 @@ const currentAnim = [
           </motion.h3>
 
           {/* About text */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-lg md:text-xl leading-8 text-[#5d3a59] max-w-3xl mx-auto"
-          >
-            הופכת רגעים מתוקים לחוויה בלתי נשכחת!
-            <br/>
-            אני צלמת המתמחה בתיעוד רגעים אמתיים ועמוקים. כל תצלום הוא סיפור של רגש וחום, 
-            מלמד אותי להסתכל בעיניים הפתוחות ולתפוס את ההיפ האמתית של החיים.
-            <br />
-            <br />
-            אני מאמינה שבכל רגע יש קסם - בחיוך של ילד,  בטבע שמסביב לנו. 
-            העבודה שלי היא להשמר ולהישמור על הרגעים האלה לנצח.
-          </motion.p>
+         {/* About text - מופעל באנימציית גלילה מילה אחר מילה */}
+          <div className="mt-8 mb-12 max-w-4xl mx-auto px-4" dir="rtl">
+            <RevealText 
+              text="הופכת רגעים מתוקים לחוויה בלתי נשכחת! אני צלמת המתמחה בתיעוד רגעים אמתיים ועמוקים. כל תצלום הוא סיפור של רגש וחום, מלמד אותי להסתכל בעיניים הפתוחות ולתפוס את היופי האמיתי של החיים. אני מאמינה שבכל רגע יש קסם - בחיוך של ילד, בטבע שמסביב לנו. העבודה שלי היא לשמר ולשמור על הרגעים האלה לנצח."
+              className="text-2xl md:text-4xl lg:text-5xl text-[black] leading-snug md:leading-tight"
+            />
+          </div>
 
 
           {/* Gallery Button */}
@@ -277,19 +307,19 @@ const currentAnim = [
         </div>
       </section>
 {/* Before After Slider Section */}
-      {/* הוספנו relative ל-className של הסקשן */}
-      <section className="relative w-full px-6 md:px-24 py-32 bg-[#f3eae3] text-[#331a34]">
+      <section className="relative w-full px-6 md:px-24 py-16 md:py-20 bg-[#f3eae3] text-[#331a34]">
         
-        {/* קו עליון שמצטייר משמאל לימין */}
+        {/* קו עליון - קרוב יותר לקצה */}
         <motion.div
           initial={{ width: 0 }}
           whileInView={{ width: "100%" }}
-          viewport={{ once: true }} // מופעל פעם אחת כשגוללים אליו
-          transition={{ duration: 1.5, ease: "easeInOut" }} // אורך האנימציה (1.5 שניות)
-          className="absolute top-0 left-0 h-1.5 bg-[#ffb4d8]"
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
+          className="absolute top-0 left-0 h-1.5 bg-[#ffb4d8] rounded-r-full"
         />
 
-        <div className="max-w-5xl mx-auto">
+        {/* הקטנתי מעט את הרוחב המקסימלי (max-w-4xl) כדי שהסליידר לא יהיה ענק מידי */}
+        <div className="max-w-4xl mx-auto">
           
           {/* Section Title */}
           <motion.h2
@@ -306,18 +336,20 @@ const currentAnim = [
             <AnimatedUnderline />
           </div>
 
-          {/* Before After Slider */}
-          <BeforeAfterSlider />
+          {/* עוטף חכם לסליידר - שומר על פרופורציות ומונע חיתוך למטה */}
+          <div className="relative w-full aspect-[4/3] sm:aspect-[3/2] md:aspect-[16/9] rounded-2xl overflow-hidden shadow-xl">
+            <BeforeAfterSlider />
+          </div>
 
         </div>
 
-        {/* קו תחתון שמצטייר מימין לשמאל */}
+        {/* קו תחתון - קרוב יותר לקצה */}
         <motion.div
           initial={{ width: 0 }}
           whileInView={{ width: "100%" }}
           viewport={{ once: true }} 
           transition={{ duration: 1.5, ease: "easeInOut" }}
-          className="absolute bottom-0 right-0 h-1.5 bg-[#ffb4d8]"
+          className="absolute bottom-0 right-0 h-1.5 bg-[#ffb4d8] rounded-l-full"
         />
 
       </section>
