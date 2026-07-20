@@ -15,7 +15,7 @@ import { Heebo } from "next/font/google"; // ייבוא הפונט המרובע 
 // הגדרת הפונט במשקל הכי עבה שלו למראה עוצמתי
 const heebo = Heebo({
   subsets: ["hebrew"],
-  weight: ["900"],
+  weight: ["300","400","900"],
 });
 import { Fredoka } from "next/font/google";
 
@@ -283,12 +283,12 @@ const currentAnim = [
             רחלי חלופסקי
           </motion.h3>
 
-          {/* About text */}
-         {/* About text - מופעל באנימציית גלילה מילה אחר מילה */}
-          <div className="mt-8 mb-12 max-w-4xl mx-auto px-4" dir="rtl">
+     {/* About text - מופעל באנימציית גלילה מילה אחר מילה */}
+          <div className="mt-8 mb-12 w-full" dir="rtl">
             <RevealText 
               text="הופכת רגעים מתוקים לחוויה בלתי נשכחת! אני צלמת המתמחה בתיעוד רגעים אמתיים ועמוקים. כל תצלום הוא סיפור של רגש וחום, מלמד אותי להסתכל בעיניים הפתוחות ולתפוס את היופי האמיתי של החיים. אני מאמינה שבכל רגע יש קסם - בחיוך של ילד, בטבע שמסביב לנו. העבודה שלי היא לשמר ולשמור על הרגעים האלה לנצח."
-              className="text-2xl md:text-4xl lg:text-5xl text-[black] leading-snug md:leading-tight"
+              // הקטנו את הגדלים (text-lg במקום text-2xl) והוספנו font-light למראה דק
+              className="text-lg md:text-xl lg:text-2xl text-[black] font-light leading-snug md:leading-tight"
             />
           </div>
 

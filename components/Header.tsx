@@ -58,7 +58,7 @@ export default function Header() {
     ? `rgba(232, 221, 212, ${0.7 * bgOpacity})`
     : "rgba(232, 221, 212, 0.8)";
 
-  const backdropBlur = (isHome && scrollY > 50)
+  const backdropBlur = ( scrollY > 50)
     ? "backdrop-blur-md"
     : "backdrop-blur-none";
 
@@ -68,9 +68,11 @@ export default function Header() {
         initial={{ y: -16, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className={`fixed top-0 left-0 right-0 z-50 px-4 md:px-6 py-2 md:py-4 border-none shadow-none transition-colors duration-300 ${backdropBlur}`}
+        className={`fixed top-0 left-0 right-0 z-50 px-4 md:px-6 py-2 md:py-4 border-none shadow-none transition-colors duration-300 backdrop-blur-md ${backdropBlur}`}
         style={{
-          backgroundColor: bgColor
+          backgroundColor: bgColor,
+          
+          
         }}
       >
         <div className="max-w-7xl mx-auto relative flex items-center justify-between md:justify-center px-4 md:px-12 w-full">

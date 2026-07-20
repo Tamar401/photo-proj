@@ -91,7 +91,7 @@ const LazyImageCard = ({ img, index, onClick }: any) => {
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, amount: 0.1, margin: "50px" }}
       // משך זמן של שניה וחצי, תנועה חלקה בשני הקצוות, והשהיה קצת יותר ארוכה
-      transition={{ duration: 1.5, ease: "easeInOut", delay: (index % 3) * 0.2 }}
+      transition={{ duration: 1.2, ease: "easeInOut", delay: (index % 3) * 0.1 }}
       onClick={onClick}
       className="relative overflow-hidden bg-[#eaeaea] group cursor-pointer break-inside-avoid w-full mb-2 min-h-[250px]"
     >
