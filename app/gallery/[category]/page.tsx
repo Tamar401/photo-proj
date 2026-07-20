@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, use, useRef } from "react";
+import { useState, useEffect, use } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -80,85 +80,42 @@ const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 
+// קומפוננטת כרטיס התמונה - מעודכנת לאנימציה רכה ואיטית
 const LazyImageCard = ({ img, index, onClick }: any) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-        observer.disconnect(); 
-      }
-    }, { rootMargin: "200px" });
-
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
-  const cardVariants = {
-    hidden: { opacity: 0, scale: 0.85 }, 
-    visible: { opacity: 1, scale: 1 },   
-  };
-
-  const cardTransition = { 
-    duration: 0.8, 
-    ease: [0.25, 0.1, 0.25, 1],
-    delay: (index % 4) * 0.05 
-  };
 
   return (
     <motion.div
-      ref={ref}
-      initial="hidden"
-      animate={isLoaded ? "visible" : "hidden"}
-      variants={cardVariants}
-      transition={cardTransition as any}
-      exit="hidden"
+      // מתחיל מ-0.5 כדי שהמרחק שהתמונה עוברת יהיה קטן יותר והתנועה תרגיש רכה
+      initial={{ opacity: 0, scale: 0.5 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, amount: 0.1, margin: "50px" }}
+      // משך זמן של שניה וחצי, תנועה חלקה בשני הקצוות, והשהיה קצת יותר ארוכה
+      transition={{ duration: 1.5, ease: "easeInOut", delay: (index % 3) * 0.2 }}
       onClick={onClick}
-      className="relative overflow-hidden bg-[#eaeaea] group cursor-pointer break-inside-avoid w-full mb-1"
+      className="relative overflow-hidden bg-[#eaeaea] group cursor-pointer break-inside-avoid w-full mb-2 min-h-[250px]"
     >
-      {isVisible && (
-        <Image
-          src={img.src}
-          alt={img.category}
-          width={0}
-          height={0}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          style={{ width: '100%', height: 'auto' }}
-          onLoad={() => setIsLoaded(true)}
-          className={`transition-all duration-500 ease-in-out group-hover:brightness-75 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-        />
-      )}
+      <Image
+        src={img.src}
+        alt={img.category}
+        width={0}
+        height={0}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        style={{ width: '100%', height: 'auto' }}
+        onLoad={() => setIsLoaded(true)}
+        // האטתי גם את הגדילה במעבר עכבר ל-1000 (שנייה שלמה) כדי שגם זה ירגיש חלומי
+        className={`transition-all duration-1000 ease-out group-hover:brightness-75 group-hover:scale-110 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+      />
     </motion.div>
   );
 };
-
 export default function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
   const { category } = use(params);
   const decodedCategory = decodeURIComponent(category);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [lightboxDirection, setLightboxDirection] = useState(0);
   
-  const [displayCount, setDisplayCount] = useState(12);
-  const loadMoreRef = useRef<HTMLDivElement>(null);
-
   const filteredImages = initialImages.filter(img => img.category === decodedCategory);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setDisplayCount((prev) => Math.min(prev + 8, filteredImages.length));
-        }
-      },
-      { rootMargin: "400px" } 
-    );
-
-    if (loadMoreRef.current) observer.observe(loadMoreRef.current);
-    return () => observer.disconnect();
-  }, [filteredImages.length]);
 
   useEffect(() => {
     if (selectedIndex !== null) document.body.style.overflow = "hidden";
@@ -273,7 +230,7 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
 
         <h1 className="text-5xl md:text-6xl font-light mb-6 tracking-widest">{categoryNames[decodedCategory] || decodedCategory}</h1>
 
-        {/* Breadcrumb Navigation - בצד ימין */}
+        {/* Breadcrumb Navigation */}
         <div className="w-full flex items-center justify-end px-4 md:px-12 mb-12">
           <div className="flex items-center gap-3 text-lg md:text-xl font-light text-[#ffb4d8]">
             <span className="text-[black]">{categoryNames[decodedCategory] || decodedCategory}</span>
@@ -288,8 +245,9 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
         </div>
 
         <section className="mb-16 w-full max-w-[1600px] mx-auto relative">
-          <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-1 w-full">
-            {filteredImages.slice(0, displayCount).map((img, index) => (
+          {/* הוגדר ל-3 עמודות במקסימום כמו שביקשת */}
+          <div className="columns-1 sm:columns-2 md:columns-3 gap-1 w-full">
+            {filteredImages.map((img, index) => (
               <LazyImageCard 
                 key={img.id}
                 img={img}
@@ -298,10 +256,6 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
               />
             ))}
           </div>
-          
-          {displayCount < filteredImages.length && (
-            <div ref={loadMoreRef} className="w-full h-20 absolute bottom-0 translate-y-full" />
-          )}
         </section>
 
       </div>

@@ -93,7 +93,6 @@ export default function ContactPage() {
               className="h-[70px] md:h-[100px] object-contain opacity-80"
             />
           </motion.div>
-<DrawnLine/>
           {/* כותרת */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}

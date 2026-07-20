@@ -235,7 +235,7 @@ const currentAnim = [
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-6xl font-light mb-8 tracking-widest"
+            className="text-5xl md:text-6xl font-light mb-8 tracking-widest" 
             style={{
               color: 'transparent',
               WebkitTextStroke: '2px #ffb4d8'
@@ -276,8 +276,19 @@ const currentAnim = [
 
         </div>
       </section>
- {/* Before After Slider Section - שונה לצבע קרם */}
-      <section className="w-full px-6 md:px-24 py-32 bg-[#f3eae3] text-[#331a34]">
+{/* Before After Slider Section */}
+      {/* הוספנו relative ל-className של הסקשן */}
+      <section className="relative w-full px-6 md:px-24 py-32 bg-[#f3eae3] text-[#331a34]">
+        
+        {/* קו עליון שמצטייר משמאל לימין */}
+        <motion.div
+          initial={{ width: 0 }}
+          whileInView={{ width: "100%" }}
+          viewport={{ once: true }} // מופעל פעם אחת כשגוללים אליו
+          transition={{ duration: 1.5, ease: "easeInOut" }} // אורך האנימציה (1.5 שניות)
+          className="absolute top-0 left-0 h-1.5 bg-[#ffb4d8]"
+        />
+
         <div className="max-w-5xl mx-auto">
           
           {/* Section Title */}
@@ -291,14 +302,24 @@ const currentAnim = [
             העיבוד שלי
           </motion.h2>
           
-         <div className="w-full max-w-[347px] h-[31px] mx-auto mb-8">
-  <AnimatedUnderline />
-</div>
+          <div className="w-full max-w-[347px] h-[31px] mx-auto mb-8">
+            <AnimatedUnderline />
+          </div>
 
           {/* Before After Slider */}
           <BeforeAfterSlider />
 
         </div>
+
+        {/* קו תחתון שמצטייר מימין לשמאל */}
+        <motion.div
+          initial={{ width: 0 }}
+          whileInView={{ width: "100%" }}
+          viewport={{ once: true }} 
+          transition={{ duration: 1.5, ease: "easeInOut" }}
+          className="absolute bottom-0 right-0 h-1.5 bg-[#ffb4d8]"
+        />
+
       </section>
 
       {/* What I Photograph Section - שונה חזרה לבהיר כדי לשמור על התחלופה */}
@@ -484,6 +505,7 @@ const currentAnim = [
     </div>
   </div>
 </section>
+
 
     </main>
     
