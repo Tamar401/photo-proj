@@ -70,7 +70,7 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
-            className="relative z-20 text-6xl md:text-8xl font-light text-white tracking-widest uppercase"
+            className="relative z-20 text-6xl md:text-8xl font-light text-white tracking-widest uppercase font-hebrew"
           >
             צור קשר
           </motion.h1>
@@ -101,8 +101,8 @@ export default function ContactPage() {
             className="text-center mb-12"
           >
 
-            <h2 className="text-4xl md:text-5xl font-extrabold text-[#ffb4d8] mb-4">בואו נדבר</h2>
-            <p className="text-lg md:text-xl text-[#7e5b7b] font-light">
+            <h2 className="text-4xl md:text-5xl font-extrabold text-[#ff6fc6] mb-4 font-hebrew">בואו נדבר</h2>
+            <p className="text-lg md:text-xl text-[#b0b0b0] font-light font-hebrew">
               אשמח לשמוע על הרעיון הבא שלכם
             </p>
           </motion.div>

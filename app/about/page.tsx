@@ -22,7 +22,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
-            className="relative z-20 text-6xl md:text-8xl font-light text-white tracking-widest uppercase"
+            className="relative z-20 text-6xl md:text-8xl font-light text-white tracking-widest uppercase font-hebrew"
           >
             אודות
           </motion.h1>
@@ -54,7 +54,7 @@ export default function AboutPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-5xl md:text-6xl font-light text-[#331a34] mb-6">רחלי חלופסקי</h2>
+            <h2 className="text-5xl md:text-6xl font-light text-[#e0e0e0] mb-6 font-hebrew">רחלי חלופסקי</h2>
           </motion.div>
 
       

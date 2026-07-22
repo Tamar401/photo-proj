@@ -40,7 +40,7 @@ export default function GalleryPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
-            className="relative z-20 text-6xl md:text-8xl font-light text-white tracking-widest uppercase"
+            className="relative z-20 text-6xl md:text-8xl font-light text-white tracking-widest uppercase font-hebrew"
           >
             גלריה
           </motion.h1>

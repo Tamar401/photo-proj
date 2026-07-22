@@ -228,16 +228,16 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
           )}
         </AnimatePresence>
 
-        <h1 className="text-5xl md:text-6xl font-light mb-6 tracking-widest">{categoryNames[decodedCategory] || decodedCategory}</h1>
+        <h1 className="text-5xl md:text-6xl font-light mb-6 tracking-widest font-hebrew">{categoryNames[decodedCategory] || decodedCategory}</h1>
 
         {/* Breadcrumb Navigation */}
         <div className="w-full flex items-center justify-end px-4 md:px-12 mb-12">
-          <div className="flex items-center gap-3 text-lg md:text-xl font-light text-[#ffb4d8]">
+          <div className="flex items-center gap-3 text-lg md:text-xl font-light text-[#ff6fc6] font-hebrew">
             <span className="text-[black]">{categoryNames[decodedCategory] || decodedCategory}</span>
             <span>/</span>
             <Link 
               href="/gallery" 
-              className="hover:text-[#ff9ecb] transition-colors"
+              className="hover:text-[#ff6fc6] transition-colors font-hebrew"
             >
               גלריה
             </Link>

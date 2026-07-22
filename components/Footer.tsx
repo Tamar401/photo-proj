@@ -9,9 +9,9 @@ export default function Footer() {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
-      className="w-full bg-white border-t border-pink-100 py-12 px-6"
+      className="w-full bg-[#f3eae3] border-t border-pink-100 py-12 px-6"
     >
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 font-hebrew">
         {/* תאגיד */}
         <motion.a
           href="mailto:t4136401@gmail.com"

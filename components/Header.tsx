@@ -71,8 +71,6 @@ export default function Header() {
         className={`fixed top-0 left-0 right-0 z-50 px-4 md:px-6 py-2 md:py-4 border-none shadow-none transition-colors duration-300 backdrop-blur-md ${backdropBlur}`}
         style={{
           backgroundColor: bgColor,
-          
-          
         }}
       >
         <div className="max-w-7xl mx-auto relative flex items-center justify-between md:justify-center px-4 md:px-12 w-full">
@@ -107,7 +105,7 @@ export default function Header() {
           </button>
 
           {/* Navigation - hidden on mobile, visible on md+ */}
-          <nav className="hidden md:flex items-center gap-3 md:gap-12 lg:gap-28 text-xs md:text-sm lg:text-base font-medium tracking-[0.1em] md:tracking-[0.2em]" style={{ color: "#331a34" }}>
+          <nav className="hidden md:flex items-center gap-3 md:gap-12 lg:gap-28 text-xs md:text-sm lg:text-base font-medium tracking-[0.1em] md:tracking-[0.2em] font-hebrew">
             {navItems.map((item) => {
               const isActive =
                 item.href === "/gallery"
@@ -124,15 +122,18 @@ export default function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="transition duration-200"
-                  style={{
-                    color: isActive ? item.color : "white",
-                    textDecoration: isActive ? "underline" : "none",
-                    textUnderlineOffset: "10px",
-                  }}
+                  className={`relative group transition-colors duration-300 ${
+                    isActive ? "text-[#c24f8d]" : "text-white hover:text-[#c24f8d]"
+                  }`}
                   onClick={item.href === "/" ? handleHomeClick : undefined}
                 >
                   {item.label}
+                  {/* קו תחתון מונפש מהאמצע */}
+                  <span
+                    className={`absolute left-1/2 -translate-x-1/2 -bottom-2 h-[2px] bg-[#c24f8d] transition-all duration-300 ease-out ${
+                      isActive ? "w-full" : "w-0 group-hover:w-full"
+                    }`}
+                  />
                 </Link>
               );
             })}
@@ -149,7 +150,7 @@ export default function Header() {
             exit={{ opacity: 0, y: -20 }}
             className="fixed top-16 left-0 right-0 md:hidden z-40 bg-[#e8ddd4]/95 backdrop-blur-md"
           >
-            <nav className="flex flex-col gap-4 p-6" style={{ color: "#331a34" }}>
+            <nav className="flex flex-col gap-4 p-6 font-hebrew">
               {navItems.map((item) => {
                 const isActive =
                   item.href === "/gallery"
@@ -172,13 +173,17 @@ export default function Header() {
                         handleHomeClick(new MouseEvent('click') as any);
                       }
                     }}
-                    className="text-lg font-medium transition duration-200"
-                    style={{
-                      color: isActive ? item.color : "#331a34",
-                      textDecoration: isActive ? "underline" : "none",
-                    }}
+                    className={`relative group w-fit transition-colors duration-300 text-lg font-medium ${
+                      isActive ? "text-[#c24f8d]" : "text-[#331a34] hover:text-[#c24f8d]"
+                    }`}
                   >
                     {item.label}
+                    {/* קו תחתון מונפש מהאמצע גם בתפריט המובייל */}
+                    <span
+                      className={`absolute left-1/2 -translate-x-1/2 -bottom-1 h-[2px] bg-[#c24f8d] transition-all duration-300 ease-out ${
+                        isActive ? "w-full" : "w-0 group-hover:w-full"
+                      }`}
+                    />
                   </Link>
                 );
               })}

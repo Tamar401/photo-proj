@@ -1,19 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zhi+Mang+Xing&display=swap');
 @import "tailwindcss";
 
 body {
-  background-color: #ffffff;
-  color: #ff6fae; /* primary light pink */
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  /* הפונט Fredoka מוגדר כראשון כדי שישלוט על כל האתר */
+  font-family: 'Fredoka', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400; /* Fredoka תומך במשקלים מ-300 ועד 700. אפשר לשנות ל-500 או 600 למראה טיפה יותר עבה */
   overflow-x: hidden;
 }
 
 .handwritten-name {
-  font-family: 'Great Vibes', cursive;
-  font-size: 1.5rem;
-  font-weight: 400;
+  font-family: 'iInspirationalDoctor', cursive;
+  font-size: 3rem;
+  font-weight: 800;
   letter-spacing: 0.05em;
-  color: #000000;
+  color: #ff6fc6;
   animation: fadeInWrite 3s ease-out;
 }
 
@@ -89,34 +93,46 @@ a:focus-visible {
 }
 
 @keyframes scroll-right {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(100px);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(100px); }
 }
 
 @keyframes scroll-left {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-100px);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100px); }
 }
 
-.animate-scroll-right {
-  animation: scroll-right 20s linear infinite;
-}
-
-.animate-scroll-left {
-  animation: scroll-left 20s linear infinite;
-}
+.animate-scroll-right { animation: scroll-right 20s linear infinite; }
+.animate-scroll-left { animation: scroll-left 20s linear infinite; }
 
 @font-face {
   font-family: 'Bongkar';
   src: url('/fonts/Bongkar.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+}
+
+@font-face {
+  font-family: 'iInspirationalDoctor';
+  src: url('/fonts/iInspirationalDoctor.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Steel Hammer Pro';
+  src: url('/fonts/Steel\ Hammer\ Pro.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* מחלקות עזר */
+.font-english {
+  font-family: 'iInspirationalDoctor', system-ui;
+  font-weight: 800;
+}
+
+.font-hebrew {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 500; /* משקל בינוני לכותרות וכדומה */
 }

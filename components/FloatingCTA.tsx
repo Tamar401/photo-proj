@@ -15,7 +15,7 @@ export default function FloatingCTA() {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="bg-white text-zinc-900 px-6 py-3 rounded-full font-bold shadow-[0_0_20px_rgba(255,255,255,0.3)] backdrop-blur-md transition-colors hover:bg-zinc-200"
+          className="bg-white text-zinc-900 px-6 py-3 rounded-full font-bold shadow-[0_0_20px_rgba(255,255,255,0.3)] backdrop-blur-md transition-colors hover:bg-zinc-200 font-hebrew"
         >
           דברו איתי
         </motion.button>

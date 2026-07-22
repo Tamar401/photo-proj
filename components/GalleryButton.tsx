@@ -57,7 +57,7 @@ export default function GalleryButton() {
       `}</style>
       <a
         href="/gallery"
-        className={`gallery-button ${isHovered ? "hovered" : "unhovered"}`}
+        className={`gallery-button font-hebrew ${isHovered ? "hovered" : "unhovered"}`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
