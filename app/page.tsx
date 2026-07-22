@@ -237,7 +237,7 @@ export default function Home() {
       </header>
 
       {/* About Section */}
-      <section className="w-full px-6 md:px-24 py-32 bg-[#f8f8f8] text-[#331a34]">
+      <section className="w-full px-6 md:px-24 py-32 bg-[#f3eae3] text-[#331a34]">
         <div className="max-w-5xl mx-auto text-center">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -279,7 +279,7 @@ export default function Home() {
       </section>
       
       {/* Before After Slider Section */}
-      <section className="relative w-full px-6 md:px-24 py-16 md:py-20 bg-[#f3eae3] text-[#331a34]">
+      <section className="relative w-full px-6 md:px-24 py-16 md:py-20 bg-[#f8f8f8] text-[#331a34]">
         <motion.div initial={{ width: 0 }} whileInView={{ width: "100%" }} viewport={{ once: true }} transition={{ duration: 1.5, ease: "easeInOut" }} className="absolute top-0 left-0 h-1.5 bg-[#ffb4d8] rounded-r-full" />
 
         <div className="max-w-4xl mx-auto">
@@ -300,7 +300,7 @@ export default function Home() {
       </section>
 
       {/* What I Photograph Section (הוחזר לעיצוב המקורי והנקי) */}
-      <section className="w-full px-6 md:px-24 py-20 bg-[#f8f8f8] text-[#331a34]">
+      <section className="w-full px-6 md:px-24 py-20 bg-[#f3eae3] text-[#331a34]">
         <div className="max-w-6xl mx-auto">
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="text-4xl md:text-5xl text-center mb-4 text-[#ffb4d8]">
             מה אני מצלמת
@@ -371,7 +371,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="w-full px-6 md:px-24 py-20 bg-[#f3eae3] text-[#331a34]">
+      <section className="w-full px-6 md:px-24 py-20 bg-[#f8f8f8] text-[#331a34]">
         <div className="max-w-4xl mx-auto">
           <AnimatePresence mode="wait">
             <motion.div
