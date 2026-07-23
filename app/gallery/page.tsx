@@ -4,6 +4,12 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import AnimatedUnderline from "@/components/AnimatedUnderline";
+import { Fredoka } from "next/font/google"; 
+
+const fredoka = Fredoka({
+  subsets: ["hebrew", "latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
 
 const categories = [
   { id: "משפחה", name: "משפחה", image: "/משפחה/לאתר 2.jpg" },
@@ -17,7 +23,7 @@ export default function GalleryPage() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <main className="min-h-screen w-full bg-[#f8f8f8] text-[#331a34] antialiased m-0 p-0 block relative">
+    <main className={`min-h-screen w-full bg-[#f8f8f8] text-[#331a34] antialiased m-0 p-0 block relative ${fredoka.className}`}>
       {/* Hero Header */}
       <div className="relative w-full h-[50vh] flex items-center justify-center overflow-hidden">
         <img
@@ -31,7 +37,7 @@ export default function GalleryPage() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 0.5, scale: 1 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
-            className="absolute text-[10rem] md:text-[16rem] font-light text-[#ffb4d8] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 tracking-widest uppercase pointer-events-none"
+            className="absolute text-[6rem] md:text-[12rem]  text-[#ffb4d8] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 tracking-[1px] uppercase font-['iInspirationalDoctor'] pointer-events-none"
             style={{ zIndex: 1 }}
           >
             gallery
@@ -40,7 +46,7 @@ export default function GalleryPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
-            className="relative z-20 text-6xl md:text-8xl font-light text-white tracking-widest uppercase font-hebrew"
+            className="relative z-20 text-6xl md:text-8xl  font-bold text-white tracking-widest uppercase "
           >
             גלריה
           </motion.h1>

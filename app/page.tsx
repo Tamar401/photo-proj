@@ -189,7 +189,7 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 0.6, scale: 1 }}
             transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
-            className="absolute text-[300px] font-['iInspirationalDoctor'] text-[#ffb4d8] tracking-[1px] uppercase z-0 whitespace-nowrap font-black"
+            className="absolute text-[80px] md:text-[170px] lg:text-[210px] font-['iInspirationalDoctor'] text-[#ffb4d8] tracking-[1px] uppercase z-0 whitespace-nowrap font-black"
           >
             RACHELY
           </motion.span>
@@ -198,7 +198,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
-            className="relative z-10 text-5xl sm:text-7xl md:text-8xl lg:text-[8rem] xl:text-[9.5rem] text-white tracking-widest drop-shadow-md whitespace-nowrap font-bold"
+            className="relative z-10 text-4xl sm:text-6xl md:text-7xl lg:text-[6rem] xl:text-[7.5rem] text-white tracking-widest drop-shadow-md whitespace-nowrap font-bold"
           >
             רחלי חלופסקי
           </motion.h1>
@@ -253,16 +253,31 @@ export default function Home() {
             <AnimatedUnderline />
           </div>
 
-          <motion.h3
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-6xl mb-8 tracking-widest"
-            style={{ color: "transparent", WebkitTextStroke: "2px #ff6fc6" }}
+            className="text-5xl md:text-6xl mb-8 tracking-widest flex justify-center"
+            dir="rtl"
           >
-            רחלי חלופסקי
-          </motion.h3>
+            {"רחלי חלופסקי".split("").map((char, index) => (
+              <motion.span
+                key={index}
+                initial={{ color: "transparent" }}
+                whileInView={{ color: "#ffb4d8" }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ 
+                  duration: 0.4, 
+                  delay: 0.8 + (index * 0.15), 
+                  ease: "easeInOut" 
+                }}
+                style={{ WebkitTextStroke: "2px #ff6fc6" }}
+              >
+                {char === " " ? "\u00A0" : char}
+              </motion.span>
+            ))}
+          </motion.div>
 
           <div className="mt-8 mb-12 w-full" dir="rtl">
             <RevealText
@@ -299,7 +314,7 @@ export default function Home() {
         <motion.div initial={{ width: 0 }} whileInView={{ width: "100%" }} viewport={{ once: true }} transition={{ duration: 1.5, ease: "easeInOut" }} className="absolute bottom-0 right-0 h-1.5 bg-[#ffb4d8] rounded-l-full" />
       </section>
 
-      {/* What I Photograph Section (הוחזר לעיצוב המקורי והנקי) */}
+      {/* What I Photograph Section */}
       <section className="w-full px-6 md:px-24 py-20 bg-[#f3eae3] text-[#331a34]">
         <div className="max-w-6xl mx-auto">
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="text-4xl md:text-5xl text-center mb-4 text-[#ffb4d8]">
