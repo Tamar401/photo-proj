@@ -11,6 +11,20 @@ const fredoka = Fredoka({
   weight: ["300", "400", "500", "600", "700"],
 });
 
+// הגדרות אנימציה להופעה הדרגתית של הכרטיסיות
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+};
+
 const categories = [
   { id: "משפחה", name: "משפחה", image: "/משפחה/לאתר 2.jpg" },
   { id: "ניו בורן", name: "ניו בורן", image: "/ניו בורן/12311-Edit.jpg" },
@@ -23,79 +37,88 @@ export default function GalleryPage() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <main className={`min-h-screen w-full bg-[#f8f8f8] text-[#331a34] antialiased m-0 p-0 block relative ${fredoka.className}`}>
+    <main className={`min-h-screen w-full bg-[#f8f8f8] text-[#331a34] antialiased m-0 p-0 block relative ${fredoka.className}`} dir="rtl">
+      
       {/* Hero Header */}
-      <div className="relative w-full h-[50vh] flex items-center justify-center overflow-hidden">
-        <img
+      <div className="relative w-full h-[40vh] md:h-[50vh] flex items-center justify-center overflow-hidden bg-[#f8f8f8]">
+        <motion.img
+          initial={{ scale: 1.05 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
           src="/משפחה/לתמר.jpg"
           alt="Gallery Header"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/10" />
-        <div className="relative z-10">
+        <div className="absolute inset-0 bg-black/20 transition-all duration-700" />
+        
+        {/* קונטיינר מרכזי עם Flexbox למירכוז מושלם */}
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none text-center">
           <motion.span
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 0.5, scale: 1 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="absolute text-[6rem] md:text-[12rem]  text-[#ffb4d8] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 tracking-[1px] uppercase font-['iInspirationalDoctor'] pointer-events-none"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 0.6, scale: 1 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+            className="absolute text-[5rem] md:text-[14rem] tracking-[10px] md:tracking-[25px] uppercase font-['iInspirationalDoctor'] text-[#ffb4d8] whitespace-nowrap"
             style={{ zIndex: 1 }}
           >
-            gallery
+            GALLERY
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
-            className="relative z-20 text-6xl md:text-8xl  font-bold text-white tracking-widest uppercase "
+            transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
+            className="relative z-20 text-6xl md:text-8xl font-bold text-white tracking-widest uppercase drop-shadow-lg"
           >
             גלריה
           </motion.h1>
         </div>
       </div>
 
-      <div className="w-full px-6 md:px-24 pt-12 pb-12 relative z-30 bg-[#fff4fb]" style={{ marginTop: '-40px' }}>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16 w-full max-w-7xl mx-auto">
+      <div className="w-full px-6 md:px-24 pt-16 pb-24 relative z-30 bg-[#fff4fb] rounded-t-[3rem] shadow-[0_-10px_40px_rgba(0,0,0,0.02)]" style={{ marginTop: '-40px' }}>
+        
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-16 w-full max-w-7xl mx-auto"
+        >
           {categories.map((category, index) => (
             <Link key={category.id} href={`/gallery/${category.id}`}>
               <motion.div
-                className="relative overflow-hidden rounded-2xl cursor-pointer group"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.1 }}
-                // כאן אנחנו מעדכנים את המצב כשהעכבר נכנס או יוצא
+                variants={itemVariants}
+                className="relative overflow-hidden rounded-[2rem] cursor-pointer group shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-500 bg-white"
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
-                <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
+                <div className="relative aspect-[3/4] overflow-hidden rounded-[2rem]">
                   <motion.img
                     src={category.image}
                     alt={category.name}
                     className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, ease: "easeInOut" }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  
+                  {/* שכבת מעבר צבע על התמונה */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent group-hover:from-black/50 transition-colors duration-500" />
 
-                  {/* טקסט עם מעבר צבע מותנה */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                  {/* טקסט וקו תחתון */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-end pb-12 pointer-events-none">
                     <span 
-                      className={`text-4xl md:text-5xl font-light tracking-widest transition-colors duration-500 ${
-                        hoveredIndex === index ? "text-[#ffb4d8]" : "text-white/90"
+                      className={`text-3xl md:text-4xl font-semibold tracking-wide transition-colors duration-500 drop-shadow-md ${
+                        hoveredIndex === index ? "text-[#ffb4d8]" : "text-white"
                       }`}
                     >
                       {category.name}
                     </span>
                     
                     {/* הקו מופיע ונעלם עם אנימציה */}
-                    <div className="h-[20px] w-[80%] mt-2">
+                    <div className="h-[20px] w-[60%] mt-3">
                       <AnimatePresence>
                         {hoveredIndex === index && (
                           <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.3 }}
+                            initial={{ opacity: 0, scaleX: 0 }}
+                            animate={{ opacity: 1, scaleX: 1 }}
+                            exit={{ opacity: 0, scaleX: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
                           >
                             <AnimatedUnderline />
                           </motion.div>
@@ -107,7 +130,8 @@ export default function GalleryPage() {
               </motion.div>
             </Link>
           ))}
-        </div>
+        </motion.div>
+        
       </div>
     </main>
   );

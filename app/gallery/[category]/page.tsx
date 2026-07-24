@@ -4,6 +4,12 @@ import { useState, useEffect, use } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { Fredoka } from "next/font/google"; 
+
+const fredoka = Fredoka({
+  subsets: ["hebrew", "latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
 
 const initialImages = [
   // משפחה
@@ -80,35 +86,44 @@ const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 
-// קומפוננטת כרטיס התמונה - מעודכנת לאנימציה רכה ואיטית
+// קומפוננטת כרטיס התמונה - טעינה מקטן לגדול ללא רווחים מיותרים
 const LazyImageCard = ({ img, index, onClick }: any) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
     <motion.div
-      // מתחיל מ-0.5 כדי שהמרחק שהתמונה עוברת יהיה קטן יותר והתנועה תרגיש רכה
-      initial={{ opacity: 0, scale: 0.5 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, amount: 0.1, margin: "50px" }}
-      // משך זמן של שניה וחצי, תנועה חלקה בשני הקצוות, והשהיה קצת יותר ארוכה
-      transition={{ duration: 1.2, ease: "easeInOut", delay: (index % 3) * 0.1 }}
+      initial={{ opacity: 0, scale: 0.85, y: 20 }}
+      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.05 }}
+      transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
       onClick={onClick}
-      className="relative overflow-hidden bg-[#eaeaea] group cursor-pointer break-inside-avoid w-full mb-2 min-h-[250px]"
+      className="relative overflow-hidden bg-transparent group cursor-pointer break-inside-avoid w-full mb-1 sm:mb-2 rounded-none"
     >
-      <Image
-        src={img.src}
-        alt={img.category}
-        width={0}
-        height={0}
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        style={{ width: '100%', height: 'auto' }}
-        onLoad={() => setIsLoaded(true)}
-        // האטתי גם את הגדילה במעבר עכבר ל-1000 (שנייה שלמה) כדי שגם זה ירגיש חלומי
-        className={`transition-all duration-1000 ease-out group-hover:brightness-75 group-hover:scale-110 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-      />
+      <div className="relative w-full flex items-center justify-center">
+        <Image
+          src={img.src}
+          alt={img.category}
+          width={0}
+          height={0}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          style={{ width: '100%', height: 'auto', display: 'block' }}
+          onLoad={() => setIsLoaded(true)}
+          className={`transition-transform duration-700 ease-out group-hover:scale-105 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+        />
+        
+        {/* שכבת Hover מודרנית עם אייקון התרחבות */}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-500 text-white">
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+            </svg>
+          </div>
+        </div>
+      </div>
     </motion.div>
   );
 };
+
 export default function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
   const { category } = use(params);
   const decodedCategory = decodeURIComponent(category);
@@ -140,9 +155,36 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
   };
 
   return (
-    <main className="min-h-screen w-full bg-[#f3eae3] text-[#331a34] antialiased m-0 p-0 block relative pt-24">
-      <div className="w-full px-4 md:px-12 pt-8 pb-12 relative z-30 bg-[#f5ede6] flex flex-col items-center">
+    <main className={`min-h-screen w-full bg-[#f8f8f8] text-[#331a34] antialiased m-0 p-0 block relative ${fredoka.className}`} dir="rtl">
+      
+      {/* Header אלגנטי */}
+      <div className="relative w-full pt-32 pb-16 flex flex-col items-center justify-center bg-gradient-to-b from-[#f0e6ef] to-[#f8f8f8]">
+        <motion.h1 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-5xl md:text-7xl font-bold mb-6 tracking-widest text-[#331a34] drop-shadow-sm text-center"
+        >
+          {categoryNames[decodedCategory] || decodedCategory}
+        </motion.h1>
 
+        {/* פירורי לחם (Breadcrumbs) מעוצבים כגלולה (Pill) */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="flex items-center gap-3 px-6 py-2 bg-white/60 backdrop-blur-sm rounded-full shadow-sm text-lg font-light text-[#8d6a87]"
+        >
+          <Link href="/gallery" className="hover:text-[#ff6fc6] transition-colors">
+            גלריה
+          </Link>
+          <span className="text-pink-300">/</span>
+          <span className="text-[#331a34] font-medium">{categoryNames[decodedCategory] || decodedCategory}</span>
+        </motion.div>
+      </div>
+
+      <div className="w-full px-4 md:px-8 pb-24 relative z-30 flex flex-col items-center">
+        {/* Lightbox מלוטש */}
         <AnimatePresence initial={false} custom={lightboxDirection}>
           {selectedIndex !== null && (
             <motion.div
@@ -150,103 +192,91 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(0,0,0,0.9)] p-4"
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-xl p-4 md:p-8"
               onClick={() => setSelectedIndex(null)}
             >
               <div
-                className="relative w-full max-w-[95vw] max-h-[95vh] flex items-center justify-center"
+                className="relative w-full max-w-7xl h-full flex items-center justify-center"
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="relative bg-transparent shadow-none overflow-hidden w-full h-full">
-                  <button
-                    onClick={(e) => { e.stopPropagation(); setSelectedIndex(null); }}
-                    className="absolute top-8 right-8 z-50 text-white/70 hover:text-white text-3xl cursor-pointer transition-all hover:scale-110"
-                    aria-label="Close lightbox"
-                  >
-                    ✕
-                  </button>
+                {/* כפתור סגירה */}
+                <button
+                  onClick={(e) => { e.stopPropagation(); setSelectedIndex(null); }}
+                  className="absolute top-4 right-4 md:top-8 md:right-8 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-md transition-all hover:scale-105"
+                  aria-label="Close lightbox"
+                >
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
 
-                  <div className="absolute inset-x-0 top-8 z-40 flex items-center justify-center px-4 pointer-events-none">
-                    <span className="text-sm font-light tracking-widest text-white/60">
-                      {selectedIndex + 1} / {filteredImages.length}
-                    </span>
-                  </div>
-
-                  <div className="relative mx-auto w-full h-[85vh] flex items-center justify-center overflow-hidden">
-                    <AnimatePresence initial={false} custom={lightboxDirection}>
-                      <motion.img
-                        key={selectedIndex}
-                        src={filteredImages[selectedIndex].src}
-                        alt={filteredImages[selectedIndex].category}
-                        custom={lightboxDirection}
-                        variants={slideVariants}
-                        initial="enter"
-                        animate="center"
-                        exit="exit"
-                        transition={{
-                          x: { type: "spring", stiffness: 300, damping: 30 },
-                          opacity: { duration: 0.2 }
-                        }}
-                        drag="x"
-                        dragConstraints={{ left: 0, right: 0 }}
-                        dragElastic={1}
-                        onDragEnd={(e, { offset, velocity }) => {
-                          const swipe = swipePower(offset.x, velocity.x);
-                          if (swipe < -swipeConfidenceThreshold) {
-                            handleNext();
-                          } else if (swipe > swipeConfidenceThreshold) {
-                            handlePrev();
-                          }
-                        }}
-                        className="absolute max-w-full max-h-[calc(85vh-80px)] object-contain cursor-grab active:cursor-grabbing shadow-2xl"
-                      />
-                    </AnimatePresence>
-                  </div>
-
-                  <button
-                    onClick={handlePrev}
-                    className="absolute left-4 md:left-12 top-1/2 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-white/10 hover:bg-white/25 text-white backdrop-blur-md transition-all hover:scale-110"
-                    aria-label="Previous image"
-                  >
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M15 18l-6-6 6-6" />
-                    </svg>
-                  </button>
-
-                  <button
-                    onClick={handleNext}
-                    className="absolute right-4 md:right-12 top-1/2 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-white/10 hover:bg-white/25 text-white backdrop-blur-md transition-all hover:scale-110"
-                    aria-label="Next image"
-                  >
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M9 18l6-6-6-6" />
-                    </svg>
-                  </button>
+                {/* מונה תמונות */}
+                <div className="absolute inset-x-0 top-6 md:top-10 z-40 flex items-center justify-center pointer-events-none">
+                  <span className="text-sm font-light tracking-widest text-white/70 bg-black/30 px-4 py-1.5 rounded-full backdrop-blur-md">
+                    {selectedIndex + 1} מתוך {filteredImages.length}
+                  </span>
                 </div>
+
+                {/* התמונה המוגדלת - ללא קצוות עגולים */}
+                <div className="relative mx-auto w-full h-[80vh] flex items-center justify-center overflow-hidden">
+                  <AnimatePresence initial={false} custom={lightboxDirection}>
+                    <motion.img
+                      key={selectedIndex}
+                      src={filteredImages[selectedIndex].src}
+                      alt={filteredImages[selectedIndex].category}
+                      custom={lightboxDirection}
+                      variants={slideVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={{
+                        x: { type: "spring", stiffness: 300, damping: 30 },
+                        opacity: { duration: 0.2 }
+                      }}
+                      drag="x"
+                      dragConstraints={{ left: 0, right: 0 }}
+                      dragElastic={1}
+                      onDragEnd={(e, { offset, velocity }) => {
+                        const swipe = swipePower(offset.x, velocity.x);
+                        if (swipe < -swipeConfidenceThreshold) {
+                          handleNext();
+                        } else if (swipe > swipeConfidenceThreshold) {
+                          handlePrev();
+                        }
+                      }}
+                      className="absolute max-w-full max-h-[80vh] object-contain cursor-grab active:cursor-grabbing drop-shadow-2xl rounded-none"
+                    />
+                  </AnimatePresence>
+                </div>
+
+                {/* כפתורי ניווט חצים */}
+                <button
+                  onClick={handleNext}
+                  className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-md transition-all hover:scale-110"
+                  aria-label="Next image"
+                >
+                  <svg className="w-8 h-8 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </button>
+
+                <button
+                  onClick={handlePrev}
+                  className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-md transition-all hover:scale-110"
+                  aria-label="Previous image"
+                >
+                  <svg className="w-8 h-8 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M15 18l-6-6 6-6" />
+                  </svg>
+                </button>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        <h1 className="text-5xl md:text-6xl font-light mb-6 tracking-widest font-hebrew">{categoryNames[decodedCategory] || decodedCategory}</h1>
-
-        {/* Breadcrumb Navigation */}
-        <div className="w-full flex items-center justify-end px-4 md:px-12 mb-12">
-          <div className="flex items-center gap-3 text-lg md:text-xl font-light text-[#ff6fc6] font-hebrew">
-            <span className="text-[black]">{categoryNames[decodedCategory] || decodedCategory}</span>
-            <span>/</span>
-            <Link 
-              href="/gallery" 
-              className="hover:text-[#ff6fc6] transition-colors font-hebrew"
-            >
-              גלריה
-            </Link>
-          </div>
-        </div>
-
-        <section className="mb-16 w-full max-w-[1600px] mx-auto relative">
-          {/* הוגדר ל-3 עמודות במקסימום כמו שביקשת */}
-          <div className="columns-1 sm:columns-2 md:columns-3 gap-1 w-full">
+        {/* גריד התמונות (Masonry) - ללא רווחים כלל */}
+        <section className="w-full max-w-7xl mx-auto relative">
+          <div className="columns-1 sm:columns-2 md:columns-3 gap-1 sm:gap-1 w-full">
             {filteredImages.map((img, index) => (
               <LazyImageCard 
                 key={img.id}
