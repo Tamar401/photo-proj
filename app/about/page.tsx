@@ -59,7 +59,7 @@ export default function AboutPage() {
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ type: "spring", stiffness: 200, damping: 20 }}
+            transition={{ type: "spring" as const, stiffness: 200, damping: 20 }}
             className="w-full flex justify-center mb-8"
           >
             <motion.img
@@ -136,7 +136,7 @@ export default function AboutPage() {
               initial={{ opacity: 0, x: -30, rotate: -3 }}
               whileInView={{ opacity: 1, x: 0, rotate: 0 }}
               viewport={{ once: true }}
-              transition={{ type: "spring", duration: 1.2, delay: 0.4 }}
+              transition={{ type: "spring" as const, duration: 1.2, delay: 0.4 }}
               className="lg:col-span-5 relative group"
             >
               <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white">
